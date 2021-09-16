@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyledHeader } from "./style";
 import { Button } from "@material-ui/core";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3002/";
+axios.defaults.baseURL = "http://localhost:3001/";
 
 export const Header = () => {
   const [users, setUser] = useState([]);
@@ -21,7 +21,7 @@ export const Header = () => {
   };
   const createUser = async () => {
     // await axios.post(`/api/createUser`, body).then(({ data }) => {
-    await axios.post(`/api/addCookie`);
+    await axios.post(`/api/createUser`);
   };
 
   return (

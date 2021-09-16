@@ -1,9 +1,9 @@
 const app = require("express")();
-let bodyParser = require("body-parser");
-let cookieParser = require("cookie-parser");
-const port = parseInt(process.env.PORT, 10) || 3002;
+const port = parseInt(process.env.PORT, 10) || 3001;
 const cors = require("cors");
-const database = require("../database/database");
+const cookieParser = require("cookie-parser");
+
+
 
 
 app.use(cors());
@@ -12,14 +12,10 @@ app.use(cookieParser());
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+const q_user = require("../database/database");
 
-app.post("/api/createUser", database.Datastore.insert({ field1: 'field1Value'
-  , field2: 5
-  , field3: new Date()
-  , field4: true
-  , field5: null
-  , notToBeSaved: undefined
-}));
+
+    app.post("/api/createUser", q_user.test);
 
 
 /*const db = require("../database/database");
