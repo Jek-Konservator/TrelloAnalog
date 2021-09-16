@@ -20,10 +20,8 @@ export const Header = () => {
     role: "Huilusha",
   };
   const createUser = async () => {
-    // await axios.post(`/api/createUser`, body).then(({ data }) => {
-    await axios.post(`/api/createUser`);
+    await axios.post(`/api/createUser`, body);
   };
-
   return (
     <StyledHeader>
       <div>Логин</div>
