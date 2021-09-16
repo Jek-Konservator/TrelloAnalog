@@ -2,15 +2,16 @@ const app = require("express")();
 const port = parseInt(process.env.PORT, 10) || 3001;
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const {users_provider} = require("../database/database");
+
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(cookieParser());
 
-const q_user = require("../database/database");
 
-app.post("/api/createUser", q_user.test);
+
+app.post("/api/createUser", users_provider.newUsers);
+/*app.get("/api/creates", q_user.testGet);*/
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

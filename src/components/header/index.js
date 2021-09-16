@@ -5,23 +5,22 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3001/";
 
 export const Header = () => {
-  const [users, setUser] = useState([]);
-
-  const huisosnya = async () => {
-    const { data } = await axios.get(`/api/getUsers`);
-    // setUser(data);
-    console.log(data, "<=res");
-  };
 
   const body = {
-    idUser: "a39ebc39-9c0b-4ef8-bb6d-6bb9bd380a22",
     login: "ke1_rotwavresnoK",
     password: "qwf2qwwfqwfqwqfwqfwwfqwf!@rfw",
     role: "Huilusha",
   };
-  const createUser = async () => {
-    await axios.post(`/api/createUser`, body);
+
+  const createUser = () => {
+    axios.post(`/api/createUser`, body);
   };
+
+  const creats = async () => {
+    const a = axios.get(`/api/creates`);
+    console.log(a)
+  };
+
   return (
     <StyledHeader>
       <div>Логин</div>
