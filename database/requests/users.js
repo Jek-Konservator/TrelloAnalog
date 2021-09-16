@@ -1,4 +1,4 @@
-const dataUsers = require( "../database");
+const {dataUsers} = require( "../database");
 
 
 const newUsers = (req, res) => {
