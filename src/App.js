@@ -3,19 +3,19 @@ import { Header } from "./components/header";
 import { GlobalStyled, MainStyle } from "./GlobalStyle";
 import { Cards } from "./components/card";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Login } from "./components/login";
 
 const App = () => {
-
   return (
     <Router>
       <MainStyle>
         <GlobalStyled />
         <Header />
         <Switch>
-          <Route exact path="/">
-            <Cards />
+          <Route exact path="/login">
+            <Login />
           </Route>
-            <Route exact path="/">
+          <Route exact path="/">
             <Cards />
           </Route>
         </Switch>
