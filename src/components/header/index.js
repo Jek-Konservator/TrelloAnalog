@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import { StyledHeader } from "./style";
-import { Button } from "@material-ui/core";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 axios.defaults.baseURL = "http://localhost:3001/";
@@ -31,16 +30,11 @@ export const Header = () => {
     axios.post(`/api/createUser`, body);
   };*/
 
-  const creats = () => {
-    localStorage.setItem("asd", 123);
-  };
-
   return (
     <StyledHeader>
       <div>Логин</div>
       <div>Дата</div>
       <div>Выйти</div>
-      <Button onClick={creats}>ХУй</Button>
     </StyledHeader>
   );
 };

@@ -4,6 +4,8 @@ import { GlobalStyled, MainStyle } from "./GlobalStyle";
 import { Cards } from "./components/card";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Login } from "./components/login";
+import {NewUser} from "./components/login/newUser";
+import {ResetPassword} from "./components/login/resetPassword";
 
 const App = () => {
   return (
@@ -17,6 +19,12 @@ const App = () => {
           </Route>
           <Route exact path="/">
             <Cards />
+          </Route>
+          <Route exact path="/registration">
+            <NewUser />
+          </Route>
+          <Route exact path="/resetpassword">
+            <ResetPassword />
           </Route>
         </Switch>
       </MainStyle>

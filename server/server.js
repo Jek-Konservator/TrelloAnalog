@@ -5,7 +5,13 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
@@ -16,5 +22,7 @@ const tables_provider = require("./database/requests/tables");
 const tasks_provider = require("./database/requests/tasks");
 
 app.post("/api/createUser", users_provider.newUsers);
-app.get("/api/getUser", users_provider.getUsers);
-
+app.get("/api/getUsersNumber", users_provider.getUsersNumber);
+app.get("/api/getUsersEmail", users_provider.getUsersEmail);
+app.get("/api/getUsersPasswordEmail", users_provider.getUsersPasswordEmail);
+app.get("/api/getUsersPasswordNumber", users_provider.getUsersPasswordNumber);
