@@ -47,7 +47,7 @@ export const LoginNumber = ({props}) => {
                 className={classes.linkLogin}
                 style={{ fontSize: "19px" }}
               >
-                Забыли пороль ?
+                Забыли пароль ?
               </Link>
             </FormGroup>
             <StyledLoadingCardFooter>

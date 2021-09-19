@@ -1,17 +1,12 @@
 const app = require("express")();
 const port = parseInt(process.env.PORT, 10) || 3001;
-const cors = require("cors");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors());
-app.use(bodyParser.json());
-
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
@@ -24,5 +19,11 @@ const tasks_provider = require("./database/requests/tasks");
 app.post("/api/createUser", users_provider.newUsers);
 app.get("/api/getUsersNumber", users_provider.getUsersNumber);
 app.get("/api/getUsersEmail", users_provider.getUsersEmail);
-app.get("/api/getUsersPasswordEmail", users_provider.getUsersPasswordEmail);
-app.get("/api/getUsersPasswordNumber", users_provider.getUsersPasswordNumber);
+app.get(
+  "/api/getUsersPasswordEmail/:email",
+  users_provider.getUsersPasswordEmail
+);
+app.get(
+  "/api/getUsersPasswordNumber/:number",
+  users_provider.getUsersPasswordNumber
+);

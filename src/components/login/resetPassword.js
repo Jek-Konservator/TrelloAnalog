@@ -13,11 +13,9 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
-import bodyParser from "body-parser";
 
 export const ResetPassword = () => {
   const history = useHistory();
-
 
   const getUser = useCallback(() => {
     const user = localStorage.getItem("userIdentification");
@@ -38,13 +36,19 @@ export const ResetPassword = () => {
     setValue(newValue);
   };
 
-  const onSubmitNewUser = async (values) => {
-    console.log(values)
+  const onSubmitForgotPassword = async (values) => {
+    console.log(values, "<= values");
     if (selectedValue === "a") {
-      const a = await axios.get(`/api/getUsersPasswordEmail`, values);
+      const a = await axios.get(
+        `/api/getUsersPasswordEmail/${values.email}`,
+        values
+      );
       console.log(a);
     } else if (selectedValue === "b") {
-      const a = await axios.get(`/api/getUsersPasswordNumber`, values);
+      const a = await axios.get(
+        `/api/getUsersPasswordNumber/${values.number}`,
+        values
+      );
       console.log(a);
     }
   };
@@ -72,7 +76,7 @@ export const ResetPassword = () => {
           </TabList>
           <TabPanel value="1">
             <Form
-              onSubmit={onSubmitNewUser}
+              onSubmit={onSubmitForgotPassword}
               initialValues={{
                 ...formData,
               }}

@@ -29,12 +29,16 @@ export const Header = () => {
   const createUser = () => {
     axios.post(`/api/createUser`, body);
   };*/
+  const logOut = () => {
+    localStorage.removeItem("userIdentification");
+    getUser();
+  };
 
   return (
     <StyledHeader>
       <div>Логин</div>
       <div>Дата</div>
-      <div>Выйти</div>
+      <div onClick={logOut}>Выйти</div>
     </StyledHeader>
   );
 };

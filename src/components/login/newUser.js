@@ -97,7 +97,7 @@ export const NewUser = () => {
                   </StyledLoadingCardInput>
                   <StyledLoadingCardFooter>
                     <Button type="submit" className={classes.buttonLogin}>
-                      {"РАЗЕГЕСТРИРОВАТЬСЯ"}
+                      ЗАРЕГИСТРИРОВАТЬСЯ
                     </Button>
                     <Link
                       to={"/login"}

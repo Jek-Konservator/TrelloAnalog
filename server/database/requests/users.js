@@ -1,6 +1,4 @@
 const { dataUsers } = require("../database");
-let bodyParser = require("body-parser");
-
 
 const newUsers = (req, res) => {
   const { email, number, password } = req.body;
@@ -27,8 +25,10 @@ const getUsersEmail = (req, res) => {
     }
   });
 };
-const getUsersPasswordEmail = async (req, res) => {
-  dataUsers.findOne({ email: req.body.email }, (err, docs) => {
+const getUsersPasswordEmail = (req, res) => {
+  const { email } = req.params;
+  console.log(email);
+  dataUsers.findOne({ email }, (err, docs) => {
     if (err === null) {
       console.log(req.body);
       res.status(200).json({ docs });
@@ -38,8 +38,9 @@ const getUsersPasswordEmail = async (req, res) => {
   });
 };
 const getUsersPasswordNumber = (req, res) => {
-  const a = req.body.number;
-  dataUsers.findOne({ number: a }, (err, docs) => {
+  const { number } = req.params;
+  console.log(req.body, number, "aaaaaaaaaaaaaaaaaaa");
+  dataUsers.findOne({ number }, (err, docs) => {
     if (err === null) {
       res.status(200).json({ docs });
     } else {
