@@ -28,6 +28,10 @@ const App = () => {
   }, [getUser]);
   return (
     <MainStyle>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+        rel="stylesheet"
+      />
       <GlobalStyled />
       <Header logOut={logOut} />
       <Switch>
