@@ -14,7 +14,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
-
+//TODO: хуки стейты сверху потом функции потом эффект
 export const NewUser = () => {
   const history = useHistory();
 

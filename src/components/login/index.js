@@ -8,7 +8,7 @@ import { LoginEmail } from "./loginEmail";
 import { LoginNumber } from "./loginNumber";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
+//TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
   const history = useHistory();
 
@@ -31,15 +31,17 @@ export const Login = () => {
   };
 
   const onSubmitNewUser = (values) => {
-      //axios.post(`/api/createUser`, formData);
+    //axios.post(`/api/createUser`, formData);
     /*localStorage.setItem("userIdentification", true)*/
-  };const getUsersNumber = (values) => {
-    console.log(values)
-      //axios.get(`/api/getUsersNumbe`, formData);
+  };
+  const getUsersNumber = (values) => {
+    console.log(values);
+    //axios.get(`/api/getUsersNumbe`, formData);
     /*localStorage.setItem("userIdentification", true)*/
-  };const getUsersEmail = (values) => {
-    console.log(values)
-      //axios.get(`/api/getUsersEmail`, formData);
+  };
+  const getUsersEmail = (values) => {
+    console.log(values);
+    //axios.get(`/api/getUsersEmail`, formData);
     /*localStorage.setItem("userIdentification", true)*/
   };
 
@@ -48,7 +50,8 @@ export const Login = () => {
     number: "",
     password: "",
   };
-
+  //TODO: сделай 1 компонент из 2х
+  //TODO: react swipeble views ( в примере материала есть )
   return (
     <StyledLogin>
       <StyledLoadingCardTitle>Авторизация</StyledLoadingCardTitle>

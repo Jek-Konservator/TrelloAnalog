@@ -27,7 +27,6 @@ const getUsersEmail = (req, res) => {
 };
 const getUsersPasswordEmail = (req, res) => {
   const { email } = req.params;
-  console.log(email);
   dataUsers.findOne({ email }, (err, docs) => {
     if (err === null) {
       console.log(req.body);
@@ -39,7 +38,6 @@ const getUsersPasswordEmail = (req, res) => {
 };
 const getUsersPasswordNumber = (req, res) => {
   const { number } = req.params;
-  console.log(req.body, number, "aaaaaaaaaaaaaaaaaaa");
   dataUsers.findOne({ number }, (err, docs) => {
     if (err === null) {
       res.status(200).json({ docs });
@@ -56,3 +54,5 @@ module.exports = {
   getUsersPasswordEmail,
   getUsersPasswordNumber,
 };
+
+// TODO: деструктуризация переменных

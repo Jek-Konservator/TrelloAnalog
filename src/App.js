@@ -1,34 +1,50 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle } from "./GlobalStyle";
 import { Cards } from "./components/card";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
-import {NewUser} from "./components/login/newUser";
-import {ResetPassword} from "./components/login/resetPassword";
+import { NewUser } from "./components/login/newUser";
+import { ResetPassword } from "./components/login/resetPassword";
 
 const App = () => {
+  const history = useHistory();
+  const getUser = useCallback(() => {
+    const user = localStorage.getItem("userIdentification");
+    if (user === null) {
+      history.replace("/login");
+    } else {
+      history.replace("/");
+    }
+  }, [history]);
+
+  const logOut = () => {
+    localStorage.removeItem("userIdentification");
+    history.replace("/login");
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
   return (
-    <Router>
-      <MainStyle>
-        <GlobalStyled />
-        <Header />
-        <Switch>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/">
-            <Cards />
-          </Route>
-          <Route exact path="/registration">
-            <NewUser />
-          </Route>
-          <Route exact path="/resetpassword">
-            <ResetPassword />
-          </Route>
-        </Switch>
-      </MainStyle>
-    </Router>
+    <MainStyle>
+      <GlobalStyled />
+      <Header logOut={logOut} />
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/">
+          <Cards />
+        </Route>
+        <Route path="/registration">
+          <NewUser />
+        </Route>
+        <Route path="/resetpassword">
+          <ResetPassword />
+        </Route>
+      </Switch>
+    </MainStyle>
   );
 };
 
