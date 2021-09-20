@@ -1,25 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyledLoadingCardTitle, StyledLogin } from "./style";
 import { Card } from "@material-ui/core";
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 import useStyles from "../../styledMUI";
-import { LoginEmail } from "./loginEmail";
+import { LoginEmail, LoginUser } from "./LoginUser";
 import { LoginNumber } from "./loginNumber";
 import { useHistory } from "react-router-dom";
 
 import axios from "axios";
+import { UserContext } from "../../context";
+import SwipeableViews from "react-swipeable-views";
+import {Button} from "@mui/material";
 //TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
   const history = useHistory();
-
-  const getUser = useCallback(() => {
-    const userLocalStorage = localStorage.getItem("userIdentification");
-    const userSessionStorage = sessionStorage.getItem("userIdentification");
-    if (userLocalStorage !== null || userSessionStorage !== null) {
-      history.replace("/");
-    }
-  }, [history]);
+  const { getUser } = useContext(UserContext);
 
   useEffect(() => {
     getUser();
@@ -27,29 +23,26 @@ export const Login = () => {
 
   const classes = useStyles();
   const [value, setValue] = useState("1");
+  const [index, setIndex] = useState(1);
   const [errorPassword, setErrorPassword] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorUserNotAccepted, setErrorUserNotAccepted] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setErrorUserNotAccepted(false);
+  };
+  const handleChangeIndex = (newValue) => {
+    setIndex(newValue);
+    console.log(newValue)
   };
 
-  const getUsersNumber = async (values) => {
+  const TryLogIn = async (values) => {
     const data = await axios.get(
-      `/api/getUsersNumber/${values.number}`,
+      `/api/TryLogIn/${values.email}/${values.number}/${values.password}`,
       values
     );
-    //localStorage.setItem("userIdentification", true)
-    console.log(data.data);
-  };
-  const getUsersEmail = async (values) => {
-    const data = await axios.get(
-      `/api/getUsersEmail/${values.email}/${values.password}`,
-      values
-    );
-
-    if (data.data.massage !== "emailNotAccepted") {
-      setErrorEmail(false)
+    if (data.data.massage !== "UserNotAccepted") {
+      setErrorUserNotAccepted(false);
       if (data.data.massage === "passwordAccepted") {
         if (values.saveMe === true) {
           localStorage.setItem("userIdentification", true);
@@ -61,14 +54,14 @@ export const Login = () => {
         setErrorPassword(true);
       }
     } else {
-      setErrorEmail(true);
+      setErrorUserNotAccepted(true);
     }
   };
 
   let formData = {
-    email: "",
-    number: "",
-    password: "",
+    email: null,
+    number: null,
+    password: null,
     saveMe: false,
   };
   //TODO: react swipeble views ( в примере материала есть )
@@ -81,14 +74,32 @@ export const Login = () => {
             <Tab label="ПО EMAIL" value="1" style={{ width: "50%" }} />
             <Tab label="ПО ТЕЛЕФОНУ" value="2" style={{ width: "50%" }} />
           </TabList>
-          <TabPanel value="1">
-            <LoginEmail
-              props={{ formData, getUsersEmail, classes, errorPassword, errorEmail }}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            <LoginNumber props={{ formData, getUsersNumber, classes }} />
-          </TabPanel>
+          <SwipeableViews onChangeIndex={(e)=> {handleChangeIndex(e)}} >
+            <div index={1}>
+              <Button onClick={handleChangeIndex}/>
+              <TabPanel value="1">
+                <LoginUser
+                  formData={formData}
+                  TryLogIn={TryLogIn}
+                  classes={classes}
+                  errorPassword={errorPassword}
+                  errorUserNotAccepted={errorUserNotAccepted}
+                  value={value}
+                />
+              </TabPanel>
+              <TabPanel value="2">
+                <LoginUser
+                  formData={formData}
+                  TryLogIn={TryLogIn}
+                  classes={classes}
+                  errorPassword={errorPassword}
+                  errorUserNotAccepted={errorUserNotAccepted}
+                  value={value}
+                />
+              </TabPanel>
+            </div>
+            <div index={2}> asd</div>
+          </SwipeableViews>
         </Card>
       </TabContext>
     </StyledLogin>

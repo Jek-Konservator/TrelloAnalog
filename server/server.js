@@ -15,7 +15,7 @@ const users_provider = require("./database/requests/users");
 
 app.post("/api/createUser", users_provider.newUsers);
 app.get("/api/getUsersNumber/:number", users_provider.getUsersNumber);
-app.get("/api/getUsersEmail/:email/:password", users_provider.getUsersEmail);
+app.get("/api/TryLogIn/:email/:number/:password", users_provider.TryLogIn);
 app.get(
   "/api/getUsersPasswordEmail/:email",
   users_provider.getUsersPasswordEmail

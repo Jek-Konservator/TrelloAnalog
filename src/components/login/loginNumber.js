@@ -8,7 +8,7 @@ import React from "react";
 
 export const LoginNumber = ({ props }) => {
   let formData = props.formData;
-  let onSubmit = props.getUsersNumber;
+  let onSubmit = props.getUsersEmail;
   let classes = props.classes;
 
   return (

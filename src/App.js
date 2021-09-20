@@ -6,6 +6,7 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
 import { ResetPassword } from "./components/login/resetPassword";
+import { UserContext } from "./context";
 
 const App = () => {
   const history = useHistory();
@@ -29,28 +30,30 @@ const App = () => {
     getUser();
   }, [getUser]);
   return (
-    <MainStyle>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
-        rel="stylesheet"
-      />
-      <GlobalStyled />
-      <Header logOut={logOut} />
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/">
-          <Cards />
-        </Route>
-        <Route path="/registration">
-          <NewUser />
-        </Route>
-        <Route path="/resetpassword">
-          <ResetPassword />
-        </Route>
-      </Switch>
-    </MainStyle>
+    <UserContext.Provider value={{ getUser }}>
+      <MainStyle>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+          rel="stylesheet"
+        />
+        <GlobalStyled />
+        <Header logOut={logOut} />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/">
+            <Cards />
+          </Route>
+          <Route path="/registration">
+            <NewUser />
+          </Route>
+          <Route path="/resetpassword">
+            <ResetPassword />
+          </Route>
+        </Switch>
+      </MainStyle>
+    </UserContext.Provider>
   );
 };
 

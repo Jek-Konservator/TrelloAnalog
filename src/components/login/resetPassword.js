@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   StyledLoadingCardFooter,
   StyledLoadingCardInput,
@@ -9,24 +9,13 @@ import { Button, Card } from "@material-ui/core";
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 import useStyles from "../../styledMUI";
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
+import {UserContext} from "../../context";
 //TODO:переверстай радио на 1 компонент табами как на страничке логина
 export const ResetPassword = () => {
-  const history = useHistory();
-
-  const getUser = useCallback(() => {
-    const user = localStorage.getItem("userIdentification");
-    if (user !== null) {
-      history.replace("/");
-    }
-  }, [history]);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
 
   const classes = useStyles();
   const [value, setValue] = useState("1");

@@ -6,24 +6,25 @@ import { Link } from "react-router-dom";
 import { Form } from "react-final-form";
 import React from "react";
 
-export const LoginEmail = ({ props }) => {
-  let formData = props.formData;
-  let onSubmit = props.getUsersEmail;
-  let classes = props.classes;
-  let errorPassword = props.errorPassword;
-  let errorEmail = props.errorEmail;
-
+export const LoginUser = ({
+  formData,
+  TryLogIn,
+  classes,
+  errorPassword,
+  errorUserNotAccepted,
+  value,
+}) => {
   return (
     <>
       <Form
-        onSubmit={onSubmit}
+        onSubmit={TryLogIn}
         initialValues={{
           ...formData,
         }}
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             {" "}
-            {errorEmail && true ? (
+            {errorUserNotAccepted && true ? (
               <div
                 style={{
                   display: "flex",
@@ -31,7 +32,7 @@ export const LoginEmail = ({ props }) => {
                   alignItems: "center",
                 }}
               >
-                Неверный адрес электронной почты
+                Такого аккаунта не существует
               </div>
             ) : errorPassword && true ? (
               <div
@@ -48,12 +49,21 @@ export const LoginEmail = ({ props }) => {
             )}
             <StyledLoadingCardInput>
               <div>
-                <TextField
-                  error={errorEmail}
-                  label="Электронная почта"
-                  name="email"
-                  className={classes.textFieldLogin}
-                />
+                {value === "1" ? (
+                  <TextField
+                    error={errorUserNotAccepted}
+                    label="Электронная почта"
+                    name="email"
+                    className={classes.textFieldLogin}
+                  />
+                ) : (
+                  <TextField
+                    error={errorUserNotAccepted}
+                    label="Номер телефона"
+                    name="number"
+                    className={classes.textFieldLogin}
+                  />
+                )}
               </div>
               <div>
                 <TextField
