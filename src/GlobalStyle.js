@@ -11,3 +11,8 @@ export const MainStyle = styled.div`
   width: 100%;
   background: linear-gradient(to top left, #6eeeed, #bbdcff);
 `;
+export const theme = {
+    colors: {
+        primary: "#0070AE",
+    },
+};

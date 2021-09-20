@@ -1,125 +1,73 @@
-import React, {useContext, useEffect, useState} from "react";
-import {
-  StyledLoadingCardFooter,
-  StyledLoadingCardInput,
-  StyledLoadingCardTitle,
-  StyledLogin,
-} from "./style";
-import { Button, Card } from "@material-ui/core";
-import { TabPanel, TabContext, TabList } from "@mui/lab";
-import Tab from "@mui/material/Tab";
+import React  from "react";
+import { StyledLoadingCardFooter, StyledLoadingCardInput } from "./style";
+import { Button } from "@material-ui/core";
 import useStyles from "../../styledMUI";
-import { Link} from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
-import {UserContext} from "../../context";
-//TODO:переверстай радио на 1 компонент табами как на страничке логина
-export const ResetPassword = () => {
 
+//TODO:переверстай радио на 1 компонент табами как на страничке логина
+export const ResetPassword = ({ handleChangeIndex, type }) => {
   const classes = useStyles();
-  const [value, setValue] = useState("1");
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const onSubmitForgotPassword = async (values) => {
-    if (value === "1") {
-      const a = await axios.get(
+    if (type === "email") {
+      const { data } = await axios.get(
         `/api/getUsersPasswordEmail/${values.email}`,
         values
       );
-    } else if (value === "2") {
-      const a = await axios.get(
+      console.log(data);
+    } else if (type === "tel") {
+      const { data } = await axios.get(
         `/api/getUsersPasswordNumber/${values.number}`,
         values
       );
-      console.log(a);
+      console.log(data);
     }
   };
 
-  let formData = {
-    email: "",
-    number: "",
-  };
-
   return (
-    <StyledLogin>
-      <StyledLoadingCardTitle>Восстанавливать пароль</StyledLoadingCardTitle>
-      <TabContext value={value}>
-        <Card className={classes.cardLogin}>
-          <TabList onChange={handleChange} style={{ width: "100%" }}>
-            <Tab label="EMAIL" value="1" style={{ width: "50%" }} />
-            <Tab label="НОМЕР ТЕЛЕФОНА" value="2" style={{ width: "50%" }} />
-          </TabList>
-          <TabPanel value="1">
-            <Form
-              onSubmit={onSubmitForgotPassword}
-              initialValues={{
-                ...formData,
-              }}
-              render={({ handleSubmit, values }) => (
-                <form onSubmit={handleSubmit}>
-                  <StyledLoadingCardInput>
-                    <div>
-                      <TextField
-                        label="Электронная почта"
-                        name="email"
-                        className={classes.textFieldLogin}
-                      />
-                    </div>
-                  </StyledLoadingCardInput>
-                  <StyledLoadingCardFooter>
-                    <Button type="submit" className={classes.buttonLogin}>
-                      {"ВОССТАНОВИТЬ ПАРОЛЬ"}
-                    </Button>
-                    <Link
-                      to={"/login"}
-                      className={classes.linkLogin}
-                      style={{ fontSize: "25px", marginTop: "30px" }}
-                    >
-                      {"У меня уже есть аккаунт"}
-                    </Link>
-                  </StyledLoadingCardFooter>
-                </form>
+    <Form
+      onSubmit={onSubmitForgotPassword}
+      initialValues={{
+        email: "",
+        number: "",
+      }}
+      render={({ handleSubmit, values }) => (
+        <form onSubmit={handleSubmit}>
+          <StyledLoadingCardInput>
+            <div>
+              {type === "email" ? (
+                <TextField
+                  label="Электронная почта"
+                  name="email"
+                  className={classes.textFieldLogin}
+                />
+              ) : (
+                <TextField
+                  label="Номер телефона"
+                  name="number"
+                  className={classes.textFieldLogin}
+                />
               )}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            <Form
-              onSubmit={onSubmitForgotPassword}
-              initialValues={{
-                ...formData,
+            </div>
+          </StyledLoadingCardInput>
+          <StyledLoadingCardFooter>
+            <Button type="submit" className={classes.buttonLogin}>
+              ВОССТАНОВИТЬ ПАРОЛЬ
+            </Button>
+            <div
+              onClick={() => {
+                handleChangeIndex(0);
               }}
-              render={({ handleSubmit, values }) => (
-                <form onSubmit={handleSubmit}>
-                  <StyledLoadingCardInput>
-                    <div>
-                      <TextField
-                        label="Номер телефона"
-                        name="number"
-                        className={classes.textFieldLogin}
-                      />
-                    </div>
-                  </StyledLoadingCardInput>
-                  <StyledLoadingCardFooter>
-                    <Button type="submit" className={classes.buttonLogin}>
-                      {"ВОССТАНОВИТЬ ПАРОЛЬ"}
-                    </Button>
-                    <Link
-                      to={"/login"}
-                      className={classes.linkLogin}
-                      style={{ fontSize: "25px", marginTop: "30px" }}
-                    >
-                      {"У меня уже есть аккаунт"}
-                    </Link>
-                  </StyledLoadingCardFooter>
-                </form>
-              )}
-            />
-          </TabPanel>
-        </Card>
-      </TabContext>
-    </StyledLogin>
+              className={classes.linkLogin}
+              style={{ fontSize: "25px", marginTop: "30px" }}
+            >
+              У меня уже есть аккаунт
+            </div>
+          </StyledLoadingCardFooter>
+        </form>
+      )}
+    />
   );
 };

@@ -18,7 +18,7 @@ const getUsersNumber = (req, res) => {
   });
 };
 
-const TryLogIn = (req, res) => {
+const tryLogIn = (req, res) => {
   const { email, number, password } = req.params;
 
   if (email !== "null") {
@@ -74,7 +74,7 @@ const getUsersPasswordNumber = (req, res) => {
 module.exports = {
   newUsers,
   getUsersNumber,
-  TryLogIn,
+  tryLogIn,
   getUsersPasswordEmail,
   getUsersPasswordNumber,
 };

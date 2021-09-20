@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   buttonLogin: {
-      background: "#2196f3",
-      '&:hover': {
-          background: "#32BDF8FF"},
+    background: "#2196f3",
+    "&:hover": {
+      background: "#32BDF8FF",
+    },
     border: 0,
     borderRadius: "15px",
     boxShadow: "0 3px 5px 2px",
@@ -19,14 +20,15 @@ const useStyles = makeStyles({
   },
   formGroup: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center",
-    padding: "0 10px 0 10px",
+    paddingLeft: 40,
+    paddingRight: 40,
   },
   linkLogin: {
     textDecoration: "none",
     fontSize: "18px",
-    color: "#2196f3"
+    color: "#2196f3",
   },
 
   cardLogin: {

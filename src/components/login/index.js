@@ -1,20 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyledLoadingCardTitle, StyledLogin } from "./style";
-import { Card } from "@material-ui/core";
-import { TabPanel, TabContext, TabList } from "@mui/lab";
-import Tab from "@mui/material/Tab";
+import { Card, Tabs, Tab } from "@material-ui/core";
 import useStyles from "../../styledMUI";
-import { LoginEmail, LoginUser } from "./LoginUser";
-import { LoginNumber } from "./loginNumber";
-import { useHistory } from "react-router-dom";
+import { LogInUser } from "./LogInUser";
 
-import axios from "axios";
 import { UserContext } from "../../context";
 import SwipeableViews from "react-swipeable-views";
-import {Button} from "@mui/material";
 //TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
-  const history = useHistory();
   const { getUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -22,86 +15,58 @@ export const Login = () => {
   }, [getUser]);
 
   const classes = useStyles();
-  const [value, setValue] = useState("1");
-  const [index, setIndex] = useState(1);
-  const [errorPassword, setErrorPassword] = useState(false);
-  const [errorUserNotAccepted, setErrorUserNotAccepted] = useState(false);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setErrorUserNotAccepted(false);
-  };
-  const handleChangeIndex = (newValue) => {
-    setIndex(newValue);
-    console.log(newValue)
   };
 
-  const TryLogIn = async (values) => {
-    const data = await axios.get(
-      `/api/TryLogIn/${values.email}/${values.number}/${values.password}`,
-      values
-    );
-    if (data.data.massage !== "UserNotAccepted") {
-      setErrorUserNotAccepted(false);
-      if (data.data.massage === "passwordAccepted") {
-        if (values.saveMe === true) {
-          localStorage.setItem("userIdentification", true);
-        } else {
-          sessionStorage.setItem("userIdentification", true);
-        }
-        history.replace("/");
-      } else if (data.data.massage === "passwordNotAccepted") {
-        setErrorPassword(true);
-      }
-    } else {
-      setErrorUserNotAccepted(true);
-    }
+  const handleChangeIndex = (index) => {
+    setValue(index);
   };
 
-  let formData = {
-    email: null,
-    number: null,
-    password: null,
-    saveMe: false,
-  };
   //TODO: react swipeble views ( в примере материала есть )
   return (
     <StyledLogin>
       <StyledLoadingCardTitle>Авторизация</StyledLoadingCardTitle>
-      <TabContext value={value}>
-        <Card className={classes.cardLogin}>
-          <TabList onChange={handleChange} style={{ width: "100%" }}>
-            <Tab label="ПО EMAIL" value="1" style={{ width: "50%" }} />
-            <Tab label="ПО ТЕЛЕФОНУ" value="2" style={{ width: "50%" }} />
-          </TabList>
-          <SwipeableViews onChangeIndex={(e)=> {handleChangeIndex(e)}} >
-            <div index={1}>
-              <Button onClick={handleChangeIndex}/>
-              <TabPanel value="1">
-                <LoginUser
-                  formData={formData}
-                  TryLogIn={TryLogIn}
-                  classes={classes}
-                  errorPassword={errorPassword}
-                  errorUserNotAccepted={errorUserNotAccepted}
-                  value={value}
-                />
-              </TabPanel>
-              <TabPanel value="2">
-                <LoginUser
-                  formData={formData}
-                  TryLogIn={TryLogIn}
-                  classes={classes}
-                  errorPassword={errorPassword}
-                  errorUserNotAccepted={errorUserNotAccepted}
-                  value={value}
-                />
-              </TabPanel>
-            </div>
-            <div index={2}> asd</div>
-          </SwipeableViews>
-        </Card>
-      </TabContext>
+      <Card className={classes.cardLogin}>
+        <Tabs
+          indicatorColor="primary"
+          value={value}
+          onChange={handleChange}
+          style={{ width: "100%" }}
+        >
+          <Tab label="ПО EMAIL" style={{ width: "50%" }} />
+          <Tab label="ПО ТЕЛЕФОНУ" style={{ width: "50%" }} />
+        </Tabs>
+        <SwipeableViews
+          style={{ width: "100%" }}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0}>
+            <LogInUser classes={classes} type="email" />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <LogInUser type="tel" classes={classes} />
+          </TabPanel>
+        </SwipeableViews>
+      </Card>
     </StyledLogin>
+  );
+};
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      style={{ width: "100%" }}
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}
+    >
+      {value === index && <>{children}</>}
+    </div>
   );
 };

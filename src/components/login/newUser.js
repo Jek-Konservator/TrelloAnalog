@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyledLoadingCardFooter,
   StyledLoadingCardInput,
@@ -14,7 +14,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
-import { UserContext } from "../../context";
+
 export const NewUser = () => {
   const history = useHistory();
   const classes = useStyles();

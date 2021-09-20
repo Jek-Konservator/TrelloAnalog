@@ -18,7 +18,7 @@ export const StyledLoadingCardInput = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 40px 0 0 0;
-  `;
+`;
 export const StyledLoadingCardFooter = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,4 +26,4 @@ export const StyledLoadingCardFooter = styled.div`
   align-items: center;
   margin-top: 40px;
 `;
-
+export const LogInContainer = styled.div``;
