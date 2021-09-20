@@ -20,7 +20,7 @@ export const LogInUser = ({ classes, type }) => {
         type={type}
         handleChangeIndex={handleChangeIndex}
       />
-      <ResetPassword handleChangeIndex={handleChangeIndex} />
+      <ResetPassword handleChangeIndex={handleChangeIndex} type={type} />
     </SwipeableViews>
   );
 };

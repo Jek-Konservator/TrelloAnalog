@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { StyledLoadingCardFooter, StyledLoadingCardInput } from "./style";
 import { Button } from "@material-ui/core";
 import useStyles from "../../styledMUI";
@@ -9,7 +9,7 @@ import { Form } from "react-final-form";
 //TODO:переверстай радио на 1 компонент табами как на страничке логина
 export const ResetPassword = ({ handleChangeIndex, type }) => {
   const classes = useStyles();
-
+  console.log(type, "type");
   const onSubmitForgotPassword = async (values) => {
     if (type === "email") {
       const { data } = await axios.get(
