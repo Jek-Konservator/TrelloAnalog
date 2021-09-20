@@ -1,5 +1,5 @@
 const { dataUsers } = require("../database");
-
+// massage поменяй на message
 const newUsers = (req, res) => {
   const { email, number, password } = req.body;
   const user = "user";

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { StyledLoadingCardTitle, StyledLogin } from "./style";
 import { Card, Tabs, Tab } from "@material-ui/core";
 import useStyles from "../../styledMUI";
@@ -8,24 +8,20 @@ import { UserContext } from "../../context";
 import SwipeableViews from "react-swipeable-views";
 //TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
-  const { getUser } = useContext(UserContext);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
-
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+
+  const [value, setValue] = useState(0);
+  const { getUser } = useContext(UserContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-
-  //TODO: react swipeble views ( в примере материала есть )
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
   return (
     <StyledLogin>
       <StyledLoadingCardTitle>Авторизация</StyledLoadingCardTitle>

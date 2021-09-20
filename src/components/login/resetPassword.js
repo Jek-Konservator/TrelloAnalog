@@ -6,7 +6,6 @@ import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
 
-//TODO:переверстай радио на 1 компонент табами как на страничке логина
 export const ResetPassword = ({ handleChangeIndex, type }) => {
   const classes = useStyles();
   console.log(type, "type");
