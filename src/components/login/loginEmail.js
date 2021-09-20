@@ -6,24 +6,50 @@ import { Link } from "react-router-dom";
 import { Form } from "react-final-form";
 import React from "react";
 
-export const LoginEmail = ({props}) => {
+export const LoginEmail = ({ props }) => {
+  let formData = props.formData;
+  let onSubmit = props.getUsersEmail;
+  let classes = props.classes;
+  let errorPassword = props.errorPassword;
+  let errorEmail = props.errorEmail;
 
-   let formData = props.formData;
-    let onSubmit = props.getUsersEmail;
-    let classes = props.classes;
-
-    return (
+  return (
     <>
-     <Form
+      <Form
         onSubmit={onSubmit}
         initialValues={{
           ...formData,
         }}
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
+            {" "}
+            {errorEmail && true ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Неверный адрес электронной почты
+              </div>
+            ) : errorPassword && true ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Неверный пароль{" "}
+              </div>
+            ) : (
+              ""
+            )}
             <StyledLoadingCardInput>
               <div>
                 <TextField
+                  error={errorEmail}
                   label="Электронная почта"
                   name="email"
                   className={classes.textFieldLogin}
@@ -31,6 +57,7 @@ export const LoginEmail = ({props}) => {
               </div>
               <div>
                 <TextField
+                  error={errorPassword}
                   label="Пароль"
                   name="password"
                   className={classes.textFieldLogin}
@@ -39,6 +66,7 @@ export const LoginEmail = ({props}) => {
             </StyledLoadingCardInput>
             <FormGroup className={classes.formGroup}>
               <FormControlLabel
+                name="saveMe"
                 control={<Checkbox defaultChecked={false} />}
                 label="Запомнить меня"
               />

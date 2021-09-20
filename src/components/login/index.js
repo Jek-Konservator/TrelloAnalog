@@ -7,14 +7,16 @@ import useStyles from "../../styledMUI";
 import { LoginEmail } from "./loginEmail";
 import { LoginNumber } from "./loginNumber";
 import { useHistory } from "react-router-dom";
+
 import axios from "axios";
 //TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
   const history = useHistory();
 
   const getUser = useCallback(() => {
-    const user = localStorage.getItem("userIdentification");
-    if (user !== null) {
+    const userLocalStorage = localStorage.getItem("userIdentification");
+    const userSessionStorage = sessionStorage.getItem("userIdentification");
+    if (userLocalStorage !== null || userSessionStorage !== null) {
       history.replace("/");
     }
   }, [history]);
@@ -25,32 +27,50 @@ export const Login = () => {
 
   const classes = useStyles();
   const [value, setValue] = useState("1");
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const onSubmitNewUser = (values) => {
-    //axios.post(`/api/createUser`, formData);
-    /*localStorage.setItem("userIdentification", true)*/
+  const getUsersNumber = async (values) => {
+    const data = await axios.get(
+      `/api/getUsersNumber/${values.number}`,
+      values
+    );
+    //localStorage.setItem("userIdentification", true)
+    console.log(data.data);
   };
-  const getUsersNumber = (values) => {
-    console.log(values);
-    //axios.get(`/api/getUsersNumbe`, formData);
-    /*localStorage.setItem("userIdentification", true)*/
-  };
-  const getUsersEmail = (values) => {
-    console.log(values);
-    //axios.get(`/api/getUsersEmail`, formData);
-    /*localStorage.setItem("userIdentification", true)*/
+  const getUsersEmail = async (values) => {
+    const data = await axios.get(
+      `/api/getUsersEmail/${values.email}/${values.password}`,
+      values
+    );
+
+    if (data.data.massage !== "emailNotAccepted") {
+      setErrorEmail(false)
+      if (data.data.massage === "passwordAccepted") {
+        if (values.saveMe === true) {
+          localStorage.setItem("userIdentification", true);
+        } else {
+          sessionStorage.setItem("userIdentification", true);
+        }
+        history.replace("/");
+      } else if (data.data.massage === "passwordNotAccepted") {
+        setErrorPassword(true);
+      }
+    } else {
+      setErrorEmail(true);
+    }
   };
 
   let formData = {
     email: "",
     number: "",
     password: "",
+    saveMe: false,
   };
-  //TODO: сделай 1 компонент из 2х
   //TODO: react swipeble views ( в примере материала есть )
   return (
     <StyledLogin>
@@ -62,7 +82,9 @@ export const Login = () => {
             <Tab label="ПО ТЕЛЕФОНУ" value="2" style={{ width: "50%" }} />
           </TabList>
           <TabPanel value="1">
-            <LoginEmail props={{ formData, getUsersEmail, classes }} />
+            <LoginEmail
+              props={{ formData, getUsersEmail, classes, errorPassword, errorEmail }}
+            />
           </TabPanel>
           <TabPanel value="2">
             <LoginNumber props={{ formData, getUsersNumber, classes }} />

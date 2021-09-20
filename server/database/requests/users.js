@@ -8,7 +8,8 @@ const newUsers = (req, res) => {
 };
 
 const getUsersNumber = (req, res) => {
-  dataUsers.findOne({ number: req.body.number }, (err, docs) => {
+  const { number } = req.params;
+  dataUsers.findOne({ number }, (err, docs) => {
     if (err === null) {
       res.status(200).json({ docs });
     } else {
@@ -17,9 +18,18 @@ const getUsersNumber = (req, res) => {
   });
 };
 const getUsersEmail = (req, res) => {
-  dataUsers.findOne({ email: req.body.email }, (err, docs) => {
+  const { email, password } = req.params;
+  dataUsers.findOne({ email }, (err, docs) => {
     if (err === null) {
-      res.status(200).json({ docs });
+      if (docs !== null) {
+        if (docs.password === password) {
+          res.status(200).json({ massage: "passwordAccepted" });
+        } else {
+          res.status(200).json({ massage: "passwordNotAccepted" });
+        }
+      } else {
+        res.status(200).json({ massage: "emailNotAccepted" });
+      }
     } else {
       res.status(500).json({ err });
     }
@@ -29,7 +39,6 @@ const getUsersPasswordEmail = (req, res) => {
   const { email } = req.params;
   dataUsers.findOne({ email }, (err, docs) => {
     if (err === null) {
-      console.log(req.body);
       res.status(200).json({ docs });
     } else {
       res.status(500).json({ err });
@@ -54,5 +63,3 @@ module.exports = {
   getUsersPasswordEmail,
   getUsersPasswordNumber,
 };
-
-// TODO: деструктуризация переменных

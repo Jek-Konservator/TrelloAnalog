@@ -14,9 +14,16 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
-//TODO: хуки стейты сверху потом функции потом эффект
 export const NewUser = () => {
   const history = useHistory();
+  const classes = useStyles();
+  const [value, setValue] = useState("1");
+
+  let formData = {
+    email: "",
+    number: "",
+    password: "",
+  };
 
   const getUser = useCallback(() => {
     const user = localStorage.getItem("userIdentification");
@@ -29,9 +36,6 @@ export const NewUser = () => {
     getUser();
   }, [getUser]);
 
-  const classes = useStyles();
-  const [value, setValue] = useState("1");
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -41,15 +45,9 @@ export const NewUser = () => {
     if (a.data.message === "AddUsers") {
       localStorage.setItem("userIdentification", true);
       history.replace("/");
-    }else {
-      console.log(a.data.message)
+    } else {
+      console.log(a.data.message);
     }
-  };
-
-  let formData = {
-    email: "",
-    number: "",
-    password: "",
   };
 
   return (

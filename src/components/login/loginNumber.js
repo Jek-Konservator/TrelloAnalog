@@ -6,15 +6,14 @@ import { Link } from "react-router-dom";
 import { Form } from "react-final-form";
 import React from "react";
 
-export const LoginNumber = ({props}) => {
+export const LoginNumber = ({ props }) => {
+  let formData = props.formData;
+  let onSubmit = props.getUsersNumber;
+  let classes = props.classes;
 
-   let formData = props.formData;
-    let onSubmit = props.getUsersNumber;
-    let classes = props.classes;
-
-    return (
+  return (
     <>
-     <Form
+      <Form
         onSubmit={onSubmit}
         initialValues={{
           ...formData,
@@ -39,6 +38,7 @@ export const LoginNumber = ({props}) => {
             </StyledLoadingCardInput>
             <FormGroup className={classes.formGroup}>
               <FormControlLabel
+                name="saveMe"
                 control={<Checkbox defaultChecked={false} />}
                 label="Запомнить меня"
               />

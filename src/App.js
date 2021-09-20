@@ -10,8 +10,9 @@ import { ResetPassword } from "./components/login/resetPassword";
 const App = () => {
   const history = useHistory();
   const getUser = useCallback(() => {
-    const user = localStorage.getItem("userIdentification");
-    if (user === null) {
+    const userLocalStorage = localStorage.getItem("userIdentification");
+    const userSessionStorage = sessionStorage.getItem("userIdentification");
+    if (userLocalStorage === null && userSessionStorage === null) {
       history.replace("/login");
     } else {
       history.replace("/");
@@ -20,6 +21,7 @@ const App = () => {
 
   const logOut = () => {
     localStorage.removeItem("userIdentification");
+    sessionStorage.removeItem("userIdentification");
     history.replace("/login");
   };
 
