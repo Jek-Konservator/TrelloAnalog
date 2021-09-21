@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyledLoadingCardFooter, StyledLoadingCardInput } from "./style";
 import { Button } from "@material-ui/core";
 import useStyles from "../../styledMUI";
 import axios from "axios";
+import { Alert } from "@mui/material";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
 
 export const ResetPassword = ({ handleChangeIndex, type }) => {
+  const [error, setError] = useState(false);
+  const [password, setPassword] = useState("");
+
   const classes = useStyles();
-  console.log(type, "type");
   const onSubmitForgotPassword = async (values) => {
     if (type === "email") {
       const { data } = await axios.get(
         `/api/getUsersPasswordEmail/${values.email}`,
         values
       );
-      console.log(data);
+      if (data.docs !== null) {
+        setError(false);
+        setPassword(data.docs.password);
+      } else {
+        setError(true);
+      }
     } else if (type === "tel") {
       const { data } = await axios.get(
         `/api/getUsersPasswordNumber/${values.number}`,
         values
       );
-      console.log(data);
+      if (data.docs !== null) {
+        setError(false);
+        setPassword(data.docs.password);
+      } else {
+        setError(true);
+      }
     }
   };
 
@@ -34,16 +47,29 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
       }}
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit}>
+          {error && true ? (
+            <Alert severity="error" className={classes.linkLogin}>
+              Такого аккаунта не существует
+            </Alert>
+          ) : password !== "" ? (
+            <Alert severity="success" className={classes.linkLogin}>
+              Ващ пароль : {password}
+            </Alert>
+          ) : (
+            ""
+          )}
           <StyledLoadingCardInput>
             <div>
               {type === "email" ? (
                 <TextField
+                  error={error}
                   label="Электронная почта"
                   name="email"
                   className={classes.textFieldLogin}
                 />
               ) : (
                 <TextField
+                  error={error}
                   label="Номер телефона"
                   name="number"
                   className={classes.textFieldLogin}
@@ -60,9 +86,9 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
                 handleChangeIndex(0);
               }}
               className={classes.linkLogin}
-              style={{ fontSize: "25px", marginTop: "30px" }}
+              style={{ fontSize: "25px", marginTop: "30px", color:"#2196f3", cursor: "pointer"}}
             >
-              У меня уже есть аккаунт
+              Вернуться к авторизации
             </div>
           </StyledLoadingCardFooter>
         </form>

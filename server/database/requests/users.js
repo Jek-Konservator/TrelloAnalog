@@ -37,7 +37,8 @@ const tryLogIn = (req, res) => {
     if (err === null) {
       if (docs !== null) {
         if (docs.password === password) {
-          res.status(200).json({ massage: "passwordAccepted" });
+          const id = docs._id;
+          res.status(200).json({ massage: "passwordAccepted", id });
         } else {
           res.status(200).json({ massage: "passwordNotAccepted" });
         }

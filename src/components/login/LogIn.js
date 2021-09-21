@@ -6,7 +6,7 @@ import {
 } from "./style";
 import { TextField } from "mui-rff";
 import { Button, FormGroup } from "@material-ui/core";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Alert, Checkbox, FormControlLabel } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
@@ -16,21 +16,27 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorUserNotAccepted, setErrorUserNotAccepted] = useState(false);
 
+  const toRegistration = () => {
+    history.replace("/registration");
+  };
+
   const tryLogIn = async (values) => {
-    const data = await axios.get(
+    const { data } = await axios.get(
       `/api/tryLogIn/${values.email}/${values.number}/${values.password}`,
       values
     );
-    if (data.data.massage !== "UserNotAccepted") {
+    if (data.massage !== "UserNotAccepted") {
       setErrorUserNotAccepted(false);
-      if (data.data.massage === "passwordAccepted") {
+      if (data.massage === "passwordAccepted") {
         if (values.saveMe === true) {
           localStorage.setItem("userIdentification", true);
+          localStorage.setItem("userId", data.id);
         } else {
           sessionStorage.setItem("userIdentification", true);
+          sessionStorage.setItem("userId", data.id);
         }
         history.replace("/");
-      } else if (data.data.massage === "passwordNotAccepted") {
+      } else if (data.massage === "passwordNotAccepted") {
         setErrorPassword(true);
       }
     } else {
@@ -51,25 +57,13 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             {errorUserNotAccepted && true ? (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <Alert severity="error" className={classes.linkLogin}>
                 Такого аккаунта не существует
-              </div>
+              </Alert>
             ) : errorPassword && true ? (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <Alert severity="error" className={classes.linkLogin}>
                 Неверный пароль
-              </div>
+              </Alert>
             ) : (
               ""
             )}
@@ -105,13 +99,18 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
                 name="saveMe"
                 control={<Checkbox defaultChecked={false} />}
                 label="Запомнить меня"
+                style={{ userSelect: "none" }}
               />
               <div
                 onClick={() => {
                   handleChangeIndex(1);
                 }}
                 className={classes.linkLogin}
-                style={{ fontSize: "19px" }}
+                style={{
+                  fontSize: "19px",
+                  color: "#2196f3",
+                  cursor: "pointer",
+                }}
               >
                 Забыли пароль ?
               </div>
@@ -121,13 +120,20 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
               <Button type="submit" className={classes.buttonLogin}>
                 {"ВОЙТИ"}
               </Button>
-              <Link
-                to={"/registration"}
+              <div
+                onClick={() => {
+                  toRegistration();
+                }}
                 className={classes.linkLogin}
-                style={{ fontSize: "25px", marginTop: "30px" }}
+                style={{
+                  fontSize: "25px",
+                  marginTop: "25px",
+                  color: "#2196f3",
+                  cursor: "pointer",
+                }}
               >
-                {"Регистрация"}
-              </Link>
+                Регистрация
+              </div>
             </StyledLoadingCardFooter>
           </form>
         )}

@@ -29,6 +29,10 @@ export const NewUser = () => {
     setValue(newValue);
   };
 
+  const toLogin = () => {
+    history.replace("/login");
+  };
+
   const onSubmitNewUser = async (values) => {
     const a = await axios.post(`/api/createUser`, values);
     if (a.data.message === "AddUsers") {
@@ -86,13 +90,15 @@ export const NewUser = () => {
                     <Button type="submit" className={classes.buttonLogin}>
                       ЗАРЕГИСТРИРОВАТЬСЯ
                     </Button>
-                    <Link
-                      to={"/login"}
-                      className={classes.linkLogin}
-                      style={{ fontSize: "25px", marginTop: "30px" }}
+                    <div
+                        onClick={() => {
+                          toLogin();
+                        }}
+                        className={classes.linkLogin}
+                        style={{ fontSize: "25px", marginTop: "25px", color:"#2196f3", cursor: "pointer" }}
                     >
-                      {"У меня уже есть аккаунт"}
-                    </Link>
+                      У меня уже есть аккаунт
+                    </div>
                   </StyledLoadingCardFooter>
                 </form>
               )}

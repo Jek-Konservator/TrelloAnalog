@@ -26,6 +26,12 @@ const useStyles = makeStyles({
     paddingRight: 40,
   },
   linkLogin: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  AlertLogin: {
     textDecoration: "none",
     fontSize: "18px",
     color: "#2196f3",

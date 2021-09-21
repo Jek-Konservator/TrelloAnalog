@@ -6,7 +6,6 @@ import { LogInUser } from "./LogInUser";
 
 import { UserContext } from "../../context";
 import SwipeableViews from "react-swipeable-views";
-//TODO: тут я думаю ты сам всё понимаешь
 export const Login = () => {
   const classes = useStyles();
 

@@ -9,6 +9,7 @@ export const LogInUser = ({ classes, type }) => {
   const handleChangeIndex = (value) => {
     setIndex(value);
   };
+
   return (
     <SwipeableViews
       style={{ height: "100%" }}

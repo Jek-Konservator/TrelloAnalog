@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
 import { Cards } from "./components/card";
@@ -10,6 +10,8 @@ import { UserContext } from "./context";
 import {ThemeProvider} from "styled-components";
 
 const App = () => {
+  const [userId, setUserId] = useState("");
+
   const history = useHistory();
   const getUser = useCallback(() => {
     const userLocalStorage = localStorage.getItem("userIdentification");
@@ -17,6 +19,7 @@ const App = () => {
     if (userLocalStorage === null && userSessionStorage === null) {
       history.replace("/login");
     } else {
+      setUserId()
       history.replace("/");
     }
   }, [history]);
