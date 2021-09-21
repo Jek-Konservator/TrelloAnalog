@@ -64,13 +64,13 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit}>
           {error && true ? (
-            <Alert severity="error" className={classes.linkLogin}>
+            <Alert severity="error" className={classes.alertLogin}>
               Такого аккаунта не существует
             </Alert>
           ) : password !== "" ? (
             <Alert
               severity="success"
-              className={classes.linkLogin}
+              className={classes.alertLogin}
             >
               Ващ пароль : {password}
               ({timeToClear})

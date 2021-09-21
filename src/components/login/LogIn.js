@@ -57,11 +57,11 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
         render={({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             {errorUserNotAccepted && true ? (
-              <Alert severity="error" className={classes.linkLogin}>
+              <Alert severity="error" className={classes.alertLogin}>
                 Такого аккаунта не существует
               </Alert>
             ) : errorPassword && true ? (
-              <Alert severity="error" className={classes.linkLogin}>
+              <Alert severity="error" className={classes.alertLogin}>
                 Неверный пароль
               </Alert>
             ) : (

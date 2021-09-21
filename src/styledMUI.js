@@ -25,13 +25,10 @@ const useStyles = makeStyles({
     paddingLeft: 40,
     paddingRight: 40,
   },
-  linkLogin: {
+   alertLogin: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-
-  },
-  AlertLogin: {
     textDecoration: "none",
     fontSize: "18px",
     color: "#2196f3",
