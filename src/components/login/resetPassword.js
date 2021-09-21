@@ -10,8 +10,23 @@ import { Form } from "react-final-form";
 export const ResetPassword = ({ handleChangeIndex, type }) => {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [timeToClear, setTimeToClear] = useState(10);
 
   const classes = useStyles();
+  const clear = () => {
+    let time = 10;
+    let a = setInterval(() => {
+      time--;
+      setTimeToClear(time);
+    }, 1000);
+
+    setTimeout(function () {
+      setPassword("");
+      setTimeToClear(10);
+      clearInterval(a);
+    }, 90000);
+  };
+
   const onSubmitForgotPassword = async (values) => {
     if (type === "email") {
       const { data } = await axios.get(
@@ -21,6 +36,7 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
       if (data.docs !== null) {
         setError(false);
         setPassword(data.docs.password);
+        clear();
       } else {
         setError(true);
       }
@@ -52,8 +68,12 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
               Такого аккаунта не существует
             </Alert>
           ) : password !== "" ? (
-            <Alert severity="success" className={classes.linkLogin}>
+            <Alert
+              severity="success"
+              className={classes.linkLogin}
+            >
               Ващ пароль : {password}
+              ({timeToClear})
             </Alert>
           ) : (
             ""
@@ -86,7 +106,12 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
                 handleChangeIndex(0);
               }}
               className={classes.linkLogin}
-              style={{ fontSize: "25px", marginTop: "30px", color:"#2196f3", cursor: "pointer"}}
+              style={{
+                fontSize: "25px",
+                marginTop: "30px",
+                color: "#2196f3",
+                cursor: "pointer",
+              }}
             >
               Вернуться к авторизации
             </div>
