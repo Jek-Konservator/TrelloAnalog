@@ -8,18 +8,27 @@ import { NewUser } from "./components/login/newUser";
 import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import {ThemeProvider} from "styled-components";
+import axios from "axios";
 
 const App = () => {
   const [userId, setUserId] = useState("");
 
   const history = useHistory();
-  const getUser = useCallback(() => {
-    const userLocalStorage = localStorage.getItem("userIdentification");
-    const userSessionStorage = sessionStorage.getItem("userIdentification");
+  const getUser = useCallback( async () => {
+    const userLocalStorage = localStorage.getItem("user");
+    const userSessionStorage = sessionStorage.getItem("user");
     if (userLocalStorage === null && userSessionStorage === null) {
       history.replace("/login");
-    } else {
-      setUserId()
+    } else if (userLocalStorage !== null) {
+      const {data} = await axios.get(`/api/getUserInfo/${userLocalStorage}`)
+      console.log(data)
+      setUserId(data)
+      history.replace("/");
+    }
+    else if (userSessionStorage !== null) {
+      const {data} = await axios.get(`/api/getUserInfo/${userSessionStorage}`)
+      console.log(data)
+      setUserId(data)
       history.replace("/");
     }
   }, [history]);

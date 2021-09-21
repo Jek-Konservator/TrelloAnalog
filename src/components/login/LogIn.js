@@ -1,4 +1,4 @@
-import { Form } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import {
   LogInContainer,
   StyledLoadingCardFooter,
@@ -6,9 +6,11 @@ import {
 } from "./style";
 import { TextField } from "mui-rff";
 import { Button, FormGroup } from "@material-ui/core";
-import { Alert, Checkbox, FormControlLabel } from "@mui/material";
-import { Link, useHistory } from "react-router-dom";
+import { Alert, FormControlLabel } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
+import { Checkbox } from "final-form-material-ui";
+
 import axios from "axios";
 
 export const LogIn = ({ classes, type, handleChangeIndex }) => {
@@ -21,22 +23,20 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
   };
 
   const tryLogIn = async (values) => {
-    const { data } = await axios.get(
+     const { data } = await axios.get(
       `/api/tryLogIn/${values.email}/${values.number}/${values.password}`,
       values
     );
-    if (data.massage !== "UserNotAccepted") {
+    if (data.message !== "UserNotAccepted") {
       setErrorUserNotAccepted(false);
-      if (data.massage === "passwordAccepted") {
+      if (data.message === "passwordAccepted") {
         if (values.saveMe === true) {
-          localStorage.setItem("userIdentification", true);
-          localStorage.setItem("userId", data.id);
+          localStorage.setItem("user", data.email);
         } else {
-          sessionStorage.setItem("userIdentification", true);
-          sessionStorage.setItem("userId", data.id);
+          sessionStorage.setItem("user", data.email);
         }
         history.replace("/");
-      } else if (data.massage === "passwordNotAccepted") {
+      } else if (data.message === "passwordNotAccepted") {
         setErrorPassword(true);
       }
     } else {
@@ -71,6 +71,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
               <div>
                 {type === "email" ? (
                   <TextField
+                    required={true}
                     error={errorUserNotAccepted}
                     label="Электронная почта"
                     name="email"
@@ -78,6 +79,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
                   />
                 ) : (
                   <TextField
+                    required={true}
                     error={errorUserNotAccepted}
                     label="Номер телефона"
                     name="number"
@@ -87,6 +89,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
               </div>
               <div>
                 <TextField
+                  required={true}
                   error={errorPassword}
                   label="Пароль"
                   name="password"
@@ -96,16 +99,20 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
             </StyledLoadingCardInput>
             <FormGroup className={classes.formGroup}>
               <FormControlLabel
-                name="saveMe"
-                control={<Checkbox defaultChecked={false} />}
                 label="Запомнить меня"
-                style={{ userSelect: "none" }}
+                control={
+                  <Field
+                    name="saveMe"
+                    component={Checkbox}
+                    type="checkbox"
+                    color={"primary"}
+                  />
+                }
               />
               <div
                 onClick={() => {
                   handleChangeIndex(1);
                 }}
-                className={classes.linkLogin}
                 style={{
                   fontSize: "19px",
                   color: "#2196f3",
@@ -124,7 +131,6 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
                 onClick={() => {
                   toRegistration();
                 }}
-                className={classes.linkLogin}
                 style={{
                   fontSize: "25px",
                   marginTop: "25px",

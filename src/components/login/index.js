@@ -1,16 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState} from "react";
 import { StyledLoadingCardTitle, StyledLogin } from "./style";
 import { Card, Tabs, Tab } from "@material-ui/core";
 import useStyles from "../../styledMUI";
 import { LogInUser } from "./LogInUser";
-
-import { UserContext } from "../../context";
 import SwipeableViews from "react-swipeable-views";
+
 export const Login = () => {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
-  const { getUser } = useContext(UserContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -18,9 +16,6 @@ export const Login = () => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
   return (
     <StyledLogin>
       <StyledLoadingCardTitle>Авторизация</StyledLoadingCardTitle>

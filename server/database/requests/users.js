@@ -7,17 +7,6 @@ const newUsers = (req, res) => {
   res.status(201).json({ message: "AddUsers" });
 };
 
-const getUsersNumber = (req, res) => {
-  const { number } = req.params;
-  dataUsers.findOne({ number }, (err, docs) => {
-    if (err === null) {
-      res.status(200).json({ docs });
-    } else {
-      res.status(500).json({ err });
-    }
-  });
-};
-
 const tryLogIn = (req, res) => {
   const { email, number, password } = req.params;
 
@@ -30,20 +19,19 @@ const tryLogIn = (req, res) => {
       resTryLogIn(err, docs);
     });
   } else {
-    res.status(501).json({ massage: "Email and Number NULL" });
+    res.status(501).json({ message: "Email and Number NULL" });
   }
 
   const resTryLogIn = (err, docs) => {
     if (err === null) {
       if (docs !== null) {
         if (docs.password === password) {
-          const id = docs._id;
-          res.status(200).json({ massage: "passwordAccepted", id });
+          res.status(200).json({ message: "passwordAccepted", email: docs.email});
         } else {
-          res.status(200).json({ massage: "passwordNotAccepted" });
+          res.status(200).json({ message: "passwordNotAccepted" });
         }
       } else {
-        res.status(200).json({ massage: "UserNotAccepted" });
+        res.status(200).json({ message: "UserNotAccepted" });
       }
     } else {
       res.status(500).json({ err });
@@ -51,31 +39,48 @@ const tryLogIn = (req, res) => {
   };
 };
 
-const getUsersPasswordEmail = (req, res) => {
-  const { email } = req.params;
-  dataUsers.findOne({ email }, (err, docs) => {
-    if (err === null) {
-      res.status(200).json({ docs });
-    } else {
-      res.status(500).json({ err });
-    }
-  });
+const getUserPassword = (req, res) => {
+  const { email, number } = req.params;
+
+  if (email !== "null") {
+    dataUsers.findOne({ email }, (err, docs) => {
+      if (err === null) {
+        res.status(200).json( docs.password );
+      } else {
+        res.status(500).json({ err });
+      }
+    });
+  } else if (number !== "null") {
+    dataUsers.findOne({ number }, (err, docs) => {
+      if (err === null) {
+        res.status(200).json(docs.password);
+      } else {
+        res.status(500).json({ err });
+      }
+    });
+  } else {
+    res.status(501).json({ message: "Email and Number NULL" });
+  }
 };
-const getUsersPasswordNumber = (req, res) => {
-  const { number } = req.params;
-  dataUsers.findOne({ number }, (err, docs) => {
-    if (err === null) {
-      res.status(200).json({ docs });
-    } else {
-      res.status(500).json({ err });
-    }
-  });
+
+const getUserInfo = (req, res) => {
+  const { email } = req.params;
+  if (email !== "null") {
+    dataUsers.findOne({ email }, (err, docs) => {
+      if (err === null) {
+        res.status(200).json({email: docs.email, number: docs.number, id: docs._id });
+      } else {
+        res.status(500).json({ err });
+      }
+    });
+  } else {
+    res.status(501).json({ message: "Email and Number NULL" });
+  }
 };
 
 module.exports = {
   newUsers,
-  getUsersNumber,
   tryLogIn,
-  getUsersPasswordEmail,
-  getUsersPasswordNumber,
+  getUserInfo,
+  getUserPassword,
 };

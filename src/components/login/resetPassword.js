@@ -24,42 +24,30 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
       setPassword("");
       setTimeToClear(10);
       clearInterval(a);
-    }, 90000);
+    }, 10000);
   };
 
   const onSubmitForgotPassword = async (values) => {
-    if (type === "email") {
       const { data } = await axios.get(
-        `/api/getUsersPasswordEmail/${values.email}`,
+        `/api/getUserPassword/${values.email}/${values.number}`,
         values
       );
+      console.log(data)
       if (data.docs !== null) {
         setError(false);
-        setPassword(data.docs.password);
+        setPassword(data);
         clear();
       } else {
         setError(true);
       }
-    } else if (type === "tel") {
-      const { data } = await axios.get(
-        `/api/getUsersPasswordNumber/${values.number}`,
-        values
-      );
-      if (data.docs !== null) {
-        setError(false);
-        setPassword(data.docs.password);
-      } else {
-        setError(true);
-      }
-    }
   };
 
   return (
     <Form
       onSubmit={onSubmitForgotPassword}
       initialValues={{
-        email: "",
-        number: "",
+        email: null,
+        number: null,
       }}
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit}>
@@ -68,12 +56,8 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
               Такого аккаунта не существует
             </Alert>
           ) : password !== "" ? (
-            <Alert
-              severity="success"
-              className={classes.alertLogin}
-            >
-              Ващ пароль : {password}
-              ({timeToClear})
+            <Alert severity="success" className={classes.alertLogin}>
+              Ващ пароль : {password}({timeToClear})
             </Alert>
           ) : (
             ""
@@ -82,6 +66,7 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
             <div>
               {type === "email" ? (
                 <TextField
+                  required={true}
                   error={error}
                   label="Электронная почта"
                   name="email"
@@ -89,6 +74,7 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
                 />
               ) : (
                 <TextField
+                  required={true}
                   error={error}
                   label="Номер телефона"
                   name="number"

@@ -10,7 +10,7 @@ import { TabPanel, TabContext, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 import useStyles from "../../styledMUI";
 
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
@@ -66,6 +66,7 @@ export const NewUser = () => {
                   <StyledLoadingCardInput>
                     <div>
                       <TextField
+                          required={true}
                         label="Электронная почта"
                         name="email"
                         className={classes.textFieldLogin}
@@ -73,6 +74,7 @@ export const NewUser = () => {
                     </div>
                     <div>
                       <TextField
+                          required={true}
                         label="Номер телефона"
                         name="number"
                         className={classes.textFieldLogin}
@@ -80,6 +82,7 @@ export const NewUser = () => {
                     </div>
                     <div>
                       <TextField
+                          required={true}
                         label="Пароль"
                         name="password"
                         className={classes.textFieldLogin}

@@ -1,15 +1,9 @@
-import React, { useContext, useEffect} from "react";
+import React from "react";
 import { StyledHeader } from "./style";
 import axios from "axios";
-import {UserContext} from "../../context";
 axios.defaults.baseURL = "http://localhost:3001/";
 
 export const Header = () => {
-  const {getUser} = useContext(UserContext);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
 
 
   const LogOut = () => {

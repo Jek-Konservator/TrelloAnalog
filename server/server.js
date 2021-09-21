@@ -14,16 +14,9 @@ const tasks_provider = require("./database/requests/tasks");
 const users_provider = require("./database/requests/users");
 
 app.post("/api/createUser", users_provider.newUsers);
-app.get("/api/getUsersNumber/:number", users_provider.getUsersNumber);
 app.get("/api/tryLogIn/:email/:number/:password", users_provider.tryLogIn);
-app.get(
-  "/api/getUsersPasswordEmail/:email",
-  users_provider.getUsersPasswordEmail
-);
-app.get(
-  "/api/getUsersPasswordNumber/:number",
-  users_provider.getUsersPasswordNumber
-);
+app.get("/api/getUserPassword/:email/:number", users_provider.getUserPassword);
+app.get("/api/getUserInfo/:email", users_provider.getUserInfo);
 //tables
 
 //tasks
