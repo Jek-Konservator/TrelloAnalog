@@ -14,11 +14,14 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
+import { Alert } from "@mui/material";
 
 export const NewUser = () => {
   const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = useState("1");
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorNumber, setErrorNumber] = useState(false);
 
   let formData = {
     email: "",
@@ -34,12 +37,19 @@ export const NewUser = () => {
   };
 
   const onSubmitNewUser = async (values) => {
-    const a = await axios.post(`/api/createUser`, values);
-    if (a.data.message === "AddUsers") {
+    const { data } = await axios.post(`/api/createUser`, values);
+    console.log(data.message);
+    if (data.message === "emailUsed") {
+      setErrorEmail(true);
+      setErrorNumber(false);
+    } else if (data.message === "numberUsed") {
+      setErrorNumber(true);
+      setErrorEmail(false);
+    } else if (data.message === "AddUsers") {
       localStorage.setItem("userIdentification", true);
       history.replace("/");
     } else {
-      console.log(a.data.message);
+      console.log(data.message);
     }
   };
 
@@ -55,6 +65,17 @@ export const NewUser = () => {
               style={{ width: "100%", maxWidth: "none" }}
             />
           </TabList>
+          {errorEmail && true ? (
+              <Alert severity="error" className={classes.alertLogin} style={{width: "100%", marginBottom: "-48px"}}>
+                Данная электронная почта уже используется
+              </Alert>
+          ) : errorNumber && true ? (
+              <Alert severity="error" className={classes.alertLogin} style={{width: "100%", marginBottom: "-48px"}}>
+                Данная номер телефона уже используется
+              </Alert>
+          ) : (
+              ""
+          )}
           <TabPanel value="1">
             <Form
               onSubmit={onSubmitNewUser}
@@ -66,7 +87,8 @@ export const NewUser = () => {
                   <StyledLoadingCardInput>
                     <div>
                       <TextField
-                          required={true}
+                        error={errorEmail}
+                        required={true}
                         label="Электронная почта"
                         name="email"
                         className={classes.textFieldLogin}
@@ -74,7 +96,8 @@ export const NewUser = () => {
                     </div>
                     <div>
                       <TextField
-                          required={true}
+                        error={errorNumber}
+                        required={true}
                         label="Номер телефона"
                         name="number"
                         className={classes.textFieldLogin}
@@ -82,7 +105,7 @@ export const NewUser = () => {
                     </div>
                     <div>
                       <TextField
-                          required={true}
+                        required={true}
                         label="Пароль"
                         name="password"
                         className={classes.textFieldLogin}
@@ -94,11 +117,16 @@ export const NewUser = () => {
                       ЗАРЕГИСТРИРОВАТЬСЯ
                     </Button>
                     <div
-                        onClick={() => {
-                          toLogin();
-                        }}
-                        className={classes.linkLogin}
-                        style={{ fontSize: "25px", marginTop: "25px", color:"#2196f3", cursor: "pointer" }}
+                      onClick={() => {
+                        toLogin();
+                      }}
+                      className={classes.linkLogin}
+                      style={{
+                        fontSize: "25px",
+                        marginTop: "25px",
+                        color: "#2196f3",
+                        cursor: "pointer",
+                      }}
                     >
                       У меня уже есть аккаунт
                     </div>

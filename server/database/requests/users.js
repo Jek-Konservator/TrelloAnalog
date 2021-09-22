@@ -1,10 +1,29 @@
 const { dataUsers } = require("../database");
 // massage поменяй на message
+
 const newUsers = (req, res) => {
   const { email, number, password } = req.body;
-  const user = "user";
-  dataUsers.insert({ email, number, password, user });
-  res.status(201).json({ message: "AddUsers" });
+
+  dataUsers.findOne({ email }, (err, docs) => {
+    if (docs !== null) {
+      return res.status(200).json({ message: "emailUsed" });
+    } else {
+      dataUsers.findOne({ number }, (err, docs) => {
+        if (docs !== null) {
+          return res.status(200).json({ message: "numberUsed" });
+        } else {
+          dataUsers.insert({
+            email,
+            number,
+            password,
+            role: "user",
+            arrayTables: [],
+          });
+          res.status(201).json({ message: "AddUsers" });
+        }
+      });
+    }
+  });
 };
 
 const tryLogIn = (req, res) => {
@@ -26,7 +45,9 @@ const tryLogIn = (req, res) => {
     if (err === null) {
       if (docs !== null) {
         if (docs.password === password) {
-          res.status(200).json({ message: "passwordAccepted", email: docs.email});
+          res
+            .status(200)
+            .json({ message: "passwordAccepted", email: docs.email });
         } else {
           res.status(200).json({ message: "passwordNotAccepted" });
         }
@@ -45,7 +66,7 @@ const getUserPassword = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        res.status(200).json( docs.password );
+        res.status(200).json(docs.password);
       } else {
         res.status(500).json({ err });
       }
@@ -68,7 +89,9 @@ const getUserInfo = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        res.status(200).json({email: docs.email, number: docs.number, id: docs._id });
+        res
+          .status(200)
+          .json({ email: docs.email, number: docs.number, id: docs._id });
       } else {
         res.status(500).json({ err });
       }

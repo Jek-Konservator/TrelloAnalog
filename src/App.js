@@ -41,7 +41,7 @@ const App = () => {
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, [getUser, history]);
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{ getUser }}>
