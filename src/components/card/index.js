@@ -1,34 +1,58 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyledCards } from "./styledIndex";
-import { Card } from "./card";
+import { Card, CardNewTable } from "./card";
 import { Moadal } from "./modal";
+import { UserContext } from "../../context";
+import axios from "axios";
 
 export const Cards = () => {
   const [visable, setVisable] = useState(false);
-  const [data, setData] = useState([]);
+  const [task, setTask] = useState([]);
+  const [table, setTable] = useState([]);
+  const [notTables, setNotTables] = useState(false);
+
+  const { userId } = useContext(UserContext);
+
+  const getTablesUser = useCallback(async () => {
+    const { data } = await axios.get(`/api/getTables/${userId}`);
+
+    if (data.array.length <= 0) {
+      setNotTables(true);
+    } else {
+      setTable(data);
+    }
+  }, [userId]);
 
   const openModal = (data) => {
-     setData(data)
-    setVisable(true)
+    setTask(data);
+    setVisable(true);
   };
+
+  useEffect(() => {
+    if (userId !== "") {
+      getTablesUser();
+    }
+  }, [getTablesUser, userId]);
 
   return (
     <StyledCards>
-      {[1, 2, 3].map((e) => (
-        <Card
-          title={"Работа дела и ещё много всего"}
-          data={[
-            "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
-            "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
-            "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
-          ]}
-          key={e}
-          openModal={openModal}
-        />
-      ))}
-
-      {visable && <Moadal data={data} />}
+      {notTables && false
+        ? [table].map((e) => (
+            <Card
+              title={"true"}
+              data={[
+                "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+                "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+                "ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД",
+              ]}
+              key={e}
+              openModal={openModal}
+              notTables={notTables}
+            />
+          ))
+        : ""}
+      <CardNewTable />
+      {visable && <Moadal data={task} />}
     </StyledCards>
   );
 };
-

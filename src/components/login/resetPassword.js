@@ -32,8 +32,8 @@ export const ResetPassword = ({ handleChangeIndex, type }) => {
         `/api/getUserPassword/${values.email}/${values.number}`,
         values
       );
-      console.log(data)
-      if (data.docs !== null) {
+
+      if (data.message === undefined) {
         setError(false);
         setPassword(data);
         clear();

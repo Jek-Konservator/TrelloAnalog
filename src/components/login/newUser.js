@@ -38,7 +38,6 @@ export const NewUser = () => {
 
   const onSubmitNewUser = async (values) => {
     const { data } = await axios.post(`/api/createUser`, values);
-    console.log(data.message);
     if (data.message === "emailUsed") {
       setErrorEmail(true);
       setErrorNumber(false);
@@ -46,8 +45,7 @@ export const NewUser = () => {
       setErrorNumber(true);
       setErrorEmail(false);
     } else if (data.message === "AddUsers") {
-      localStorage.setItem("userIdentification", true);
-      history.replace("/");
+      history.replace("/login");
     } else {
       console.log(data.message);
     }

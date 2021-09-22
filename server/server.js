@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 
-const tables_provider = require("./database/requests/tables");
+
 const tasks_provider = require("./database/requests/tasks");
 //users
 const users_provider = require("./database/requests/users");
@@ -18,6 +18,9 @@ app.get("/api/tryLogIn/:email/:number/:password", users_provider.tryLogIn);
 app.get("/api/getUserPassword/:email/:number", users_provider.getUserPassword);
 app.get("/api/getUserInfo/:email", users_provider.getUserInfo);
 //tables
+const tables_provider = require("./database/requests/tables");
+
+app.get("/api/getTables/:idUser", tables_provider.getTables);
 
 //tasks
 

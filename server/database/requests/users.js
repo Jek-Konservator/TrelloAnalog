@@ -65,22 +65,22 @@ const getUserPassword = (req, res) => {
 
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
-      if (err === null) {
+      if (docs !== null) {
         res.status(200).json(docs.password);
       } else {
-        res.status(500).json({ err });
+        res.status(200).json({message: "emailNotUse" });
       }
     });
   } else if (number !== "null") {
     dataUsers.findOne({ number }, (err, docs) => {
-      if (err === null) {
+      if (docs !== null) {
         res.status(200).json(docs.password);
       } else {
-        res.status(500).json({ err });
+        res.status(200).json({ message: "numberNotUse"  });
       }
     });
   } else {
-    res.status(501).json({ message: "Email and Number NULL" });
+    res.status(200).json({ message: "Email and Number NULL" });
   }
 };
 
