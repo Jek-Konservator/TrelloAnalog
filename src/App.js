@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
-import {Cards, Tables} from "./components/main";
+import {Cards, Tables, Test} from "./components/main";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -9,6 +9,7 @@ import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import { ThemeProvider } from "styled-components";
 import axios from "axios";
+import {Table} from "./components/main/table";
 
 const App = () => {
   const [userId, setUserId] = useState("");
@@ -24,7 +25,6 @@ const App = () => {
       const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
       setUserId(data.id);
       setEmailUser(data.email);
-      history.replace("/");
     } else if (userSessionStorage !== null) {
       const { data } = await axios.get(
         `/api/getUserInfo/${userSessionStorage}`
@@ -66,6 +66,9 @@ const App = () => {
             </Route>
             <Route path="/resetpassword">
               <ResetPassword />
+            </Route>
+            <Route path="/tables/:idTAbles">
+              <Table />
             </Route>
           </Switch>
         </MainStyle>

@@ -1,23 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyledCards } from "./styledIndex";
-import { Task, CardNewTable } from "./task";
-import { Moadal } from "./modal";
 import { UserContext } from "../../context";
-import {
-  ListItemIcon,
-  ListItem,
-  SwipeableDrawer,
-  ListItemText,
-  Box,
-  List,
-  Button,
-} from "@mui/material";
-import Divider from "@mui/material/Divider";
+import {ListItem, SwipeableDrawer, Box, List, ListItemText} from "@mui/material";
+import { Button, Link } from "@material-ui/core";
+
 
 import axios from "axios";
-
-import styled from "styled-components";
-import { then } from "pg/lib/native/query";
+import useStyles from "../../styledMUI";
+import {useHistory, useParams} from "react-router-dom";
+import {Table} from "./table";
 
 export const Tables = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
@@ -25,14 +16,15 @@ export const Tables = () => {
   const [notTables, setNotTables] = useState(false);
 
   const { userId } = useContext(UserContext);
+  const classes = useStyles();
+  const history = useHistory();
 
   const getTablesUser = useCallback(async () => {
     const { data } = await axios.get(`/api/getTables/${userId}`);
-
-    if (data.array.length <= 0) {
+    if (data.length <= 0) {
       setNotTables(true);
     } else {
-      setTables(data.array);
+      setTables(data);
     }
   }, [userId]);
 
@@ -52,40 +44,36 @@ export const Tables = () => {
     }
     setVisibleTemporaryDrawer(open);
   };
-  const newTable = () => {
-    axios.post(`/api/newTable`, { userId });
-  };
-  const getTable = async (idTable) => {
-    const { data } = await axios.get(`/api/getTable/${idTable}`);
-    return data.nameTable;
-  };
-
-  const TableName = ({ id }) => {
-    const [nameTable, setNameTable] = useState("");
-    const get = async () => {
-      const data = await getTable(id);
-      setNameTable(data);
-    };
-
-    get().then((r) => r);
-
-    return <div>{nameTable}</div>;
+  const newTable = async () => {
+    const {data} = await axios.post(`/api/newTable`, { userId });
+    if(data.message === "addTables"){
+      const { data } = await axios.get(`/api/getTables/${userId}`);
+      if (data.length <= 0) {
+        setNotTables(true);
+      } else {
+        setTables(data);
+      }
+    }
   };
 
+  const toTable = (idTAbles) => {
+    history.replace(`/tables/${idTAbles}`)
 
-  const Tables = () => (
+  }
+
+  const TablesUser = () => (
     <Box
       sx={{ width: "250px" }}
       role="presentation"
-      /*onClick={toggleDrawer( false)}*/
     >
-      <List>
-        {tables.map((id) => (
-          <ListItem button key={id}>
-            <TableName id={id} />
+      <List style={{display: "flex", flexDirection: "column", justifyContent:"center", alignItems: "center" }}>
+        {tables.map((docs) => (
+          <ListItem button key={docs._id} style={{display: "flex", flexDirection: "column", justifyContent:"center", alignItems: "center" }}>
+            <ListItemText onClick={() => toTable(docs._id)}  primary={docs.name}/>
           </ListItem>
         ))}
-        <Button onClick={newTable}>Создать глвую доску</Button>
+        <Button onClick={newTable} className={classes.buttonLogin}>Создать новую доску</Button>
+        <Link href={`/test/${123}`}>asdasddsa</Link>
       </List>
     </Box>
   );
@@ -100,9 +88,10 @@ export const Tables = () => {
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
         >
-          {Tables()}
+          {TablesUser()}
         </SwipeableDrawer>
       </React.Fragment>
     </StyledCards>
   );
 };
+

@@ -16,7 +16,6 @@ const newUsers = (req, res) => {
             number,
             password,
             role: "user",
-            arrayTables: [],
           });
           res.status(201).json({ message: "AddUsers" });
         }
