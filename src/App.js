@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
-import { Cards } from "./components/card";
+import {Cards, Tables} from "./components/main";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -29,7 +29,6 @@ const App = () => {
       const { data } = await axios.get(
         `/api/getUserInfo/${userSessionStorage}`
       );
-      console.log(data);
       setUserId(data.id);
       setEmailUser(data.email);
       history.replace("/");
@@ -60,7 +59,7 @@ const App = () => {
               <Login />
             </Route>
             <Route exact path="/">
-              <Cards  userId={userId}/>
+              <Tables />
             </Route>
             <Route path="/registration">
               <NewUser />

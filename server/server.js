@@ -21,7 +21,8 @@ app.get("/api/getUserInfo/:email", users_provider.getUserInfo);
 const tables_provider = require("./database/requests/tables");
 
 app.get("/api/getTables/:idUser", tables_provider.getTables);
-
+app.get("/api/getTable/:idTable", tables_provider.getTable);
+app.post("/api/newTable", tables_provider.newTable);
 //tasks
 
 app.listen(port, () => {

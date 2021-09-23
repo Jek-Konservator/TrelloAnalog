@@ -3,7 +3,7 @@ import { StyledCard, StyledData, StyledTitle } from "./styledCard";
 import { Button, Fab } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
 
-export const Card = ({ title, data, openModal}) => {
+export const Task = ({ title, data, openModal}) => {
 
   return (
     <StyledCard>
