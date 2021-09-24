@@ -9,6 +9,8 @@ import axios from "axios";
 import useStyles from "../../styledMUI";
 import {useHistory} from "react-router-dom";
 
+// TODO: Вынеси TablesUser отдельно и старайся разделять логику нужную и не нужную, к примеру тебе логика материаловского компонента нахуй не нужна, выноси изх в отдельный компонент и там внутри делай компонент в котором вся хуйня , чтобы не мозолило глаз
+
 export const TablesMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
   const [tables, setTables] = useState([]);

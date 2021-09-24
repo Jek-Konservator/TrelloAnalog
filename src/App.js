@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
+import { Tables } from "./components/main";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -8,8 +9,9 @@ import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import { ThemeProvider } from "styled-components";
 import axios from "axios";
-import {Table} from "./components/main/table";
-
+import { Table } from "./components/main/table";
+// TODO: стейT можно хранить в объекте const [user, setUser] = useState({name:"oleg",age:19});
+// TODO: опять же нейминги, и не ДОпускай ТАкого ПОтому ЧТо КАк нибудть ПРоебёшься и разбей по папкам всё в мейне ( MainPage)
 const App = () => {
   const [userId, setUserId] = useState("");
   const [emailUser, setEmailUser] = useState("");
@@ -21,6 +23,8 @@ const App = () => {
     if (userLocalStorage === null && userSessionStorage === null) {
       history.replace("/login");
     } else if (userLocalStorage !== null) {
+      // потом перепиши это на тернарки, сократишь код в 2 раза const {data} = userLocalStorage !== null ? await axios.get(`/api/getUserInfo/${userLocalStorage}`) : await axios.get(`/api/getUserInfo/${userSessionStorage}`)
+      // я думаю ты понял о чем я
       const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
       setUserId(data.id);
       setEmailUser(data.email);
