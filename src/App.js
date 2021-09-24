@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
-import {Cards, Tables, Test} from "./components/main";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -59,7 +58,6 @@ const App = () => {
               <Login />
             </Route>
             <Route exact path="/">
-              <Tables />
             </Route>
             <Route path="/registration">
               <NewUser />

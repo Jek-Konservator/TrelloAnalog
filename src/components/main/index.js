@@ -2,15 +2,14 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyledCards } from "./styledIndex";
 import { UserContext } from "../../context";
 import {ListItem, SwipeableDrawer, Box, List, ListItemText} from "@mui/material";
-import { Button, Link } from "@material-ui/core";
+import { Button} from "@material-ui/core";
 
 
 import axios from "axios";
 import useStyles from "../../styledMUI";
-import {useHistory, useParams} from "react-router-dom";
-import {Table} from "./table";
+import {useHistory} from "react-router-dom";
 
-export const Tables = () => {
+export const TablesMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
   const [tables, setTables] = useState([]);
   const [notTables, setNotTables] = useState(false);
@@ -73,7 +72,6 @@ export const Tables = () => {
           </ListItem>
         ))}
         <Button onClick={newTable} className={classes.buttonLogin}>Создать новую доску</Button>
-        <Link href={`/test/${123}`}>asdasddsa</Link>
       </List>
     </Box>
   );
@@ -81,7 +79,6 @@ export const Tables = () => {
   return (
     <StyledCards>
       <React.Fragment key={"left"}>
-        <Button onClick={toggleDrawer(true)}>asdasdasd</Button>
         <SwipeableDrawer
           anchor={"left"}
           open={visibleTemporaryDrawer}
