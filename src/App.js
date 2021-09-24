@@ -8,7 +8,6 @@ import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import { ThemeProvider } from "styled-components";
 import axios from "axios";
-import { Table } from "./components/main/table";
 // TODO: стейT можно хранить в объекте const [user, setUser] = useState({name:"oleg",age:19});
 // TODO: опять же нейминги, и не ДОпускай ТАкого ПОтому ЧТо КАк нибудть ПРоебёшься и разбей по папкам всё в мейне ( MainPage)
 import {Board} from "./components/tables and tasks/board";
