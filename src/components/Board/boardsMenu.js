@@ -110,7 +110,7 @@ const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
     >
       <Button
         onClick={newBoard}
-        style={{ width: 250 }}
+        style={{ width: 250, borderRadius: 0 }}
         className={classes.buttonLogin}
       >
         Создать новую доску

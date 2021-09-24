@@ -46,7 +46,7 @@ export const Board = () => {
 const NewTask = ({ newTask }) => {
   return (
     <StyledCard style={{ justifyContent: "center", alignItems: "center" }}>
-      <IconButton onClick={newTask}>
+      <IconButton id={"hui"} onClick={newTask}>
         <AddCircleOutlineIcon style={{ fontSize: "50px" }} color="primary" />
       </IconButton>
     </StyledCard>
