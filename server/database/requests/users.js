@@ -29,11 +29,19 @@ const tryLogIn = (req, res) => {
 
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
-      resTryLogIn(err, docs);
+      if (err === null) {
+        resTryLogIn(err, docs);
+      } else {
+        res.status(500).json({ message: err });
+      }
     });
   } else if (number !== "null") {
     dataUsers.findOne({ number }, (err, docs) => {
+       if(err === null){
       resTryLogIn(err, docs);
+      } else{
+      res.status(500).json({message: err})
+    }
     });
   } else {
     res.status(501).json({ message: "Email and Number NULL" });
@@ -66,7 +74,7 @@ const getUserPassword = (req, res) => {
       if (docs !== null) {
         res.status(200).json(docs.password);
       } else {
-        res.status(200).json({message: "emailNotUse" });
+        res.status(200).json({ message: "emailNotUse" });
       }
     });
   } else if (number !== "null") {
@@ -74,7 +82,7 @@ const getUserPassword = (req, res) => {
       if (docs !== null) {
         res.status(200).json(docs.password);
       } else {
-        res.status(200).json({ message: "numberNotUse"  });
+        res.status(200).json({ message: "numberNotUse" });
       }
     });
   } else {

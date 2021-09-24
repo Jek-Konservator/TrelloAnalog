@@ -35,7 +35,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
         } else {
           sessionStorage.setItem("user", data.email);
         }
-        history.go("/");
+        history.replace("/");
       } else if (data.message === "passwordNotAccepted") {
         setErrorPassword(true);
       }

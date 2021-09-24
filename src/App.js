@@ -8,13 +8,15 @@ import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import { ThemeProvider } from "styled-components";
 import axios from "axios";
-import {Table} from "./components/main/table";
+import {Board} from "./components/tables and tasks/board";
+import {Main} from "./components/main";
 
 const App = () => {
   const [userId, setUserId] = useState("");
   const [emailUser, setEmailUser] = useState("");
 
   const history = useHistory();
+
   const getUser = useCallback(async () => {
     const userLocalStorage = localStorage.getItem("user");
     const userSessionStorage = sessionStorage.getItem("user");
@@ -30,19 +32,13 @@ const App = () => {
       );
       setUserId(data.id);
       setEmailUser(data.email);
-      history.replace("/");
     }
   }, [history]);
 
-  const logOut = () => {
-    localStorage.removeItem("userIdentification");
-    sessionStorage.removeItem("userIdentification");
-    history.replace("/login");
-  };
-
-  useEffect(() => {
+   useEffect(() => {
     getUser();
-  }, [getUser, history]);
+  }, [getUser]);
+
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{ getUser, userId, emailUser }}>
@@ -52,12 +48,13 @@ const App = () => {
             rel="stylesheet"
           />
           <GlobalStyled />
-          <Header logOut={logOut} />
+          <Header/>
           <Switch>
             <Route path="/login">
               <Login />
             </Route>
             <Route exact path="/">
+              <Main/>
             </Route>
             <Route path="/registration">
               <NewUser />
@@ -65,8 +62,8 @@ const App = () => {
             <Route path="/resetpassword">
               <ResetPassword />
             </Route>
-            <Route path="/tables/:idTAbles">
-              <Table />
+            <Route path="/boards/:idBoard">
+              <Board />
             </Route>
           </Switch>
         </MainStyle>

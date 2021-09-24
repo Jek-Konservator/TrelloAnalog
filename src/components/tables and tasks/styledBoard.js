@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+
+
+export const StyledBoards = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+`;
+
 export const StyledCard = styled.div`
   background-color: white;
   opacity: 0.8;
@@ -25,3 +34,4 @@ export const StyledData = styled.div`
   font-size: 15px;
   text-align: left;
 `;
+
