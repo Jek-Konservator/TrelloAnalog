@@ -8,7 +8,7 @@ import {
 import { Button, Card } from "@material-ui/core";
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
-import useStyles from "../../styledMUI";
+import useStyles from "../../styles/styledMUI";
 
 import { useHistory } from "react-router-dom";
 import axios from "axios";

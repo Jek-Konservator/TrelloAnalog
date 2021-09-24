@@ -8,10 +8,11 @@ import {
   List,
   ListItemText,
   IconButton,
-  Button,
 } from "@mui/material";
+import { Button } from "@material-ui/core";
+
 import axios from "axios";
-import useStyles from "../../styledMUI";
+import useStyles from "../../styles/styledMUI";
 import { useHistory, useParams } from "react-router-dom";
 import ReorderIcon from "@mui/icons-material/Reorder";
 

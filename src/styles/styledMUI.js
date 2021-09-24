@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     width: "370px",
     height: "45px",
   },
-
   textFieldLogin: {
     width: "350px",
     marginBottom: "40px",
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
     paddingLeft: 40,
     paddingRight: 40,
   },
-   alertLogin: {
+  alertLogin: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -33,7 +32,6 @@ const useStyles = makeStyles({
     fontSize: "18px",
     color: "#2196f3",
   },
-
   cardLogin: {
     padding: "0 0 20px 0",
     width: "540px",

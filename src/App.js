@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
-import { GlobalStyled, MainStyle, theme } from "./GlobalStyle";
+import { GlobalStyled, MainStyle, theme } from "./styles/GlobalStyle";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
