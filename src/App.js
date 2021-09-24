@@ -8,6 +8,9 @@ import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
 import { ThemeProvider } from "styled-components";
 import axios from "axios";
+import { Table } from "./components/main/table";
+// TODO: стейT можно хранить в объекте const [user, setUser] = useState({name:"oleg",age:19});
+// TODO: опять же нейминги, и не ДОпускай ТАкого ПОтому ЧТо КАк нибудть ПРоебёшься и разбей по папкам всё в мейне ( MainPage)
 import {Board} from "./components/tables and tasks/board";
 import {Main} from "./components/main";
 
@@ -23,6 +26,8 @@ const App = () => {
     if (userLocalStorage === null && userSessionStorage === null) {
       history.replace("/login");
     } else if (userLocalStorage !== null) {
+      // потом перепиши это на тернарки, сократишь код в 2 раза const {data} = userLocalStorage !== null ? await axios.get(`/api/getUserInfo/${userLocalStorage}`) : await axios.get(`/api/getUserInfo/${userSessionStorage}`)
+      // я думаю ты понял о чем я
       const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
       setUserId(data.id);
       setEmailUser(data.email);
