@@ -4,15 +4,15 @@ export const GlobalStyled = createGlobalStyle`
 body {
   margin: 0;
   font-family: Roboto;
+  background-color: #84e9f2;
+  color:black;
 }
 `;
 export const MainStyle = styled.div`
-  height: 100vh;
   width: 100%;
-  background: linear-gradient(to top left, #6eeeed, #bbdcff);
 `;
 export const theme = {
-    colors: {
-        primary: "#0070AE",
-    },
+  colors: {
+    primary: "#0070AE",
+  },
 };

@@ -37,11 +37,11 @@ const tryLogIn = (req, res) => {
     });
   } else if (number !== "null") {
     dataUsers.findOne({ number }, (err, docs) => {
-       if(err === null){
-      resTryLogIn(err, docs);
-      } else{
-      res.status(500).json({message: err})
-    }
+      if (err === null) {
+        resTryLogIn(err, docs);
+      } else {
+        res.status(500).json({ message: err });
+      }
     });
   } else {
     res.status(501).json({ message: "Email and Number NULL" });
@@ -95,15 +95,18 @@ const getUserInfo = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        res
-          .status(200)
-          .json({ email: docs.email, number: docs.number, id: docs._id });
+        res.status(200).json({
+          user: { email: docs.email, number: docs.number, id: docs._id },
+          completed: true,
+        });
       } else {
-        res.status(500).json({ err });
+        res.status(500).json({ error: err, completed: false });
       }
     });
   } else {
-    res.status(501).json({ message: "Email and Number NULL" });
+    res
+      .status(501)
+      .json({ completed: false, message: "Email and Number NULL" });
   }
 };
 

@@ -47,7 +47,6 @@ export const NewUser = () => {
     } else if (data.message === "AddUsers") {
       history.replace("/login");
     } else {
-      console.log(data.message);
     }
   };
 

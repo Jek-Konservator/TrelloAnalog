@@ -8,22 +8,23 @@ import { TextField } from "mui-rff";
 import { Button, FormGroup } from "@material-ui/core";
 import { Alert, FormControlLabel } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Checkbox } from "final-form-material-ui";
 
 import axios from "axios";
+import { UserContext } from "../../context";
 
 export const LogIn = ({ classes, type, handleChangeIndex }) => {
   const history = useHistory();
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorUserNotAccepted, setErrorUserNotAccepted] = useState(false);
-
+  const { getUser } = useContext(UserContext);
   const toRegistration = () => {
     history.replace("/registration");
   };
 
   const tryLogIn = async (values) => {
-     const { data } = await axios.get(
+    const { data } = await axios.get(
       `/api/tryLogIn/${values.email}/${values.number}/${values.password}`,
       values
     );
@@ -36,6 +37,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
           sessionStorage.setItem("user", data.email);
         }
         history.replace("/");
+        getUser();
       } else if (data.message === "passwordNotAccepted") {
         setErrorPassword(true);
       }
@@ -92,6 +94,7 @@ export const LogIn = ({ classes, type, handleChangeIndex }) => {
                   required={true}
                   error={errorPassword}
                   label="Пароль"
+                  type="password"
                   name="password"
                   className={classes.textFieldLogin}
                 />

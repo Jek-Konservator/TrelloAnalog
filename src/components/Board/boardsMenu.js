@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import {StyledBoardsMenu} from "./styledIndex";
+import { StyledBoardsMenu } from "./styledIndex";
 import { UserContext } from "../../context";
 import {
   ListItem,
@@ -8,38 +8,41 @@ import {
   List,
   ListItemText,
   IconButton,
+  Button,
 } from "@mui/material";
-import { Button } from "@material-ui/core";
 import axios from "axios";
 import useStyles from "../../styledMUI";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ReorderIcon from "@mui/icons-material/Reorder";
 
 export const BoardMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
   const [boards, setBoards] = useState([]);
-/*
+  /*
   const [notTables, setNotTables] = useState(false);
 */
-  const { userId } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const classes = useStyles();
   const history = useHistory();
+  const { idBoard } = useParams();
 
+  console.log(idBoard);
   const getBoardsUser = useCallback(async () => {
-    const { data } = await axios.get(`/api/getBoards/${userId}`);
+    console.log(user);
+    const { data } = await axios.get(`/api/getBoards/${user.id}`);
+    // TODO: перепиши на обработку ошибок
     if (data.length <= 0) {
-     // setNotTables(true);
+      // setNotTables(true);
     } else {
       setBoards(data);
     }
-  }, [userId]);
-
+  }, [user]);
 
   useEffect(() => {
-    if (userId !== "") {
+    if (user !== undefined) {
       getBoardsUser().then((r) => r);
     }
-  }, [getBoardsUser, userId]);
+  }, [getBoardsUser, user]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -53,9 +56,9 @@ export const BoardMenu = () => {
   };
 
   const newBoard = async () => {
-    const { data } = await axios.post(`/api/newBoard`, { userId });
+    const { data } = await axios.post(`/api/newBoard`, { userId: user.id });
     if (data.message === "addBoards") {
-      const { data } = await axios.get(`/api/getBoards/${userId}`);
+      const { data } = await axios.get(`/api/getBoards/${user.id}`);
       if (data.length <= 0) {
         //setNotTables(true);
       } else {
@@ -65,43 +68,9 @@ export const BoardMenu = () => {
   };
 
   const toBoards = (idBoard) => {
-    history.replace(`/boards/${idBoard}`);
     setVisibleTemporaryDrawer(false);
+    history.replace(`/boards/${idBoard}`);
   };
-
-  const BoardsUser = () => (
-    <Box sx={{ width: "250px" }} role="presentation">
-      <List
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {boards.map((docs) => (
-          <ListItem
-            button
-            key={docs._id}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <ListItemText
-              primary={docs.name}
-              onClick={() => toBoards(docs._id)}
-            />
-          </ListItem>
-        ))}
-        <Button onClick={newBoard} className={classes.buttonLogin}>
-          Создать новую доску
-        </Button>
-      </List>
-    </Box>
-  );
 
   return (
     <StyledBoardsMenu>
@@ -116,10 +85,50 @@ export const BoardMenu = () => {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-            {BoardsUser()}
+            <BoardsUser
+              newBoard={newBoard}
+              classes={classes}
+              boards={boards}
+              toBoards={toBoards}
+            />
           </SwipeableDrawer>
         )}
       </React.Fragment>
     </StyledBoardsMenu>
   );
 };
+const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
+  <Box sx={{ width: "250px" }} role="presentation">
+    <List
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Button
+        onClick={newBoard}
+        style={{ width: 250 }}
+        className={classes.buttonLogin}
+      >
+        Создать новую доску
+      </Button>
+      {boards.map((board) => (
+        <ListItem
+          button
+          onClick={() => toBoards(board._id)}
+          key={board._id}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ListItemText>{board.name}</ListItemText>
+        </ListItem>
+      ))}
+    </List>
+  </Box>
+);

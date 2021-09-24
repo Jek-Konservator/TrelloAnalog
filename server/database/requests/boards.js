@@ -15,7 +15,7 @@ const getBoard = (req, res) => {
   const { idBoard } = req.params;
   dataBoard.findOne({ _id: idBoard }, (err, docs) => {
     if (err === null) {
-      res.status(200).json({ nameBoard: docs.name, array: docs.arrayTask });
+      res.status(200).json({ nameBoard: docs.name });
     } else {
       res.status(500).json({ message: err });
     }
