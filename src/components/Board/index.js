@@ -29,6 +29,7 @@ export const Board = () => {
     }
   }, [idBoard]);
 
+
   useEffect(() => {
     getTasks();
   }, [getTasks]);
@@ -50,7 +51,7 @@ export const Board = () => {
         });
       }
     }
-    setVisibleRenameTask(!visibleRenameTask);
+    setVisibleRenameTask(false);
   };
   const editTextTask = async (text, id) => {
     if (typeof text === "string") {
@@ -61,7 +62,7 @@ export const Board = () => {
         });
       }
     }
-    setVisibleEditTask(!visibleEditTask);
+    setVisibleEditTask(false);
   };
   return (
     <div>
@@ -70,7 +71,7 @@ export const Board = () => {
         {tasks.map((task) => (
           <StyledCard key={task._id}>
             <StyledTitle>
-              {visibleRenameTask && true ? (
+              {visibleRenameTask === task._id ? (
                 <>
                   <TextField
                     label={"Название задачи"}
@@ -101,7 +102,7 @@ export const Board = () => {
                     {task.name}
                   </div>
                   <IconButton
-                    onClick={() => setVisibleRenameTask(true)}
+                    onClick={() => setVisibleRenameTask(task._id)}
                     style={{ position: "sticky", right: "10px" }}
                   >
                     <EditIcon color={"primary"} />
@@ -113,7 +114,7 @@ export const Board = () => {
             <StyledData>
               {task.task !== "" ? (
                 <>
-                  {visibleEditTask && true ? (
+                  {visibleEditTask === task._id ? (
                     <>
                       <TextField
                           inputProps={{maxLength: 100}}
@@ -138,7 +139,7 @@ export const Board = () => {
                       >
                         {task.task}
                       </div>
-                      <IconButton onClick={() => setVisibleEditTask(true)} style={{paddingLeft: "10px"}}>
+                      <IconButton onClick={() => setVisibleEditTask(task._id)} style={{paddingLeft: "10px"}}>
                         <EditIcon
                           color={"primary"}
                           style={{ position: "sticky", right: "10px" }}
