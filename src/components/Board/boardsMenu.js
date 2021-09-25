@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { StyledBoardsMenu } from "./styledIndex";
+import { StyledBoardsMenu } from "./styledBoardsMenu";
 import { UserContext } from "../../context";
 import {
   ListItem,
@@ -14,7 +14,7 @@ import { Button } from "@material-ui/core";
 import axios from "axios";
 import useStyles from "../../styles/styledMUI";
 import { useHistory, useParams } from "react-router-dom";
-import ReorderIcon from "@mui/icons-material/Reorder";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export const BoardMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
@@ -27,11 +27,8 @@ export const BoardMenu = () => {
   const history = useHistory();
   const { idBoard } = useParams();
 
-  console.log(idBoard);
   const getBoardsUser = useCallback(async () => {
-    console.log(user);
     const { data } = await axios.get(`/api/getBoards/${user.id}`);
-    // TODO: перепиши на обработку ошибок
     if (data.length <= 0) {
       // setNotTables(true);
     } else {
@@ -77,7 +74,7 @@ export const BoardMenu = () => {
     <StyledBoardsMenu>
       <React.Fragment key={"left"}>
         <IconButton onClick={toggleDrawer(true)}>
-          <ReorderIcon />
+          <MenuIcon />
         </IconButton>
         {visibleTemporaryDrawer && (
           <SwipeableDrawer
