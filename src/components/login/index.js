@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyledLoadingCardTitle, StyledLogin } from "./style";
-import { Card, Tabs, Tab } from "@material-ui/core";
+import { Card, Tabs, Tab } from "@mui/material";
 import useStyles from "../../styles/styledMUI";
 import { LogInUser } from "./LogInUser";
 import SwipeableViews from "react-swipeable-views";

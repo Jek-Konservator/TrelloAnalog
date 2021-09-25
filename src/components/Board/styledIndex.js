@@ -10,29 +10,42 @@ export const StyledBoards = styled.div`
 export const StyledCard = styled.div`
   background-color: white;
   opacity: 0.8;
-  width: 250px;
-  height: 350px;
+  width: 350px;
+  overflow: hidden;
+  min-height: 150px;
+  max-height: 250px;
   margin: 10px;
   border-radius: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
   word-wrap: break-word;
 `;
 export const StyledTitle = styled.div`
-  margin: 10px 0 10px 0;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  width: 100%;
+  max-height: 80px;
+  min-height: 40px;
   font-size: 25px;
-  text-align: center;
-  word-wrap: break-word;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  background-color: #32bdf8ff;
 `;
+
 export const StyledData = styled.div`
-  margin: 10px;
-  width: 230px;
-  font-size: 15px;
+  margin: 10px 10px 10px 10px;
+  font-size: 20px;
+  display: flex;
+  min-height: 80px;
+  max-height: 120px;
+  justify-content: left;
+  align-items: flex-start;
+  word-wrap: break-word;
   text-align: left;
 `;
 export const StyledHeaderBoard = styled.div`
   padding: 30px 0 30px 30px;
   font-size: 30px;
+  display: flex;
 `;

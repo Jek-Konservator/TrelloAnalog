@@ -27,9 +27,17 @@ const newBoard = (req, res) => {
   dataBoard.insert({ name: "Новая доска", idOwner: userId });
   res.status(201).json({ message: "addBoards" });
 };
+const renameBoard = (req, res) => {
+  const { name, idBoard } = req.body;
+  dataBoard.update({ _id: idBoard}, {$set: {name: name}}, {}, function(err, numReplaced) {
+
+      });
+  res.status(200).json({ message: "boardRename" });
+};
 
 module.exports = {
   getBoards,
   getBoard,
   newBoard,
+  renameBoard
 };

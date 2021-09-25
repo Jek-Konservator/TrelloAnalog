@@ -1,4 +1,4 @@
-const { dataUsers } = require("../database");
+const { dataUsers, dataBoard } = require("../database");
 
 const newUsers = (req, res) => {
   const { email, number, password } = req.body;
@@ -95,18 +95,25 @@ const getUserInfo = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        res.status(200).json({
-          user: { email: docs.email, number: docs.number, id: docs._id },
-          completed: true,
+        let user = { email: docs.email, number: docs.number, id: docs._id };
+        dataBoard.find({ idOwner: docs._id }, (err, docs) => {
+          if (err === null) {
+            let boards = { docs };
+            res.status(200).json({
+              user: user,
+              boards: boards,
+              completed: true,
+            });
+          } else {
+            res.status(500).json({ error: err });
+          }
         });
       } else {
-        res.status(500).json({ error: err, completed: false });
+        res
+          .status(501)
+          .json({ completed: false, message: "Email and Number NULL" });
       }
     });
-  } else {
-    res
-      .status(501)
-      .json({ completed: false, message: "Email and Number NULL" });
   }
 };
 

@@ -31,7 +31,7 @@ const App = () => {
       // я думаю ты понял о чем я
       const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
       if (data.completed) {
-        setUser(data.user);
+        setUser(data);
       }
     } else if (userSessionStorage !== null) {
       const { data } = await axios.get(

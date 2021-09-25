@@ -1,46 +1,27 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyledBoardsMenu } from "./styledBoardsMenu";
 import { UserContext } from "../../context";
 import {
-  ListItem,
-  SwipeableDrawer,
-  Box,
-  List,
-  ListItemText,
-  IconButton,
+    ListItem,
+    SwipeableDrawer,
+    Box,
+    List,
+    ListItemText,
+    IconButton,
 } from "@mui/material";
 import { Button } from "@material-ui/core";
 
 import axios from "axios";
 import useStyles from "../../styles/styledMUI";
-import { useHistory, useParams } from "react-router-dom";
-import MenuIcon from '@mui/icons-material/Menu';
+import { useHistory } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export const BoardMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
-  const [boards, setBoards] = useState([]);
-  /*
-  const [notTables, setNotTables] = useState(false);
-*/
-  const { user } = useContext(UserContext);
+  const { user, getUser } = useContext(UserContext);
   const classes = useStyles();
   const history = useHistory();
-  const { idBoard } = useParams();
 
-  const getBoardsUser = useCallback(async () => {
-    const { data } = await axios.get(`/api/getBoards/${user.id}`);
-    if (data.length <= 0) {
-      // setNotTables(true);
-    } else {
-      setBoards(data);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user !== undefined) {
-      getBoardsUser().then((r) => r);
-    }
-  }, [getBoardsUser, user]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -53,16 +34,10 @@ export const BoardMenu = () => {
     setVisibleTemporaryDrawer(open);
   };
 
-  const newBoard = async () => {
-    const { data } = await axios.post(`/api/newBoard`, { userId: user.id });
-    if (data.message === "addBoards") {
-      const { data } = await axios.get(`/api/getBoards/${user.id}`);
-      if (data.length <= 0) {
-        //setNotTables(true);
-      } else {
-        setBoards(data);
-      }
-    }
+  const newBoard = () => {
+    axios
+      .post(`/api/newBoard`, { userId: user.user.id })
+      .then((r) => getUser());
   };
 
   const toBoards = (idBoard) => {
@@ -86,7 +61,7 @@ export const BoardMenu = () => {
             <BoardsUser
               newBoard={newBoard}
               classes={classes}
-              boards={boards}
+              boards={user.boards.docs}
               toBoards={toBoards}
             />
           </SwipeableDrawer>
@@ -95,6 +70,7 @@ export const BoardMenu = () => {
     </StyledBoardsMenu>
   );
 };
+
 const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
   <Box sx={{ width: "250px" }} role="presentation">
     <List

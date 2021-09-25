@@ -24,10 +24,13 @@ app.get("/api/getUserInfo/:email", users.getUserInfo);
 app.get("/api/getBoards/:idUser", boards.getBoards);
 app.get("/api/getBoard/:idBoard", boards.getBoard);
 app.post("/api/newBoard", boards.newBoard);
+app.put("/api/renameBoard", boards.renameBoard);
 //tasks
 
 app.post("/api/newTask", tasks.newTask);
 app.get("/api/getTasks/:idBoard", tasks.getTasks);
+app.put("/api/editTask", tasks.editTask);
+app.put("/api/renameTask", tasks.renameTask);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
