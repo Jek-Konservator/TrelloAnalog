@@ -7,6 +7,8 @@ import axios from "axios";
 import {UserContext} from "../../context";
 import {useParams} from "react-router-dom";
 
+// TODO:  опять renameTable какой нахуй тейбл?)))
+
 export const BoardHeader = () => {
 
     const { idBoard } = useParams();
@@ -29,16 +31,21 @@ export const BoardHeader = () => {
     const renameTable = async (name) => {
         if (typeof name === "string") {
             setBoardName("");
+            // TODO: name:name  как думаешь что надо с этим сделать?))
             await axios.put(`/api/renameBoard`, { name: name, idBoard }).then((r) => {
+                // TODO: почему Р не используется? сделай везде обработку ошибок и completed
                 getBoard();
                 getUser();
             });
         }
+        // TODO: то есть если будет ошибка то всё равно статус поменяется и нихуя не изменится?
         setVisibleRenameTextFiled(!visibleRenameTextFiled);
     };
 
     return(
         <StyledHeaderBoard>
+            {/*// TODO: зачем ты проверяешь на тру?  ты же можешь просто написать visibleRenameTextFiled ?  */}
+            {/*// TODO: это не хедер а тайтл*/}
             {visibleRenameTextFiled && true ? (
                 <>
                     <TextField

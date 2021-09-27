@@ -18,12 +18,17 @@ export const Board = () => {
 
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
+
+  // TODO: у тебя тут фолс но ты передаёшь айди, тайпскрипт сказал привет
   const [visibleRenameTask, setVisibleRenameTask] = useState(false);
+
+
   const [visibleEditTask, setVisibleEditTask] = useState(false);
   const [taskText, setTaskText] = useState("");
 
   const getTasks = useCallback(async () => {
     const { data } = await axios.get(`/api/getTasks/${idBoard}`);
+    // TODO: тут опять же таки нужна обработка ошибок как и во всем проекте
     if (data !== null) {
       setTasks(data);
     }
@@ -51,11 +56,14 @@ export const Board = () => {
         });
       }
     }
+    // TODO: опять же если что то пошло не так и оно не переименуется то почему статус поменяется?
     setVisibleRenameTask(false);
   };
   const editTextTask = async (text, id) => {
+    // TODO: почему эдит текст таск если это у тебя было в прошлой функции а запрос просто на редактирование таски?
     if (typeof text === "string") {
       setTaskText("");
+      // TODO: смысл от условия? ты меняешь стейт на пустую строку и снизу что-то сравниваешь если не пустая строка? так ты только что пустую строку сделал))))))
       if (taskText !== "") {
         await axios.put(`/api/editTask`, { taskText, id }).then((r) => {
           getTasks();
@@ -110,7 +118,7 @@ export const Board = () => {
                 </>
               )}
             </StyledTitle>
-
+            {/*// TODO: опять таск таск зачем дублирование, ну стили пиздец невозможно чиатть я отписалуже что так лучше не делать*/}
             <StyledData>
               {task.task !== "" ? (
                 <>
@@ -140,6 +148,7 @@ export const Board = () => {
                         {task.task}
                       </div>
                       <IconButton onClick={() => setVisibleEditTask(task._id)} style={{paddingLeft: "10px"}}>
+                        {/*// TODO: а зачем тут стики? и райт 10 , маргинов с паддингами не существует?)*/}
                         <EditIcon
                           color={"primary"}
                           style={{ position: "sticky", right: "10px" }}

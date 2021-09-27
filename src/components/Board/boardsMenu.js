@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { StyledBoardsMenu } from "./styledBoardsMenu";
 import { UserContext } from "../../context";
 import {
-    ListItem,
-    SwipeableDrawer,
-    Box,
-    List,
-    ListItemText,
-    IconButton,
+  ListItem,
+  SwipeableDrawer,
+  Box,
+  List,
+  ListItemText,
+  IconButton,
 } from "@mui/material";
 import { Button } from "@material-ui/core";
 
@@ -22,7 +22,6 @@ export const BoardMenu = () => {
   const classes = useStyles();
   const history = useHistory();
 
-
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
@@ -35,6 +34,8 @@ export const BoardMenu = () => {
   };
 
   const newBoard = () => {
+    console.log(user);
+    // TODO: почему идет юзер юзер, такого быть не должно, просто юзер.айди либо userData - user - id но одинаковых не должно быть
     axios
       .post(`/api/newBoard`, { userId: user.user.id })
       .then((r) => getUser());
@@ -81,6 +82,7 @@ const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
         alignItems: "center",
       }}
     >
+        {/*// TODO: во втором проекте так стили не скрещивай, не надо писать каждому элементу стайл и на 4 строчки флексы */}
       <Button
         onClick={newBoard}
         style={{ width: 250, borderRadius: 0 }}

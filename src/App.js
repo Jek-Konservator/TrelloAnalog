@@ -12,8 +12,6 @@ import axios from "axios";
 import { Main } from "./components/main";
 import { Board } from "./components/Board";
 
-// TODO: стейT можно хранить в объекте const [user, setUser] = useState({name:"oleg",age:19});
-// TODO: опять же нейминги, и не ДОпускай ТАкого ПОтому ЧТо КАк нибудть ПРоебёшься и разбей по папкам всё в мейне ( MainPage)
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -27,8 +25,8 @@ const App = () => {
       setUser(null);
       history.replace("/login");
     } else if (userLocalStorage !== null) {
-      // потом перепиши это на тернарки, сократишь код в 2 раза const {data} = userLocalStorage !== null ? await axios.get(`/api/getUserInfo/${userLocalStorage}`) : await axios.get(`/api/getUserInfo/${userSessionStorage}`)
-      // я думаю ты понял о чем я
+      // TODO: потом перепиши это на тернарки, сократишь код в 2 раза const {data} = userLocalStorage !== null ? await axios.get(`/api/getUserInfo/${userLocalStorage}`) : await axios.get(`/api/getUserInfo/${userSessionStorage}`)
+      // TODO: я думаю ты понял о чем я
       const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
       if (data.completed) {
         setUser(data);
@@ -38,7 +36,7 @@ const App = () => {
         `/api/getUserInfo/${userSessionStorage}`
       );
       if (data.completed) {
-        setUser(data.user);
+        setUser(data);
       }
     }
   }, [history]);
@@ -81,3 +79,18 @@ const App = () => {
 };
 
 export default App;
+
+
+// TODO: добавить загрузку картинок
+
+
+// TODO: добавить поиск и фильтрацию в строке,
+//  после название доски поиск и потом кнопка с фильтрами и
+//  там выбираю почему фильтровать
+//  ( хештеги которые могут быть у каждой карточки и будут отображаться фиксированно снизу
+
+// TODO: сделать норм стили и фиксануть баги по ui которые я в телеге тебе отписал ( закреплённое сообщение в диа)
+
+// TODO: сделай нормальную обработку ошибок и вывод сообщений и перепеши уже на тернарки блядский гет юзер на 505 строк)
+
+// TODO:
