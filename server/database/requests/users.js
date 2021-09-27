@@ -98,10 +98,9 @@ const getUserInfo = (req, res) => {
         let user = { email: docs.email, number: docs.number, id: docs._id };
         dataBoard.find({ idOwner: docs._id }, (err, docs) => {
           if (err === null) {
-            let boards = { docs };
             res.status(200).json({
               user: user,
-              boards: boards,
+              boards: docs,
               completed: true,
             });
           } else {
