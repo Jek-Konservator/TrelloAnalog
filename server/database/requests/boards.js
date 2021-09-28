@@ -14,10 +14,10 @@ const getBoards = (req, res) => {
 const getBoard = (req, res) => {
   const { idBoard } = req.params;
   dataBoard.findOne({ _id: idBoard }, (err, docs) => {
-    if (err === null) {
-      res.status(200).json(docs );
+    if (err) {
+      res.status(400).json(err);
     } else {
-      res.status(500).json({ message: err });
+      res.status(200).json(docs);
     }
   });
 };
@@ -29,15 +29,23 @@ const newBoard = (req, res) => {
 };
 const renameBoard = (req, res) => {
   const { name, idBoard } = req.body;
-  dataBoard.update({ _id: idBoard}, {$set: {name: name}}, {}, function(err, numReplaced) {
-
-      });
-  res.status(200).json({ message: "boardRename" });
+  dataBoard.update(
+    { _id: idBoard },
+    { $set: { name: name } },
+    {},
+    function (err, numReplaced) {
+      if(err){
+        res.status(400);
+      }else{
+        res.status(200).json({ message: "boardRename" });
+      }
+    }
+  );
 };
 
 module.exports = {
   getBoards,
   getBoard,
   newBoard,
-  renameBoard
+  renameBoard,
 };

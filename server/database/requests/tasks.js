@@ -5,15 +5,21 @@ const newTask = (req, res) => {
   dataTasks.insert({ name: "Новая задача", task: "", idBoard });
   res.status(201).json({ message: "addTask" });
 };
+
 const editTask = (req, res) => {
   const { id, taskText } = req.body;
   dataTasks.update(
     { _id: id },
     { $set: { task: taskText } },
     {},
-    function (err, numReplaced) {}
+    function (err, numReplaced) {
+      if (err) {
+        res.status(400);
+      } else {
+        res.status(201).json({ message: "editTask" });
+      }
+    }
   );
-  res.status(201).json({ message: "editTask" });
 };
 
 const renameTask = (req, res) => {
@@ -22,18 +28,25 @@ const renameTask = (req, res) => {
     { _id: id },
     { $set: { name: name } },
     {},
-    function (err, numReplaced) {}
+    function (err, numReplaced) {
+      if (err) {
+        res.status(400);
+      } else {
+        res.status(200).json({ message: "TaskRename" });
+      }
+    }
   );
-  res.status(200).json({ message: "TaskRename" });
 };
 
 const getTasks = (req, res) => {
   const { idBoard } = req.params;
   dataTasks.find({ idBoard }, function (err, docs) {
-    if (err === null) {
-      res.status(200).json(docs);
+    if (err) {
+      res.status(400);
     } else {
-      res.status(500).json({ message: err });
+      console.log(123)
+      console.log(docs)
+      res.status(200).json(docs);
     }
   });
 };

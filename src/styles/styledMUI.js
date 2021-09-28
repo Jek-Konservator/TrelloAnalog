@@ -42,6 +42,12 @@ const useStyles = makeStyles({
     alignItems: "center",
     borderRadius: "15px",
   },
+  listMenuBoards: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default useStyles;

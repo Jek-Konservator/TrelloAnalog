@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import {UserContext} from "../../context";
 
 
-// TODO: тут кстати почему то нет нихуя, а должно быть
 
 export const Main = () => {
+
+    const { user, getUser } = useContext(UserContext);
+
 
     return(
         <div>

@@ -5,7 +5,6 @@ import { BoardMenu } from "../Board/boardsMenu";
 import { UserContext } from "../../context";
 
 axios.defaults.baseURL = "http://localhost:3001/";
-// TODO: Сюда просто прокинь компонет типа SIdeBar или шо то такое, и там внутри него сделай логику, и всё будет гуд и прокинь туда открытие закрытие
 export const Header = () => {
   const { getUser } = useContext(UserContext);
 

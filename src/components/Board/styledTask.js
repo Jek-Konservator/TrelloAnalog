@@ -29,6 +29,7 @@ export const StyledTitle = styled.div`
   font-size: 25px;
   text-align: left;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: #32bdf8ff;
 `;
@@ -39,12 +40,12 @@ export const StyledData = styled.div`
   display: flex;
   min-height: 80px;
   max-height: 120px;
-  justify-content: left;
+  justify-content: space-between;
   align-items: flex-start;
   word-wrap: break-word;
   text-align: left;
 `;
-export const StyledHeaderBoard = styled.div`
+export const StyledTitleBoard = styled.div`
   padding: 30px 0 30px 30px;
   font-size: 30px;
   display: flex;

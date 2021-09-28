@@ -34,11 +34,15 @@ export const BoardMenu = () => {
   };
 
   const newBoard = () => {
-    console.log(user);
-    // TODO: почему идет юзер юзер, такого быть не должно, просто юзер.айди либо userData - user - id но одинаковых не должно быть
     axios
       .post(`/api/newBoard`, { userId: user.user.id })
-      .then((r) => getUser());
+      .then(({ data }) => {
+        getUser();
+        console.log(data.message);
+      })
+      .catch((err) => {
+        console.log("Ошибка добавления новой доски", err);
+      });
   };
 
   const toBoards = (idBoard) => {
@@ -62,7 +66,7 @@ export const BoardMenu = () => {
             <BoardsUser
               newBoard={newBoard}
               classes={classes}
-              boards={user.boards.docs}
+              boards={user.boards}
               toBoards={toBoards}
             />
           </SwipeableDrawer>
@@ -74,15 +78,7 @@ export const BoardMenu = () => {
 
 const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
   <Box sx={{ width: "250px" }} role="presentation">
-    <List
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-        {/*// TODO: во втором проекте так стили не скрещивай, не надо писать каждому элементу стайл и на 4 строчки флексы */}
+    <List className={classes.listMenuBoards}>
       <Button
         onClick={newBoard}
         style={{ width: 250, borderRadius: 0 }}
@@ -95,12 +91,7 @@ const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
           button
           onClick={() => toBoards(board._id)}
           key={board._id}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className={classes.listMenuBoards}
         >
           <ListItemText>{board.name}</ListItemText>
         </ListItem>

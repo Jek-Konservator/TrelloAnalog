@@ -12,7 +12,6 @@ import axios from "axios";
 import { Main } from "./components/main";
 import { Board } from "./components/Board";
 
-
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -21,24 +20,14 @@ const App = () => {
   const getUser = useCallback(async () => {
     const userLocalStorage = localStorage.getItem("user");
     const userSessionStorage = sessionStorage.getItem("user");
-    if (userLocalStorage === null && userSessionStorage === null) {
-      setUser(null);
-      history.replace("/login");
-    } else if (userLocalStorage !== null) {
-      // TODO: потом перепиши это на тернарки, сократишь код в 2 раза const {data} = userLocalStorage !== null ? await axios.get(`/api/getUserInfo/${userLocalStorage}`) : await axios.get(`/api/getUserInfo/${userSessionStorage}`)
-      // TODO: я думаю ты понял о чем я
-      const { data } = await axios.get(`/api/getUserInfo/${userLocalStorage}`);
-      if (data.completed) {
-        setUser(data);
-      }
-    } else if (userSessionStorage !== null) {
-      const { data } = await axios.get(
-        `/api/getUserInfo/${userSessionStorage}`
-      );
-      if (data.completed) {
-        setUser(data);
-      }
-    }
+
+    const { data } =
+      userLocalStorage !== null
+        ? await axios.get(`/api/getUserInfo/${userLocalStorage}`)
+        : userSessionStorage !== null
+        ? await axios.get(`/api/getUserInfo/${userSessionStorage}`)
+        : (setUser(null), history.replace("/login"));
+    data.completed && setUser(data);
   }, [history]);
 
   useEffect(() => {
@@ -80,9 +69,7 @@ const App = () => {
 
 export default App;
 
-
 // TODO: добавить загрузку картинок
-
 
 // TODO: добавить поиск и фильтрацию в строке,
 //  после название доски поиск и потом кнопка с фильтрами и
