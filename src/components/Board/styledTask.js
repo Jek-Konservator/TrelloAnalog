@@ -7,19 +7,7 @@ export const StyledBoards = styled.div`
   justify-content: flex-start;
 `;
 
-export const StyledCard = styled.div`
-  background-color: white;
-  opacity: 0.8;
-  width: 350px;
-  overflow: hidden;
-  min-height: 150px;
-  max-height: 250px;
-  margin: 10px;
-  border-radius: 25px;
-  display: flex;
-  flex-direction: column;
-  word-wrap: break-word;
-`;
+
 export const StyledTitle = styled.div`
   margin-bottom: 10px;
   padding-left: 10px;

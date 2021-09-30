@@ -24,7 +24,7 @@ const getBoard = (req, res) => {
 
 const newBoard = (req, res) => {
   const { userId } = req.body;
-  dataBoard.insert({ name: "Новая доска", idOwner: userId });
+  dataBoard.insert({ name: "Новая доска", idOwner: userId, time: new Date().getTime() });
   res.status(201).json({ message: "addBoards" });
 };
 const renameBoard = (req, res) => {

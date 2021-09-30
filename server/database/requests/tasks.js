@@ -2,7 +2,7 @@ const { dataTasks, dataBoard } = require("../database");
 
 const newTask = (req, res) => {
   const { idBoard } = req.body;
-  dataTasks.insert({ name: "Новая задача", task: "", idBoard });
+  dataTasks.insert({ name: "Новая задача", task: "", idBoard, time: new Date().getTime() });
   res.status(201).json({ message: "addTask" });
 };
 
@@ -44,8 +44,6 @@ const getTasks = (req, res) => {
     if (err) {
       res.status(400);
     } else {
-      console.log(123)
-      console.log(docs)
       res.status(200).json(docs);
     }
   });

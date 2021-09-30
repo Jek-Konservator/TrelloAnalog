@@ -21,13 +21,18 @@ const App = () => {
     const userLocalStorage = localStorage.getItem("user");
     const userSessionStorage = sessionStorage.getItem("user");
 
-    const { data } =
+    let { data } =
       userLocalStorage !== null
         ? await axios.get(`/api/getUserInfo/${userLocalStorage}`)
         : userSessionStorage !== null
         ? await axios.get(`/api/getUserInfo/${userSessionStorage}`)
-        : (setUser(null), history.replace("/login"));
-    data.completed && setUser(data);
+        : "";
+
+    if (data) {
+      data.completed && setUser(data);
+    } else {
+      history.replace("/login");
+    }
   }, [history]);
 
   useEffect(() => {
@@ -43,7 +48,7 @@ const App = () => {
             rel="stylesheet"
           />
           <GlobalStyled />
-          {user !== null && <Header />}
+          {user && <Header />}
           <Switch>
             <Route path="/login">
               <Login />

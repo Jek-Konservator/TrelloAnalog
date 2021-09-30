@@ -22,6 +22,8 @@ export const BoardMenu = () => {
   const classes = useStyles();
   const history = useHistory();
 
+
+
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
@@ -66,7 +68,7 @@ export const BoardMenu = () => {
             <BoardsUser
               newBoard={newBoard}
               classes={classes}
-              boards={user.boards}
+              boards={(user.boards).sort((a, b) => a.time < b.time ? 1 : -1)}
               toBoards={toBoards}
             />
           </SwipeableDrawer>
@@ -93,7 +95,16 @@ const BoardsUser = ({ newBoard, classes, boards, toBoards }) => (
           key={board._id}
           className={classes.listMenuBoards}
         >
-          <ListItemText>{board.name}</ListItemText>
+          <ListItemText
+            style={{
+              maxWidth: " 80%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {board.name}
+          </ListItemText>
         </ListItem>
       ))}
     </List>

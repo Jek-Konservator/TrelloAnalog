@@ -4,11 +4,11 @@ const newUsers = (req, res) => {
   const { email, number, password } = req.body;
 
   dataUsers.findOne({ email }, (err, docs) => {
-    if (docs !== null) {
+    if (docs ) {
       return res.status(200).json({ message: "emailUsed" });
     } else {
       dataUsers.findOne({ number }, (err, docs) => {
-        if (docs !== null) {
+        if (docs ) {
           return res.status(200).json({ message: "numberUsed" });
         } else {
           dataUsers.insert({
@@ -49,7 +49,7 @@ const tryLogIn = (req, res) => {
 
   const resTryLogIn = (err, docs) => {
     if (err === null) {
-      if (docs !== null) {
+      if (docs ) {
         if (docs.password === password) {
           res
             .status(200)
@@ -71,7 +71,7 @@ const getUserPassword = (req, res) => {
 
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
-      if (docs !== null) {
+      if (docs ) {
         res.status(200).json(docs.password);
       } else {
         res.status(200).json({ message: "emailNotUse" });
@@ -79,7 +79,7 @@ const getUserPassword = (req, res) => {
     });
   } else if (number !== "null") {
     dataUsers.findOne({ number }, (err, docs) => {
-      if (docs !== null) {
+      if (docs ) {
         res.status(200).json(docs.password);
       } else {
         res.status(200).json({ message: "numberNotUse" });
