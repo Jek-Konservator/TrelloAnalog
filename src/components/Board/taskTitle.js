@@ -20,6 +20,7 @@ export const TaskTitle = ({ task, getTasks }) => {
           console.log("Ошибка редактирования названия задачи", err);
         });
     }
+    // TODO: тут тоже самое выполниться в люббом случае закрытие и я как юзер нихуя не пойму
     setVisibleRenameTask(false);
   };
 

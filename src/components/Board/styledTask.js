@@ -33,6 +33,7 @@ export const StyledData = styled.div`
   word-wrap: break-word;
   text-align: left;
 `;
+// TODO: какого хуя доска в тасках находиться?
 export const StyledTitleBoard = styled.div`
   padding: 30px 0 30px 30px;
   font-size: 30px;

@@ -20,7 +20,7 @@ const App = () => {
   const getUser = useCallback(async () => {
     const userLocalStorage = localStorage.getItem("user");
     const userSessionStorage = sessionStorage.getItem("user");
-
+    // TODO: перепиши на 1 переменную и в then условие въеби
     let { data } =
       userLocalStorage !== null
         ? await axios.get(`/api/getUserInfo/${userLocalStorage}`)
@@ -74,6 +74,7 @@ const App = () => {
 
 export default App;
 
+// TODO: КОММИТЫ С НАЗВАНИЯМИ ТОДО ЖДУ
 // TODO: добавить загрузку картинок
 
 // TODO: добавить поиск и фильтрацию в строке,
