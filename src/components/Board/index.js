@@ -15,16 +15,27 @@ export const Board = () => {
 
   const [tasks, setTasks] = useState([]);
 
-  const getTasks = useCallback(async () => {
-    await axios
-      .get(`/api/getTasks/${idBoard}`)
-      .then(({ data }) => {
-          setTasks((data).sort((a, b) => a.time < b.time ? 1 : -1));
-      })
-      .catch((err) => {
-        console.log("Ошибка получения задач", err);
-      });
-  }, [idBoard]);
+  const getTasks = useCallback(
+    async (filterParams) => {
+      const params =
+        filterParams &&
+        new URLSearchParams({
+          text: filterParams.text,
+          hashtags: filterParams.hashtags,
+          // sort: filterParams.sort,
+        }).toString();
+
+      await axios
+        .get(`/api/getTasks/${idBoard}/?${params}`)
+        .then(({ data }) => {
+          setTasks(data.sort((a, b) => (a.time < b.time ? 1 : -1)));
+        })
+        .catch((err) => {
+          console.log("Ошибка получения задач", err);
+        });
+    },
+    [idBoard]
+  );
 
   useEffect(() => {
     getTasks().then();
@@ -41,7 +52,7 @@ export const Board = () => {
 
   return (
     <div>
-      <BoardTitle />
+      <BoardTitle getTasks={getTasks} />
       <StyledBoards>
         {tasks.map((task) => (
           <Card

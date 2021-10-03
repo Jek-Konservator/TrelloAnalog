@@ -7,7 +7,6 @@ export const StyledBoards = styled.div`
   justify-content: flex-start;
 `;
 
-
 export const StyledTitle = styled.div`
   margin-bottom: 10px;
   padding-left: 10px;
@@ -34,7 +33,8 @@ export const StyledData = styled.div`
   text-align: left;
 `;
 export const StyledTitleBoard = styled.div`
-  padding: 30px 0 30px 30px;
   font-size: 30px;
   display: flex;
+  align-items: center;
+  padding: 30px 0 15px 30px;
 `;

@@ -6,8 +6,9 @@ import { StyledTitleBoard } from "./styledTask";
 import axios from "axios";
 import { UserContext } from "../../context";
 import { useParams } from "react-router-dom";
+import { FilterAndSearch, FilterNavigation } from "../FilterNavigation";
 
-export const BoardTitle = () => {
+export const BoardTitle = ({ getTasks }) => {
   const { idBoard } = useParams();
   const { getUser } = useContext(UserContext);
   const [board, setBoard] = useState({});
@@ -48,40 +49,44 @@ export const BoardTitle = () => {
   };
   return (
     <StyledTitleBoard>
-      {visibleRenameTextFiled ? (
-        <>
-          <TextField
-            label={"Название доски"}
-            defaultValue={board.name}
-            onChange={(e) => {
-              setBoardName(e.target.value);
-            }}
-          />
-          <IconButton onClick={() => renameBoard(boardName)}>
-            <CheckCircleOutlineIcon
-              style={{ fontSize: 30 }}
-              color={"primary"}
+      <div style={{ fontSize: 30, display: "flex", alignItems: "center" }}>
+        {visibleRenameTextFiled ? (
+          <>
+            <TextField
+              label={"Название доски"}
+              defaultValue={board.name}
+              onChange={(e) => {
+                setBoardName(e.target.value);
+              }}
             />
-          </IconButton>
-        </>
-      ) : (
-        <>
-          <div
-            title={board.name}
-            style={{
-              maxWidth: "500px",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {board.name}
-          </div>
-          <IconButton onClick={() => setVisibleRenameTextFiled(true)}>
-            <EditIcon color={"primary"} />
-          </IconButton>
-        </>
-      )}
+            <IconButton onClick={() => renameBoard(boardName)}>
+              <CheckCircleOutlineIcon
+                style={{ fontSize: 30 }}
+                color={"primary"}
+              />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <div
+              title={board.name}
+              style={{
+                maxWidth: "500px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {board.name}
+            </div>
+            <IconButton onClick={() => setVisibleRenameTextFiled(true)}>
+              <EditIcon color={"primary"} />
+            </IconButton>
+          </>
+        )}
+      </div>
+
+      <FilterNavigation getTasks={getTasks} />
     </StyledTitleBoard>
   );
 };
