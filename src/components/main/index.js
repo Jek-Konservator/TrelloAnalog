@@ -22,9 +22,8 @@ export const Main = () => {
   };
 
   const newBoard = () => {
-      // TODO: опять юзер юхер, нахуя я писал в прошлый раз тодо?
     axios
-      .post(`/api/newBoard`, { userId: user.user.id })
+      .post(`/api/newBoard`, { userId: {user}.id })
       .then(({ data }) => {
         getUser();
         console.log(data.message);
