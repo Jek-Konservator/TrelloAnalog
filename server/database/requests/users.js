@@ -95,7 +95,7 @@ const getUserInfo = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        let user = { email: docs.email, number: docs.number, id: docs._id };
+        let user = { email: docs.email, number: docs.number, id: docs._id, hashtags:[] };
         dataBoard.find({ idOwner: docs._id }, (err, docs) => {
           if (err === null) {
             res.status(200).json({

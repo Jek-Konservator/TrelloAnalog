@@ -6,6 +6,7 @@ import { StyledTitleBoard } from "./styledBoardTitle";
 import axios from "axios";
 import { UserContext } from "../../../context";
 import { useParams } from "react-router-dom";
+import {FilterNavigation} from "../FilterNavigation";
 
 export const BoardTitle = ({setError}) => {
   const { idBoard } = useParams();
@@ -20,7 +21,7 @@ export const BoardTitle = ({setError}) => {
       .then(({ data }) => {
         if ({ data }) {
           setBoard(data);
-          setError("");
+
         }
       })
       .catch((err) => {
@@ -60,7 +61,6 @@ export const BoardTitle = ({setError}) => {
           />
           <IconButton onClick={() => renameBoard(boardName)}>
             <CheckCircleOutlineIcon
-              style={{ fontSize: 30 }}
               color={"primary"}
             />
           </IconButton>
@@ -83,6 +83,7 @@ export const BoardTitle = ({setError}) => {
           </IconButton>
         </>
       )}
+      <FilterNavigation/>
     </StyledTitleBoard>
   );
 };

@@ -26,6 +26,23 @@ const editTask = (req, res) => {
     }
   );
 };
+const editTaskHashtags = (req, res) => {
+  const { id, hashtagsParams } = req.body;
+  console.log(id, hashtagsParams.hashtags)
+  res.status(200)
+  /*dataTasks.update(
+    { _id: id },
+    { $set: { hashtags } },
+    {},
+    function (err, numReplaced) {
+      if (err) {
+        res.status(400);
+      } else {
+        res.status(201).json({ message: "editTask" });
+      }
+    }
+  );*/
+};
 
 const renameTask = (req, res) => {
   const { name, id } = req.body;
@@ -45,16 +62,17 @@ const renameTask = (req, res) => {
 
 const getTasks = (req, res) => {
   const { idBoard } = req.params;
-  dataTasks.find({ idBoard },
-    function (err, docs) {
-      if (err) {
-        res.status(400);
-      } else {
-        res.status(200).json(docs.sort( function (a,b) {
+  dataTasks.find({ idBoard }, function (err, docs) {
+    if (err) {
+      res.status(400);
+    } else {
+      res.status(200).json(
+        docs.sort(function (a, b) {
           return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
-        }));
-      }
-    });
+        })
+      );
+    }
+  });
 };
 
 module.exports = {
@@ -62,4 +80,5 @@ module.exports = {
   getTasks,
   editTask,
   renameTask,
+  editTaskHashtags,
 };
