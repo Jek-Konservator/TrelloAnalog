@@ -2,7 +2,12 @@ const { dataTasks, dataBoard } = require("../database");
 
 const newTask = (req, res) => {
   const { idBoard } = req.body;
-  dataTasks.insert({ name: "Новая задача", task: "", idBoard, time: new Date().getTime() });
+  dataTasks.insert({
+    name: "Новая задача",
+    task: "",
+    idBoard,
+    time: new Date().getTime(),
+  });
   res.status(201).json({ message: "addTask" });
 };
 
@@ -40,13 +45,22 @@ const renameTask = (req, res) => {
 
 const getTasks = (req, res) => {
   const { idBoard } = req.params;
-  dataTasks.find({ idBoard }, function (err, docs) {
+  dataTasks.find({ idBoard },
+    function (err, docs) {
+      if (err) {
+        res.status(400);
+      } else {
+        res.status(200).json(docs.sort( function (a,b) {
+          return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
+        }));
+      }
+    }); /*dataTasks.find({ idBoard }, function (err, docs) {
     if (err) {
       res.status(400);
     } else {
       res.status(200).json(docs);
     }
-  });
+  });*/
 };
 
 module.exports = {

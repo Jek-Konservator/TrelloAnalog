@@ -5,7 +5,9 @@ import {
   StyledLoadingCardTitle,
   StyledLogin,
 } from "./style";
-import { Button, Card } from "@mui/material";
+import { Card } from "@mui/material";
+import { Button } from "@material-ui/core";
+
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 import useStyles from "../../styles/styledMUI";

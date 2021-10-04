@@ -100,7 +100,9 @@ const getUserInfo = (req, res) => {
           if (err === null) {
             res.status(200).json({
               user: user,
-              boards: docs,
+              boards: docs.sort( function (a,b) {
+                return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
+              }),
               completed: true,
             });
           } else {
