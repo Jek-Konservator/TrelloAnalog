@@ -16,6 +16,7 @@ export const Board = () => {
   const [tasks, setTasks] = useState([]);
 
   const getTasks = useCallback(async () => {
+      // TODO: сортировка на бэке через бд
     await axios
       .get(`/api/getTasks/${idBoard}`)
       .then(({ data }) => {

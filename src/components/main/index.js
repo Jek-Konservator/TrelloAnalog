@@ -22,6 +22,7 @@ export const Main = () => {
   };
 
   const newBoard = () => {
+      // TODO: опять юзер юхер, нахуя я писал в прошлый раз тодо?
     axios
       .post(`/api/newBoard`, { userId: user.user.id })
       .then(({ data }) => {
@@ -32,7 +33,7 @@ export const Main = () => {
         console.log("Ошибка добавления новой доски", err);
       });
   };
-
+// TODO: тут опять сортировака
   return (
     <StyledMain>
       {user &&
