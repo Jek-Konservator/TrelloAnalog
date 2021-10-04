@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyledHeader } from "./style";
 import axios from "axios";
-import { BoardMenu } from "../Board/boardsMenu";
+import { BoardMenu } from "../Board/boardsMenu/boardsMenu";
 import { UserContext } from "../../context";
 
 axios.defaults.baseURL = "http://localhost:3001/";

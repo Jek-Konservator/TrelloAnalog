@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import { StyledTitleBoard } from "./styledTask";
+import { StyledTitleBoard } from "./styledBoardTitle";
 import axios from "axios";
-import { UserContext } from "../../context";
+import { UserContext } from "../../../context";
 import { useParams } from "react-router-dom";
 
 export const BoardTitle = () => {

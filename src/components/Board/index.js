@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { IconButton, Card } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
-import { BoardTitle } from "./boardTitle";
-import { TaskTitle } from "./taskTitle";
-import { TaskDescription } from "./taskDescription";
+import { BoardTitle } from "./boardTitle/boardTitle";
+import { TaskTitle } from "./taskTitle/taskTitle";
+import { TaskDescription } from "./taskDescription/taskDescription";
 import useStyles from "../../styles/styledMUI";
 
 export const Board = () => {
@@ -16,7 +16,6 @@ export const Board = () => {
   const [tasks, setTasks] = useState([]);
 
   const getTasks = useCallback(async () => {
-      // TODO: сортировка на бэке через бд
     await axios
       .get(`/api/getTasks/${idBoard}`)
       .then(({ data }) => {

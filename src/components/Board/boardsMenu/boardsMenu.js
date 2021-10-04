@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { StyledBoardsMenu } from "./styledBoardsMenu";
-import { UserContext } from "../../context";
+import { UserContext } from "../../../context";
 import {
   ListItem,
   SwipeableDrawer,
@@ -12,7 +12,7 @@ import {
 import { Button } from "@material-ui/core";
 
 import axios from "axios";
-import useStyles from "../../styles/styledMUI";
+import useStyles from "../../../styles/styledMUI";
 import { useHistory } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 

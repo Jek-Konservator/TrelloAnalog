@@ -3,7 +3,7 @@ import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { StyledData } from "./styledTask";
+import { StyledData } from "./styledTaskDescription";
 import axios from "axios";
 
 export const TaskDescription = ({ task, getTasks }) => {
