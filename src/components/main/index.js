@@ -32,11 +32,10 @@ export const Main = () => {
         console.log("Ошибка добавления новой доски", err);
       });
   };
-// TODO: тут опять сортировака
   return (
     <StyledMain>
       {user &&
-      (user.boards).sort((a, b) => a.time < b.time ? 1 : -1).map((board) => (
+      user.boards.map((board) => (
           <Card
             key={board._id}
             className={classes.cardMain}
