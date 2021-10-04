@@ -11,5 +11,5 @@ export const StyledTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #32bdf8ff;
+  border-bottom: 1px solid gray;
 `;

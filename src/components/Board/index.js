@@ -19,7 +19,7 @@ export const Board = () => {
     await axios
       .get(`/api/getTasks/${idBoard}`)
       .then(({ data }) => {
-          setTasks((data));
+        setTasks(data);
       })
       .catch((err) => {
         console.log("Ошибка получения задач", err);

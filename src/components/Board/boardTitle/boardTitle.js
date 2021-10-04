@@ -7,7 +7,7 @@ import axios from "axios";
 import { UserContext } from "../../../context";
 import { useParams } from "react-router-dom";
 
-export const BoardTitle = () => {
+export const BoardTitle = ({setError}) => {
   const { idBoard } = useParams();
   const { getUser } = useContext(UserContext);
   const [board, setBoard] = useState({});
@@ -20,12 +20,13 @@ export const BoardTitle = () => {
       .then(({ data }) => {
         if ({ data }) {
           setBoard(data);
+          setError("");
         }
       })
       .catch((err) => {
         console.log("Ошибка получения спика досок", err);
       });
-  }, [idBoard]);
+  }, [idBoard, setError]);
 
   useEffect(() => {
     getBoard().then();
