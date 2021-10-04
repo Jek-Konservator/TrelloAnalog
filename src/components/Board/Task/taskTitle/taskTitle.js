@@ -15,13 +15,12 @@ export const TaskTitle = ({ task, getTasks }) => {
         .put(`/api/renameTask`, { name: name, id: id })
         .then(() => {
           getTasks();
+          setVisibleRenameTask(false);
         })
         .catch((err) => {
           console.log("Ошибка редактирования названия задачи", err);
         });
     }
-    // TODO: тут тоже самое выполниться в люббом случае закрытие и я как юзер нихуя не пойму
-    setVisibleRenameTask(false);
   };
 
   return (

@@ -16,24 +16,22 @@ export const TaskDescription = ({ task, getTasks }) => {
         .put(`/api/editTask`, { taskText, id })
         .then(() => {
           getTasks();
+          setVisibleEditTask(false);
         })
         .catch((err) => {
           console.log("Ошибка редактирования описания задачи", err);
         });
     }
-    // TODO: тут получается даже если название не смениться то оно всё равно закроется, обработай это
-    setVisibleEditTask(false);
   };
-// TODO: опятб таск таск на 30 строке, не должно этого быть , какого хуя дублирование блядских данных?)
   return (
     <StyledData>
-      {task.task !== "" ? (
+      {task.description !== "" ? (
         <>
           {visibleEditTask ? (
             <>
               <TextField
                 inputProps={{ maxLength: 100 }}
-                defaultValue={task.task}
+                defaultValue={task.description}
                 label={"Задач"}
                 onChange={(e) => setTaskText(e.target.value)}
               />
@@ -47,12 +45,12 @@ export const TaskDescription = ({ task, getTasks }) => {
           ) : (
             <>
               <div
-                title={task.task}
+                title={task.description}
                 style={{
                   maxWidth: " 80%",
                 }}
               >
-                {task.task}
+                {task.description}
               </div>
               <IconButton
                 onClick={() => setVisibleEditTask(true)}

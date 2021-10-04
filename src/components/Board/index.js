@@ -5,8 +5,8 @@ import { IconButton, Card } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { BoardTitle } from "./boardTitle/boardTitle";
-import { TaskTitle } from "./taskTitle/taskTitle";
-import { TaskDescription } from "./taskDescription/taskDescription";
+import { TaskTitle } from "./Task/taskTitle/taskTitle";
+import { TaskDescription } from "./Task/taskDescription/taskDescription";
 import useStyles from "../../styles/styledMUI";
 
 export const Board = () => {
@@ -20,7 +20,6 @@ export const Board = () => {
       .get(`/api/getTasks/${idBoard}`)
       .then(({ data }) => {
           setTasks((data));
-          console.log(data)
       })
       .catch((err) => {
         console.log("Ошибка получения задач", err);

@@ -18,23 +18,28 @@ const App = () => {
   const history = useHistory();
 
   const getUser = useCallback(async () => {
-    const userLocalStorage = localStorage.getItem("user");
-    const userSessionStorage = sessionStorage.getItem("user");
-    // TODO: перепиши на 1 переменную и в then условие въеби
-    let { data } =
-      userLocalStorage !== null
-        ? await axios.get(`/api/getUserInfo/${userLocalStorage}`)
-        : userSessionStorage !== null
-        ? await axios.get(`/api/getUserInfo/${userSessionStorage}`)
-        : "";
+    const userStorage = localStorage.getItem("user")
+      ? localStorage.getItem("user")
+      : sessionStorage.getItem("user")
+      ? sessionStorage.getItem("user")
+      : null;
 
-    if (data) {
-      data.completed && setUser(data);
+    if (userStorage) {
+      await axios
+        .get(`/api/getUserInfo/${userStorage}`)
+        .then(({ data }) => {
+          data.completed && setUser(data);
+        })
+        .catch((err) => {
+          history.replace("/login");
+          setUser(null);
+          console.log("ошибка авторизации", err);
+        });
     } else {
+      setUser(null);
       history.replace("/login");
     }
   }, [history]);
-
   useEffect(() => {
     getUser();
   }, [getUser, history]);
@@ -75,15 +80,13 @@ const App = () => {
 export default App;
 
 // TODO: КОММИТЫ С НАЗВАНИЯМИ ТОДО ЖДУ
-// TODO: добавить загрузку картинок
 
+// TODO: добавить загрузку картинок
+// TODO: сделать норм стили и фиксануть баги по ui которые я в телеге тебе отписал ( закреплённое сообщение в диа)
 // TODO: добавить поиск и фильтрацию в строке,
 //  после название доски поиск и потом кнопка с фильтрами и
 //  там выбираю почему фильтровать
 //  ( хештеги которые могут быть у каждой карточки и будут отображаться фиксированно снизу
-
-// TODO: сделать норм стили и фиксануть баги по ui которые я в телеге тебе отписал ( закреплённое сообщение в диа)
-
 // TODO: сделай нормальную обработку ошибок и вывод сообщений и перепеши уже на тернарки блядский гет юзер на 505 строк)
-
 // TODO: а да, нейминги давай нормальные к свойстам объекта и функциям, какой нахуй ренейм тейбл, и таск.таск  юзер.юзер
+// TODO: сортировка(Переделать fain().sort(time : 1||-1).exec(()=>(docs)))

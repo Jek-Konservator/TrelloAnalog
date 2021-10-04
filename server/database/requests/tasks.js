@@ -4,7 +4,7 @@ const newTask = (req, res) => {
   const { idBoard } = req.body;
   dataTasks.insert({
     name: "Новая задача",
-    task: "",
+    description: "",
     idBoard,
     time: new Date().getTime(),
   });
@@ -15,7 +15,7 @@ const editTask = (req, res) => {
   const { id, taskText } = req.body;
   dataTasks.update(
     { _id: id },
-    { $set: { task: taskText } },
+    { $set: { description: taskText } },
     {},
     function (err, numReplaced) {
       if (err) {
@@ -54,13 +54,7 @@ const getTasks = (req, res) => {
           return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
         }));
       }
-    }); /*dataTasks.find({ idBoard }, function (err, docs) {
-    if (err) {
-      res.status(400);
-    } else {
-      res.status(200).json(docs);
-    }
-  });*/
+    });
 };
 
 module.exports = {
