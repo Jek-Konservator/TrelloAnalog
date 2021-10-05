@@ -37,7 +37,7 @@ export const BoardMenu = () => {
 
   const newBoard = () => {
     axios
-      .post(`/api/newBoard`, { userId: user.user.id })
+      .post(`/api/newBoard`, { userId: user.userInfo.id })
       .then(({ data }) => {
         getUser();
         console.log(data.message);

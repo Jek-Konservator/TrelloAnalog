@@ -39,9 +39,25 @@ export const Board = () => {
       });
   };
 
+  const getTasksHashtag = async ({taskHashtags} ) => {
+
+    if (taskHashtags.length !== 0) {
+      axios
+        .get(`/api/getTasksHashtag/${taskHashtags}`)
+        .then(({ data }) => {
+          setTasks(data);
+        })
+        .catch((err) => {
+          console.log("Ошибка редактирования названия доски", err);
+        });
+    } else {
+        await getTasks()
+    }
+  };
+
   return (
     <div>
-      <BoardTitle />
+      <BoardTitle getTasksHashtag={getTasksHashtag} />
       <StyledBoards>
         {tasks.map((task) => (
           <Card

@@ -1,57 +1,97 @@
-import React, {useState} from "react";
-import { Autocomplete, Button, TextField } from "@mui/material";
-import {StyledHashtags} from "./styledHashtags";
+import React, { useContext, useState } from "react";
+import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
+import { StyledHashtags } from "./styledHashtags";
 import axios from "axios";
+import { UserContext} from "../../../../context";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-export const Hashtags = ({type, id}) => {
+export const Hashtags = ({hashtagsParamsNull, taskHashtags, type, editHashtagTask, getTasksHashtag }) => {
+  const { user, getUser } = useContext(UserContext);
+  const [hashtagsParams, setHashtagsParams] = useState({taskHashtags});
+  const [visibleNewHashtags, setVisibleNewHashtags] = useState(false);
+  const [newHashtagsText, setNewHashtagsText] = useState("");
 
-    const [hashtagsParams, setHashtagsParams] = useState();
-
-    const hashtags = [
-        { id: 0, name: "Папе" },
-        { id: 1, name: "Маме" },
-        { id: 2, name: "Работа" },
-        { id: 3, name: "ДР" },
-    ];
-console.log(hashtags)
-
-    const useHashtags = () =>{
-
-    if( type === "taskHashtags"){
-        //console.log(hashtagsParams)
-        // hashtags.includes(name)
-       // axios.post(`/api/editTaskHashtags`, {id, hashtagsParams})
-    }else{}}
-
-
+  const newHashtags = async () => {
+    await axios
+      .post(`api/newHashtag`, {
+        hashtag: newHashtagsText,
+        idUser: user.userInfo.id,
+      })
+      .then(({ data }) => {
+        getUser();
+        setVisibleNewHashtags(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <StyledHashtags>
-      <Autocomplete
-        sx={ type === "taskHashtags" ?  { width: "200px" } : { width: "300px" }}
-        multiple
-        onChange={(event, value) => {
-          const tags = value
-            .map((e) => e.name)
-            .join()
-            .toString();
-          setHashtagsParams({
-            ...hashtagsParams,
-            hashtags: tags,
-          }); console.log(value);
-        }}
-        options={hashtags}
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            label="Хештеги"
-            placeholder="Хештеги"
+      {user ? (
+        <>
+          <Autocomplete
+            sx={
+              type === "taskHashtags" ? { width: "200px" } : { width: "300px" }
+            }
+            defaultValue={taskHashtags}
+            multiple
+            onChange={(event, value) => {
+              const tags = value.map((e) => e);
+              setHashtagsParams({
+                ...hashtagsParams,
+                taskHashtags: tags,
+              });
+            }}
+            options={user.userInfo.hashtags}
+            getOptionLabel={(option) => option}
+            renderInput={(params) => (
+              <TextField
+                  error={hashtagsParamsNull}
+                {...params}
+                variant="standard"
+                label="Хештеги"
+                placeholder="Хештеги"
+              />
+            )}
           />
-        )}
-      />
-      <Button onClick={useHashtags}>Применить</Button>
+
+          {type === "taskHashtags" ? (
+            <>
+              <IconButton onClick={() => editHashtagTask(hashtagsParams)}>
+                <CheckCircleOutlineIcon color={"primary"} />
+              </IconButton>{" "}
+            </>
+          ) : (
+            <>
+              <Button onClick={() => getTasksHashtag(hashtagsParams)}>
+                Применить
+              </Button>
+              {visibleNewHashtags ? (
+                <>
+                  <TextField
+                    label={"Хештег"}
+                    onChange={(e) => setNewHashtagsText(e.target.value)}
+                  />
+                  <IconButton onClick={() => newHashtags()}>
+                    <CheckCircleOutlineIcon color={"primary"} />
+                  </IconButton>
+                </>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setVisibleNewHashtags(true);
+                  }}
+                >
+                  Добавить хэштэг
+                </Button>
+              )}
+            </>
+          )}
+        </>
+      ) : (
+        ""
+      )}
     </StyledHashtags>
   );
 };

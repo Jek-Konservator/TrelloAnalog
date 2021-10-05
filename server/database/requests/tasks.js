@@ -7,6 +7,7 @@ const newTask = (req, res) => {
     description: "",
     idBoard,
     time: new Date().getTime(),
+    hashtags: [],
   });
   res.status(201).json({ message: "addTask" });
 };
@@ -26,23 +27,7 @@ const editTask = (req, res) => {
     }
   );
 };
-const editTaskHashtags = (req, res) => {
-  const { id, hashtagsParams } = req.body;
-  console.log(id, hashtagsParams.hashtags)
-  res.status(200)
-  /*dataTasks.update(
-    { _id: id },
-    { $set: { hashtags } },
-    {},
-    function (err, numReplaced) {
-      if (err) {
-        res.status(400);
-      } else {
-        res.status(201).json({ message: "editTask" });
-      }
-    }
-  );*/
-};
+
 
 const renameTask = (req, res) => {
   const { name, id } = req.body;
@@ -80,5 +65,4 @@ module.exports = {
   getTasks,
   editTask,
   renameTask,
-  editTaskHashtags,
 };

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React  from "react";
 import {FilterStyled} from "./styled";
 import {Hashtags} from "./hashtags/hashtags";
 
-export const FilterNavigation = () => {
+export const FilterNavigation = ({getTasksHashtag}) => {
 
 
   return (
     <FilterStyled>
-     <Hashtags type={"hashtagsFilter"}/>
+     <Hashtags getTasksHashtag={getTasksHashtag} type={"hashtagsFilter"}/>
     </FilterStyled>
   );
 };

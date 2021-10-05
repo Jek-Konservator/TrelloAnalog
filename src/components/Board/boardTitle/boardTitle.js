@@ -6,9 +6,9 @@ import { StyledTitleBoard } from "./styledBoardTitle";
 import axios from "axios";
 import { UserContext } from "../../../context";
 import { useParams } from "react-router-dom";
-import {FilterNavigation} from "../FilterNavigation";
+import { FilterNavigation } from "../FilterNavigation";
 
-export const BoardTitle = ({setError}) => {
+export const BoardTitle = ({ getTasksHashtag }) => {
   const { idBoard } = useParams();
   const { getUser } = useContext(UserContext);
   const [board, setBoard] = useState({});
@@ -21,13 +21,12 @@ export const BoardTitle = ({setError}) => {
       .then(({ data }) => {
         if ({ data }) {
           setBoard(data);
-
         }
       })
       .catch((err) => {
         console.log("Ошибка получения спика досок", err);
       });
-  }, [idBoard, setError]);
+  }, [idBoard]);
 
   useEffect(() => {
     getBoard().then();
@@ -45,9 +44,8 @@ export const BoardTitle = ({setError}) => {
           console.log("Ошибка редактирования названия доски", err);
         });
     }
-
-    setVisibleRenameTextFiled(false);
   };
+
   return (
     <StyledTitleBoard>
       {visibleRenameTextFiled ? (
@@ -60,9 +58,7 @@ export const BoardTitle = ({setError}) => {
             }}
           />
           <IconButton onClick={() => renameBoard(boardName)}>
-            <CheckCircleOutlineIcon
-              color={"primary"}
-            />
+            <CheckCircleOutlineIcon color={"primary"} />
           </IconButton>
         </>
       ) : (
@@ -83,7 +79,9 @@ export const BoardTitle = ({setError}) => {
           </IconButton>
         </>
       )}
-      <FilterNavigation/>
+      <FilterNavigation
+        getTasksHashtag={getTasksHashtag}
+      />
     </StyledTitleBoard>
   );
 };

@@ -6,6 +6,7 @@ const cors = require("cors");
 const users = require("./database/requests/users");
 const boards = require("./database/requests/boards");
 const tasks = require("./database/requests/tasks");
+const filter = require("./database/requests/filter");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,7 +32,12 @@ app.post("/api/newTask", tasks.newTask);
 app.get("/api/getTasks/:idBoard", tasks.getTasks);
 app.put("/api/editTask", tasks.editTask);
 app.put("/api/renameTask", tasks.renameTask);
-app.post("/api/editTaskHashtags", tasks.editTaskHashtags);
+
+
+//filter
+app.post("/api/newHashtag", filter.newHashtag);
+app.put("/api/editTaskHashtags", filter.editTaskHashtags);
+app.get("/api/getTasksHashtag/:taskHashtags", filter.getTasksHashtag);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

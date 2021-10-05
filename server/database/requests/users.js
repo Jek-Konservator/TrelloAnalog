@@ -16,6 +16,7 @@ const newUsers = (req, res) => {
             number,
             password,
             role: "user",
+            hashtags: [],
           });
           res.status(201).json({ message: "AddUsers" });
         }
@@ -95,11 +96,11 @@ const getUserInfo = (req, res) => {
   if (email !== "null") {
     dataUsers.findOne({ email }, (err, docs) => {
       if (err === null) {
-        let user = { email: docs.email, number: docs.number, id: docs._id, hashtags:[] };
+        let user = { email: docs.email, number: docs.number, id: docs._id, hashtags: docs.hashtags};
         dataBoard.find({ idOwner: docs._id }, (err, docs) => {
           if (err === null) {
             res.status(200).json({
-              user: user,
+              userInfo: user,
               boards: docs.sort( function (a,b) {
                 return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
               }),
@@ -117,6 +118,7 @@ const getUserInfo = (req, res) => {
     });
   }
 };
+
 
 module.exports = {
   newUsers,
