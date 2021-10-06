@@ -63,7 +63,7 @@ export const Board = () => {
           <Card
             className={classes.cardTask}
             key={task._id}
-            style={{ borderRadius: "20px" }}
+            style={{ borderRadius: "8px" }}
           >
             <TaskTitle task={task} getTasks={getTasks} />
             <TaskDescription task={task} getTasks={getTasks} />
@@ -82,7 +82,7 @@ const NewTask = ({ newTask, classes }) => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: "20px",
+        borderRadius: "8px",
       }}
     >
       <IconButton onClick={newTask}>

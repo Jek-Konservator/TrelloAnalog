@@ -33,31 +33,11 @@ const editTaskHashtags = (req, res) => {
 const getTasksHashtag = (req, res) => {
   //баг порядок тэгов имеет значение(((
   let { taskHashtags } = req.params;
-  dataTasks.find({ hashtags: taskHashtags }, function (err, docs) {
-    if (err) {
-      res(400);
-    } else {
-      if (docs.length === 0) {
-        taskHashtags = taskHashtags.split(",");
-        dataTasks.find({ hashtags: taskHashtags }, function (err, docs) {
-          if (err) {
-            res(400);
-          } else {
-            res.status(200).json(
-              docs.sort(function (a, b) {
-                return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
-              })
-            );
-          }
-        });
-      } else {
-        res.status(200).json(
-          docs.sort(function (a, b) {
-            return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
-          })
-        );
-      }
-    }
+  taskHashtags = taskHashtags.split(",").map((e) => {
+    return { hashtags: e };
+  });
+  dataTasks.find({ $and: taskHashtags }, function (err, docs) {
+    res.status(200).json(docs);
   });
 };
 
