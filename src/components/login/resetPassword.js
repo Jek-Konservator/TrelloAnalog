@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { StyledLoadingCardFooter, StyledLoadingCardInput } from "./style";
 import useStyles from "../../styles/styledMUI";
 import axios from "axios";
-import { Alert, Button } from "@mui/material";
+import { Alert } from "@mui/material";
+import { Button } from "@material-ui/core";
 import { TextField } from "mui-rff";
 import { Form } from "react-final-form";
 

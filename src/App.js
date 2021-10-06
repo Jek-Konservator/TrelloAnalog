@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
-import { GlobalStyled, MainStyle, theme } from "./styles/GlobalStyle";
+import { GlobalStyled, StyleMain, theme } from "./styles/GlobalStyle";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -47,14 +47,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{ getUser, user }}>
-        <MainStyle>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
-            rel="stylesheet"
-          />
-          <GlobalStyled />
-          {user && <Header />}
-          <Switch>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+          rel="stylesheet"
+        />
+        <GlobalStyled />
+        {user && <Header />}
+        <Switch>
+          <StyleMain>
             <Route path="/login">
               <Login />
             </Route>
@@ -70,8 +70,8 @@ const App = () => {
             <Route path="/boards/:idBoard">
               <Board />
             </Route>
-          </Switch>
-        </MainStyle>
+          </StyleMain>
+        </Switch>
       </UserContext.Provider>
     </ThemeProvider>
   );
@@ -83,10 +83,6 @@ export default App;
 
 // TODO: добавить загрузку картинок
 // TODO: сделать норм стили и фиксануть баги по ui которые я в телеге тебе отписал ( закреплённое сообщение в диа)
-// TODO: добавить поиск и фильтрацию в строке,
-//  после название доски поиск и потом кнопка с фильтрами и
-//  там выбираю почему фильтровать
-//  ( хештеги которые могут быть у каждой карточки и будут отображаться фиксированно снизу
 // TODO: сделай нормальную обработку ошибок и вывод сообщений и перепеши уже на тернарки блядский гет юзер на 505 строк)
 // TODO: а да, нейминги давай нормальные к свойстам объекта и функциям, какой нахуй ренейм тейбл, и таск.таск  юзер.юзер
 // TODO: сортировка(Переделать fain().sort(time : 1||-1).exec(()=>(docs)))

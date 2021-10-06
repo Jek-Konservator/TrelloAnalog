@@ -37,7 +37,8 @@ app.put("/api/renameTask", tasks.renameTask);
 //filter
 app.post("/api/newHashtag", filter.newHashtag);
 app.put("/api/editTaskHashtags", filter.editTaskHashtags);
-app.get("/api/getTasksHashtag/:taskHashtags", filter.getTasksHashtag);
+app.get("/api/getTasksHashtag/:taskHashtags/:idBoard", filter.getTasksHashtag);
+app.get("/api/searchTask/:textSearch/:idBoard", filter.searchTask);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

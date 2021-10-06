@@ -9,10 +9,10 @@ export const StyledMain = styled.div`
 export const StyledTitleMainCard = styled.div`
   width: 100%;
   height: 50px;
-  background-color: #32BDF8FF;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid gray;
 `;
 export const StyledDescriptionMainCard = styled.div`
   width: 100%;
@@ -20,5 +20,5 @@ export const StyledDescriptionMainCard = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding-bottom: 20px;
+  padding-bottom: 8px;
 `;

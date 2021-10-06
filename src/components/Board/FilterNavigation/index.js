@@ -1,13 +1,18 @@
-import React  from "react";
-import {FilterStyled} from "./styled";
-import {Hashtags} from "./hashtags/hashtags";
+import React from "react";
+import { FilterStyled } from "./styled";
+import {Hashtags} from "./hashtags";
+import { Search } from "./search";
 
-export const FilterNavigation = ({getTasksHashtag}) => {
-
-
+export const FilterNavigation = ({
+  setTextSearch,
+  searchTask,
+  getTasksHashtag,
+  textSearch,
+}) => {
   return (
     <FilterStyled>
-     <Hashtags getTasksHashtag={getTasksHashtag} type={"hashtagsFilter"}/>
+        <Search textSearch={textSearch} setTextSearch={setTextSearch} searchTask={searchTask} />
+        <Hashtags getTasksHashtag={getTasksHashtag} type={"hashtagsFilter"} />
     </FilterStyled>
   );
 };

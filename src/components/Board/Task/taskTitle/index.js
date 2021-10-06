@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import { StyledTitle } from "./styledTaskTitle";
+import { StyledTitle } from "./styled";
 import axios from "axios";
 
 export const TaskTitle = ({ task, getTasks }) => {

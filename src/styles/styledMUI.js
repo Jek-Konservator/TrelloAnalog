@@ -53,10 +53,11 @@ const useStyles = makeStyles({
     justifyContent: "flex-start",
     alignItems: "center",
     borderRadius: "15px",
+    boxShadow: "4px 4px 30px #2196f3",
   },
   cardMain: {
-    width: "350px",
-    height: "250px",
+    width: "300px",
+    height: "150px",
     margin: "0 0 15px 15px",
     display: "flex",
     flexDirection: "column",
@@ -68,7 +69,7 @@ const useStyles = makeStyles({
   cardTask: {
     backgroundColor: "white",
     opacity: "0.8",
-    width: "350px",
+    width: "400px",
     overflow: "hidden",
     minHeight: "150px",
     maxHeight: "250px",

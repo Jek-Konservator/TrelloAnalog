@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyledBoardsMenu } from "./styledBoardsMenu";
+import { StyledBoardsMenu } from "./styled";
 import { UserContext } from "../../../context";
 import {
   ListItem,
@@ -53,9 +53,9 @@ export const BoardMenu = () => {
   };
 
   return (
-    <StyledBoardsMenu>
+    <StyledBoardsMenu >
       <React.Fragment key={"left"}>
-        <IconButton onClick={toggleDrawer(true)}>
+        <IconButton style={{color:"white"}} onClick={toggleDrawer(true)}>
           <MenuIcon />
         </IconButton>
         {visibleTemporaryDrawer && (

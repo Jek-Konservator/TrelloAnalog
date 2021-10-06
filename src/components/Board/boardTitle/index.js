@@ -2,13 +2,12 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import { StyledTitleBoard } from "./styledBoardTitle";
+import { StyledTitleBoard } from "./styled";
 import axios from "axios";
 import { UserContext } from "../../../context";
 import { useParams } from "react-router-dom";
-import { FilterNavigation } from "../FilterNavigation";
 
-export const BoardTitle = ({ getTasksHashtag }) => {
+export const BoardTitle = () => {
   const { idBoard } = useParams();
   const { getUser } = useContext(UserContext);
   const [board, setBoard] = useState({});
@@ -79,9 +78,6 @@ export const BoardTitle = ({ getTasksHashtag }) => {
           </IconButton>
         </>
       )}
-      <FilterNavigation
-        getTasksHashtag={getTasksHashtag}
-      />
     </StyledTitleBoard>
   );
 };

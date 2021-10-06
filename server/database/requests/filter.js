@@ -32,12 +32,25 @@ const editTaskHashtags = (req, res) => {
 
 const getTasksHashtag = (req, res) => {
   //баг порядок тэгов имеет значение(((
-  let { taskHashtags } = req.params;
+  let { taskHashtags, idBoard } = req.params;
   taskHashtags = taskHashtags.split(",").map((e) => {
     return { hashtags: e };
   });
-  dataTasks.find({ $and: taskHashtags }, function (err, docs) {
+  dataTasks.find({ $and: taskHashtags, idBoard }, function (err, docs) {
     res.status(200).json(docs);
+  });
+};
+
+const searchTask = (req, res) => {
+  //баг порядок тэгов имеет значение(((
+  let { textSearch, idBoard } = req.params;
+  dataTasks.find({ idBoard }, function (err, docs) {
+   const searchTasts = docs.filter(
+      (task) =>
+        task.name.toLowerCase().indexOf(textSearch.toLowerCase()) > -1 ||
+        task.description.toLowerCase().indexOf(textSearch.toLowerCase()) > -1
+    );
+    res.status(200).json(searchTasts);
   });
 };
 
@@ -45,4 +58,5 @@ module.exports = {
   newHashtag,
   editTaskHashtags,
   getTasksHashtag,
+  searchTask,
 };

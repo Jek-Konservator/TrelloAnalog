@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { StyledBoards } from "./styledTask";
 import { useParams } from "react-router-dom";
 import { IconButton, Card } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
-import { BoardTitle } from "./boardTitle/boardTitle";
-import { TaskTitle } from "./Task/taskTitle/taskTitle";
-import { TaskDescription } from "./Task/taskDescription/taskDescription";
+import { BoardTitle } from "./boardTitle";
+import { TaskTitle } from "./Task/taskTitle";
+import { TaskDescription } from "./Task/taskDescription";
 import useStyles from "../../styles/styledMUI";
+import { FilterNavigation } from "./FilterNavigation";
+import { StyleContent } from "../../styles/GlobalStyle";
 
 export const Board = () => {
   const { idBoard } = useParams();
   const classes = useStyles();
 
   const [tasks, setTasks] = useState([]);
+  const [textSearch, setTextSearch] = useState("");
 
   const getTasks = useCallback(async () => {
     await axios
@@ -39,38 +42,62 @@ export const Board = () => {
       });
   };
 
-  const getTasksHashtag = async ({taskHashtags} ) => {
+  const searchTask = async () => {
+    if (textSearch.text !== "") {
+      axios
+        .get(`/api/searchTask/${textSearch.text}/${idBoard}`)
+        .then(({ data }) => setTasks(data))
+        .catch((err) => console.log(err));
+    } else {
+     await getTasks()
+    }
+  };
 
+  const getTasksHashtag = async ({ taskHashtags }) => {
     if (taskHashtags.length !== 0) {
       axios
-        .get(`/api/getTasksHashtag/${taskHashtags}`)
+        .get(`/api/getTasksHashtag/${taskHashtags}/${idBoard}`)
         .then(({ data }) => {
           setTasks(data);
         })
         .catch((err) => {
-          console.log("Ошибка редактирования названия доски", err);
+          console.log("Ошибка фильтрации по тегам", err);
         });
     } else {
-        await getTasks()
+      await getTasks();
     }
   };
 
   return (
-    <div>
-      <BoardTitle getTasksHashtag={getTasksHashtag} />
-      <StyledBoards>
-        {tasks.map((task) => (
-          <Card
-            className={classes.cardTask}
-            key={task._id}
-            style={{ borderRadius: "8px" }}
-          >
-            <TaskTitle task={task} getTasks={getTasks} />
-            <TaskDescription task={task} getTasks={getTasks} />
-          </Card>
-        ))}
-        <NewTask newTask={newTask} classes={classes} />
-      </StyledBoards>
+    <div style={{ display: "flex", width: "100%" }}>
+      <div
+        style={{ width: "85%", display: "flex", justifyContent: "flex-end" }}
+      >
+        <StyleContent>
+          <BoardTitle />
+          <StyledBoards>
+            {tasks.map((task) => (
+              <Card
+                className={classes.cardTask}
+                key={task._id}
+                style={{ borderRadius: "8px" }}
+              >
+                <TaskTitle task={task} getTasks={getTasks} />
+                <TaskDescription task={task} getTasks={getTasks} />
+              </Card>
+            ))}
+            <NewTask newTask={newTask} classes={classes} />
+          </StyledBoards>
+        </StyleContent>
+      </div>
+      <div style={{ width: "15%", display: "flex", justifyContent: "center" }}>
+        <FilterNavigation
+          textSearch={textSearch}
+          setTextSearch={setTextSearch}
+          searchTask={searchTask}
+          getTasksHashtag={getTasksHashtag}
+        />
+      </div>
     </div>
   );
 };

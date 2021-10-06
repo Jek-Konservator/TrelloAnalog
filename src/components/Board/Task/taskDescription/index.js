@@ -4,9 +4,9 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import TagIcon from "@mui/icons-material/Tag";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { StyledData } from "./styledTaskDescription";
+import { StyledData } from "./styled";
 import axios from "axios";
-import { Hashtags } from "../../FilterNavigation/hashtags/hashtags";
+import {Hashtags} from "../../FilterNavigation/hashtags";
 
 export const TaskDescription = ({ task, getTasks }) => {
   const [visibleEditTask, setVisibleEditTask] = useState(false);
@@ -88,12 +88,12 @@ export const TaskDescription = ({ task, getTasks }) => {
                           flexDirection: "column",
                         }}
                       >
-                        <div>
+                        <div>{task.description}</div>
+                        <div style={{color: "#2196f3"}}>
                           {task.hashtags.map((hashtag) => {
                             return " #" + hashtag;
                           })}
                         </div>
-                        <div>{task.description}</div>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         <IconButton onClick={() => setVisibleEditTask(true)}>

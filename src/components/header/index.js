@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyledHeader } from "./style";
 import axios from "axios";
-import { BoardMenu } from "../Board/boardsMenu/boardsMenu";
+import { BoardMenu } from "../Board/boardsMenu";
 import { UserContext } from "../../context";
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
@@ -22,7 +22,7 @@ export const Header = () => {
   };
 
   return (
-    <div>
+    <div style={{display: "flex", justifyContent: "center"}}>
       <StyledHeader>
         <BoardMenu />
         <Button onClick={toMain}>ГЛАВНАЯ</Button>

@@ -11,6 +11,7 @@ import useStyles from "../../styles/styledMUI";
 import { useHistory } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
+import {StyleContent} from "../../styles/GlobalStyle";
 
 export const Main = () => {
   const { user, getUser } = useContext(UserContext);
@@ -23,7 +24,7 @@ export const Main = () => {
 
   const newBoard = () => {
     axios
-      .post(`/api/newBoard`, { userId: {user}.id })
+      .post(`/api/newBoard`, { userId: user.userInfo.id })
       .then(({ data }) => {
         getUser();
         console.log(data.message);
@@ -32,52 +33,59 @@ export const Main = () => {
         console.log("Ошибка добавления новой доски", err);
       });
   };
-  return (
-    <StyledMain>
-      {user &&
-      user.boards.map((board) => (
-          <Card
-            key={board._id}
-            className={classes.cardMain}
-            style={{ borderRadius: "20px" }}
-          >
-            <StyledTitleMainCard>
-              <div
-                title={board.name}
-                style={{
-                  padding: "0 25px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {board.name}
-              </div>
-            </StyledTitleMainCard>
-            <StyledDescriptionMainCard>
-              <Button
-                className={classes.buttonMain}
-                onClick={() => toBoards(board._id)}
-              >
-                Открыть доску
-              </Button>
-            </StyledDescriptionMainCard>
-          </Card>
-        ))}
 
-      <Card
-        className={classes.cardMain}
-        style={{
-          borderRadius: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <IconButton onClick={newBoard}>
-          <AddCircleOutlineIcon style={{ fontSize: "50px" }} color="primary" />
-        </IconButton>
-      </Card>
-    </StyledMain>
+  console.log(user);
+  return (
+    <StyleContent styled={{display: "flex", justifyContent:"center"}}>
+      <StyledMain>
+        {user &&
+          user.boards.map((board) => (
+            <Card
+              key={board._id}
+              className={classes.cardMain}
+              style={{ borderRadius: "20px" }}
+            >
+              <StyledTitleMainCard>
+                <div
+                  title={board.name}
+                  style={{
+                    padding: "0 25px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {board.name}
+                </div>
+              </StyledTitleMainCard>
+              <StyledDescriptionMainCard>
+                <Button
+                  className={classes.buttonMain}
+                  onClick={() => toBoards(board._id)}
+                >
+                  Открыть доску
+                </Button>
+              </StyledDescriptionMainCard>
+            </Card>
+          ))}
+
+        <Card
+          className={classes.cardMain}
+          style={{
+            borderRadius: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <IconButton onClick={newBoard}>
+            <AddCircleOutlineIcon
+              style={{ fontSize: "50px" }}
+              color="primary"
+            />
+          </IconButton>
+        </Card>
+      </StyledMain>
+    </StyleContent>
   );
 };
