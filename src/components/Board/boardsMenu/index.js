@@ -68,7 +68,7 @@ export const BoardMenu = () => {
             <BoardsUser
               newBoard={newBoard}
               classes={classes}
-              boards={(user.boards).sort((a, b) => a.time < b.time ? 1 : -1)}
+              boards={user.boards}
               toBoards={toBoards}
             />
           </SwipeableDrawer>

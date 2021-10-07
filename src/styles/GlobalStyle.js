@@ -1,15 +1,17 @@
 import styled, { createGlobalStyle } from "styled-components";
+import { createTheme } from "@mui/material/styles";
 
 export const GlobalStyled = createGlobalStyle`
 body {
   margin: 0;
   font-family: Roboto;
   color:black;
+  background-color: #e6eef5;
 }
 `;
 export const StyleMain = styled.div`
   width: 100vw;
- display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 `;
@@ -23,9 +25,11 @@ export const StyleContent = styled.div`
   min-height: calc(100vh - 200px);
   box-shadow: 4px 4px 10px gray;
 `;
-export const theme = {
-  colors: {
-    primary: "#0070AE",
-    secondary: "#ffffff",
+
+export const theme = createTheme({
+  palette: {
+    secondary: {
+      main: "#fff"
+    },
   },
-};
+});

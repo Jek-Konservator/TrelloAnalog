@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState } from "react";
 import { StyledBoards } from "./styledTask";
 import { useParams } from "react-router-dom";
 import { IconButton, Card } from "@mui/material";
@@ -43,7 +43,7 @@ export const Board = () => {
   };
 
   const searchTask = async () => {
-    if (textSearch.text !== "") {
+    if (textSearch.text !== "" && textSearch) {
       axios
         .get(`/api/searchTask/${textSearch.text}/${idBoard}`)
         .then(({ data }) => setTasks(data))
@@ -54,6 +54,7 @@ export const Board = () => {
   };
 
   const getTasksHashtag = async ({ taskHashtags }) => {
+      if (taskHashtags) {
     if (taskHashtags.length !== 0) {
       axios
         .get(`/api/getTasksHashtag/${taskHashtags}/${idBoard}`)
@@ -66,6 +67,7 @@ export const Board = () => {
     } else {
       await getTasks();
     }
+      }
   };
 
   return (

@@ -3,7 +3,6 @@ import { StyledHeader } from "./style";
 import axios from "axios";
 import { BoardMenu } from "../Board/boardsMenu";
 import { UserContext } from "../../context";
-import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
 axios.defaults.baseURL = "http://localhost:3001/";
@@ -25,9 +24,10 @@ export const Header = () => {
     <div style={{display: "flex", justifyContent: "center"}}>
       <StyledHeader>
         <BoardMenu />
-        <Button onClick={toMain}>ГЛАВНАЯ</Button>
-        <div style={{ cursor: "pointer" }} onClick={LogOut}>
-          Выйти
+        <div style={{ cursor: "pointer" }} onClick={toMain}>
+          ГЛАВНАЯ
+        </div><div style={{ cursor: "pointer" }} onClick={LogOut}>
+          ВЫЙТИ
         </div>
       </StyledHeader>
     </div>

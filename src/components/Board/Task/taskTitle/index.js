@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import { StyledTitle } from "./styled";
 import axios from "axios";
@@ -20,6 +21,8 @@ export const TaskTitle = ({ task, getTasks }) => {
         .catch((err) => {
           console.log("Ошибка редактирования названия задачи", err);
         });
+    } else {
+      setVisibleRenameTask(false);
     }
   };
 
@@ -35,9 +38,18 @@ export const TaskTitle = ({ task, getTasks }) => {
               setTaskName(e.target.value);
             }}
           />
-          <IconButton onClick={() => renameTask(taskName, task._id)}>
+          <IconButton
+            style={{ marginLeft: "10px", boxSizing: "border-box" }}
+            onClick={() => setVisibleRenameTask(false)}
+          >
+            <CancelIcon style={{ fontSize: 30 }} color={"primary"} />
+          </IconButton>
+          <IconButton
+            style={{ marginRight: "20px" }}
+            onClick={() => renameTask(taskName, task._id)}
+          >
             <CheckCircleOutlineIcon
-              style={{ fontSize: 30, marginRight: 15 }}
+              style={{ fontSize: 30 }}
               color={"primary"}
             />
           </IconButton>

@@ -4,9 +4,10 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import TagIcon from "@mui/icons-material/Tag";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { StyledData } from "./styled";
 import axios from "axios";
-import {Hashtags} from "../../FilterNavigation/hashtags";
+import { Hashtags } from "../../FilterNavigation/hashtags";
 
 export const TaskDescription = ({ task, getTasks }) => {
   const [visibleEditTask, setVisibleEditTask] = useState(false);
@@ -53,7 +54,8 @@ export const TaskDescription = ({ task, getTasks }) => {
           {visibleEditHashtagTask === true ? (
             <>
               <Hashtags
-                  hashtagsParamsNull={hashtagsParamsNull}
+                  setVisibleEditHashtagTask={setVisibleEditHashtagTask}
+                hashtagsParamsNull={hashtagsParamsNull}
                 taskHashtags={task.hashtags}
                 type={"taskHashtags"}
                 editHashtagTask={editHashtagTask}
@@ -64,20 +66,40 @@ export const TaskDescription = ({ task, getTasks }) => {
               {task.description !== "" ? (
                 <>
                   {visibleEditTask ? (
-                    <>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
                       <TextField
+                        focused={true}
+                        style={{ width: "85%" }}
                         inputProps={{ maxLength: 100 }}
                         defaultValue={task.description}
-                        label={"Задач"}
+                        label={"Задача"}
                         onChange={(e) => setTaskText(e.target.value)}
                       />
-                      <IconButton onClick={() => editDescriptionTask(task._id)}>
+                      <IconButton
+                          style={{ marginLeft: "10px", boxSizing: "border-box" }}
+                          onClick={()=>setVisibleEditTask(false)}
+                      >
+                        <CancelIcon
+                            style={{ fontSize: 30 }}
+                            color={"primary"}
+                        />
+                      </IconButton>
+                      <IconButton
+                        style={{ marginLeft: "10px", boxSizing: "border-box" }}
+                        onClick={() => editDescriptionTask(task._id)}
+                      >
                         <CheckCircleOutlineIcon
                           style={{ fontSize: 30 }}
                           color={"primary"}
                         />
                       </IconButton>
-                    </>
+                    </div>
                   ) : (
                     <>
                       <div
@@ -89,7 +111,7 @@ export const TaskDescription = ({ task, getTasks }) => {
                         }}
                       >
                         <div>{task.description}</div>
-                        <div style={{color: "#2196f3"}}>
+                        <div style={{ color: "#2196f3" }}>
                           {task.hashtags.map((hashtag) => {
                             return " #" + hashtag;
                           })}
@@ -123,6 +145,7 @@ export const TaskDescription = ({ task, getTasks }) => {
                     label={"Задача"}
                     onChange={(e) => setTaskText(e.target.value)}
                   />
+
                   <IconButton
                     onClick={() => editDescriptionTask(task._id)}
                     style={{ marginLeft: "10px" }}

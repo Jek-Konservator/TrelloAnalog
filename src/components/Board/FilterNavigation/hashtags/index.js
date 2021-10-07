@@ -4,9 +4,11 @@ import { StyledHashtags } from "./styled";
 import axios from "axios";
 import { UserContext } from "../../../../context";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export const Hashtags = ({
   hashtagsParamsNull,
+  setVisibleEditHashtagTask,
   taskHashtags,
   type,
   editHashtagTask,
@@ -39,8 +41,8 @@ export const Hashtags = ({
           <div
             style={
               type !== "taskHashtags"
-                ? { display: "flex", flexDirection: "column", height: "155px" }
-                : { display: "flex", height: "90px" }
+                ? { display: "flex", flexDirection: "column" }
+                : { display: "flex", alignItems: "center" }
             }
           >
             <Autocomplete
@@ -74,9 +76,16 @@ export const Hashtags = ({
             {type === "taskHashtags" ? (
               <>
                 <IconButton
-                  onClick={() => editHashtagTask(hashtagsParams)}
+                  style={{ marginLeft: "10px", boxSizing: "border-box" }}
+                  onClick={() => setVisibleEditHashtagTask(false)}
                 >
-                  <CheckCircleOutlineIcon color={"primary"} />
+                  <CancelIcon style={{ fontSize: 30 }} color={"primary"} />
+                </IconButton>
+                <IconButton onClick={() => editHashtagTask(hashtagsParams)}>
+                  <CheckCircleOutlineIcon
+                    style={{ fontSize: "30px" }}
+                    color={"primary"}
+                  />
                 </IconButton>
               </>
             ) : (
@@ -89,15 +98,25 @@ export const Hashtags = ({
           </div>
 
           {visibleNewHashtags ? (
-            <>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <TextField
                 label={"Хештег"}
                 onChange={(e) => setNewHashtagsText(e.target.value)}
               />
-              <IconButton onClick={() => newHashtags()}>
-                <CheckCircleOutlineIcon color={"primary"} />
+
+              <IconButton
+                style={{ marginLeft: "10px" }}
+                onClick={() => setVisibleNewHashtags(false)}
+              >
+                <CancelIcon style={{ fontSize: 30 }} color={"primary"} />
               </IconButton>
-            </>
+              <IconButton onClick={() => newHashtags()}>
+                <CheckCircleOutlineIcon
+                  style={{ fontSize: 30 }}
+                  color={"primary"}
+                />
+              </IconButton>
+            </div>
           ) : (
             type !== "taskHashtags" && (
               <Button

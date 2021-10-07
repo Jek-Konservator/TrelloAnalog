@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const StyledTitle = styled.div`
-  margin-bottom: 10px;
   padding-left: 10px;
   width: 100%;
   max-height: 80px;

@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
-import { GlobalStyled, StyleMain, theme } from "./styles/GlobalStyle";
+import {GlobalStyled, StyleMain, theme} from "./styles/GlobalStyle";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
 import { ResetPassword } from "./components/login/resetPassword";
 import { UserContext } from "./context";
-import { ThemeProvider } from "styled-components";
 import axios from "axios";
 
 import { Main } from "./components/main";
 import { Board } from "./components/Board";
+import { ThemeProvider } from "@mui/material";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -45,16 +45,16 @@ const App = () => {
   }, [getUser, history]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ getUser, user }}>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
-          rel="stylesheet"
-        />
-        <GlobalStyled />
-        {user && <Header />}
-        <Switch>
-          <StyleMain>
+    <UserContext.Provider value={{ getUser, user }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+        rel="stylesheet"
+      />
+      <GlobalStyled />
+      {user && <Header />}
+      <Switch>
+        <StyleMain>
+          <ThemeProvider theme={theme}>
             <Route path="/login">
               <Login />
             </Route>
@@ -70,10 +70,10 @@ const App = () => {
             <Route path="/boards/:idBoard">
               <Board />
             </Route>
-          </StyleMain>
-        </Switch>
-      </UserContext.Provider>
-    </ThemeProvider>
+          </ThemeProvider>
+        </StyleMain>
+      </Switch>
+    </UserContext.Provider>
   );
 };
 

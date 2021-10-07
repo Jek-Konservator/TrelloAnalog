@@ -1,21 +1,11 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
+import {StyleSearch} from "./styled";
 
 export const Search = ({ setTextSearch, searchTask, textSearch }) => {
   return (
-    <div
-      style={{
-        height: "80px",
-        padding: "5px",
-        width: "95%",
-        backgroundColor: "#d3eafd",
-        borderRadius: "10px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <StyleSearch>
       <TextField
         label="Поиск"
         placeholder="Поиск"
@@ -28,6 +18,6 @@ export const Search = ({ setTextSearch, searchTask, textSearch }) => {
         }}
       />
       <Button onClick={searchTask}>Найти</Button>
-    </div>
+    </StyleSearch>
   );
 };
