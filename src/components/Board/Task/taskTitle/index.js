@@ -12,6 +12,148 @@ export const TaskTitle = ({ task, getTasks }) => {
 
   const renameTask = async (name, id) => {
     if (taskName !== "") {
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
+      // TODO: tut
       await axios
         .put(`/api/renameTask`, { name: name, id: id })
         .then(() => {
@@ -59,7 +201,7 @@ export const TaskTitle = ({ task, getTasks }) => {
           <div
             title={task.name}
             style={{
-              maxWidth: " 80%",
+              maxWidth: "80%",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
