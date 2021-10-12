@@ -64,7 +64,7 @@ export const TaskDescription = ({ task, getTasks }) => {
           {visibleEditHashtagTask === true ? (
             <>
               <Hashtags
-                  setVisibleEditHashtagTask={setVisibleEditHashtagTask}
+                setVisibleEditHashtagTask={setVisibleEditHashtagTask}
                 hashtagsParamsNull={hashtagsParamsNull}
                 taskHashtags={task.hashtags}
                 type={"taskHashtags"}
@@ -92,12 +92,12 @@ export const TaskDescription = ({ task, getTasks }) => {
                         onChange={(e) => setTaskText(e.target.value)}
                       />
                       <IconButton
-                          style={{ marginLeft: "10px", boxSizing: "border-box" }}
-                          onClick={()=>setVisibleEditTask(false)}
+                        style={{ marginLeft: "10px", boxSizing: "border-box" }}
+                        onClick={() => setVisibleEditTask(false)}
                       >
                         <CancelIcon
-                            style={{ fontSize: 30 }}
-                            color={"primary"}
+                          style={{ fontSize: 30 }}
+                          color={"primary"}
                         />
                       </IconButton>
                       <IconButton
@@ -123,7 +123,8 @@ export const TaskDescription = ({ task, getTasks }) => {
                         <div>{task.description}</div>
                         <div style={{ color: "#2196f3" }}>
                           {task.hashtags.map((hashtag) => {
-                            return " #" + hashtag;
+                            // TODO: tut
+                            return "#" + hashtag;
                           })}
                         </div>
                       </div>
@@ -168,7 +169,7 @@ export const TaskDescription = ({ task, getTasks }) => {
                 </div>
               )}
             </>
-          )}{" "}
+          )}
         </>
       )}
     </StyledData>
