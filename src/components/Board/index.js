@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { StyledBoards } from "./styledTask";
+import { StyledBoards } from "./StyledBoards";
 import { useParams } from "react-router-dom";
 import { IconButton, Card } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";

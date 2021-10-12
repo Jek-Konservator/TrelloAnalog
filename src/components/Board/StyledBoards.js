@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Styleetzrxcgtvhkbj lnkmlatz cgjvhkbjlnkm;ldBoards = styled.div`
+export const StyledBoards = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;

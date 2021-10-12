@@ -123,8 +123,7 @@ export const TaskDescription = ({ task, getTasks }) => {
                         <div>{task.description}</div>
                         <div style={{ color: "#2196f3" }}>
                           {task.hashtags.map((hashtag) => {
-                            // TODO: tut
-                            return "#" + hashtag;
+                            return <>` #${hashtag}`</>
                           })}
                         </div>
                       </div>

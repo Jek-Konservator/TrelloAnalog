@@ -1,182 +1,39 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import EditIcon from "@mui/icons-material/Edit";
 import { StyledTitle } from "./styled";
 import axios from "axios";
-import {UserContext} from "../../../../context";
+import { UserContext } from "../../../../context";
 
 export const TaskTitle = ({ task, getTasks }) => {
   const { setDataSnackBar } = useContext(UserContext);
   const [visibleRenameTask, setVisibleRenameTask] = useState(false);
   const [taskName, setTaskName] = useState("");
 
-
   const renameTask = async (name, id) => {
-    if (taskName !== "") {
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      // TODO: tut
-      await axios
-        .put(`/api/renameTask`, { name: name, id: id })
-        .then(() => {
-          getTasks();
-          setVisibleRenameTask(false);
-          setDataSnackBar({
-            type: "success",
-            massage: "Задача успешно переименована",
-          });
-        })
-        .catch((err) => {
-          setDataSnackBar({
-            type: "error",
-            massage: "Ошибка редактирования названия задачи",
-          });
-          console.log(err);
-        });
-    } else {
+    if (taskName === "") {
       setVisibleRenameTask(false);
+      return;
     }
+    await axios
+      .put(`/api/renameTask`, { name: name, id: id })
+      .then(() => {
+        getTasks();
+        setVisibleRenameTask(false);
+        setDataSnackBar({
+          type: "success",
+          massage: "Задача успешно переименована",
+        });
+      })
+      .catch((err) => {
+        setDataSnackBar({
+          type: "error",
+          massage: "Ошибка редактирования названия задачи",
+        });
+        console.log(err);
+      });
   };
 
   return (

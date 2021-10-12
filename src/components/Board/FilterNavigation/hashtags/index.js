@@ -36,7 +36,7 @@ export const Hashtags = ({
 
   return (
     <StyledHashtags>
-      {user ? (
+      {user && (
         <>
           <div
             style={
@@ -129,10 +129,7 @@ export const Hashtags = ({
             )
           )}
         </>
-      ) : (
-        ""
       )}
-      {/*// TODO: tutv*/}
     </StyledHashtags>
   );
 };
