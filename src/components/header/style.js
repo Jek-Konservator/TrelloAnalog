@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.div`
-  width: 70%;
+  width: 70vw;
   background-color:#2196f3;
   height: 50px;
   border-radius: 0 0 15px 15px;

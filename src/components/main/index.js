@@ -11,10 +11,10 @@ import useStyles from "../../styles/styledMUI";
 import { useHistory } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
-import {StyleContent} from "../../styles/GlobalStyle";
+import { StyleContent } from "../../styles/GlobalStyle";
 
 export const Main = () => {
-  const { user, getUser } = useContext(UserContext);
+  const { user, getUser, setDataSnackBar } = useContext(UserContext);
   const classes = useStyles();
   const history = useHistory();
 
@@ -28,6 +28,11 @@ export const Main = () => {
       .then(({ data }) => {
         getUser();
         console.log(data.message);
+
+        setDataSnackBar({
+          type: "success",
+          massage: "Новая доска успешно создана",
+        });
       })
       .catch((err) => {
         console.log("Ошибка добавления новой доски", err);
@@ -36,14 +41,14 @@ export const Main = () => {
 
   console.log(user);
   return (
-    <StyleContent styled={{display: "flex", justifyContent:"center"}}>
+    <StyleContent styled={{ display: "flex", justifyContent: "center" }}>
       <StyledMain>
         {user &&
           user.boards.map((board) => (
             <Card
               key={board._id}
               className={classes.cardMain}
-              style={{ borderRadius: "20px" }}
+              style={{ borderRadius: "12px" }}
             >
               <StyledTitleMainCard>
                 <div
@@ -72,7 +77,7 @@ export const Main = () => {
         <Card
           className={classes.cardMain}
           style={{
-            borderRadius: "20px",
+            borderRadius: "12px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

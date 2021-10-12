@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/header";
-import {GlobalStyled, StyleMain, theme} from "./styles/GlobalStyle";
+import { GlobalStyled, StyleMain, theme } from "./styles/GlobalStyle";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Login } from "./components/login";
 import { NewUser } from "./components/login/newUser";
@@ -11,9 +11,11 @@ import axios from "axios";
 import { Main } from "./components/main";
 import { Board } from "./components/Board";
 import { ThemeProvider } from "@mui/material";
+import { SnackBar } from "./components/Snackbar";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [dataSnackBar, setDataSnackBar] = useState({});
 
   const history = useHistory();
 
@@ -44,16 +46,24 @@ const App = () => {
     getUser();
   }, [getUser, history]);
 
+  console.log(dataSnackBar);
+
   return (
-    <UserContext.Provider value={{ getUser, user }}>
+    <UserContext.Provider value={{ getUser, user, setDataSnackBar }}>
       <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
         rel="stylesheet"
       />
       <GlobalStyled />
-      {user && <Header />}
+
+      <SnackBar
+        type={dataSnackBar.type}
+        massage={dataSnackBar.massage}
+        open={true}
+      />
       <Switch>
         <StyleMain>
+          {user && <Header />}
           <ThemeProvider theme={theme}>
             <Route path="/login">
               <Login />

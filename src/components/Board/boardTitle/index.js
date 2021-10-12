@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 export const BoardTitle = () => {
   const { idBoard } = useParams();
-  const { getUser } = useContext(UserContext);
+  const { getUser, setDataSnackBar } = useContext(UserContext);
   const [board, setBoard] = useState({});
   const [boardName, setBoardName] = useState("");
   const [visibleRenameTextFiled, setVisibleRenameTextFiled] = useState(false);
@@ -40,9 +40,17 @@ export const BoardTitle = () => {
           getBoard();
           getUser();
           setVisibleRenameTextFiled(false);
+          setDataSnackBar({
+            type: "success",
+            massage: "Доска успешно переименована",
+          });
         })
         .catch((err) => {
-          console.log("Ошибка редактирования названия доски", err);
+          setDataSnackBar({
+            type: "error",
+            massage: "Ошибка редактирования названия доски",
+          });
+          console.log(err);
         });
     } else {
       setVisibleRenameTextFiled(false);

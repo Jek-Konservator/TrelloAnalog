@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyledBoards } from "./styledTask";
 import { useParams } from "react-router-dom";
 import { IconButton, Card } from "@mui/material";
@@ -10,9 +10,12 @@ import { TaskDescription } from "./Task/taskDescription";
 import useStyles from "../../styles/styledMUI";
 import { FilterNavigation } from "./FilterNavigation";
 import { StyleContent } from "../../styles/GlobalStyle";
+import { UserContext } from "../../context";
 
 export const Board = () => {
   const { idBoard } = useParams();
+  const { setDataSnackBar } = useContext(UserContext);
+
   const classes = useStyles();
 
   const [tasks, setTasks] = useState([]);
@@ -36,9 +39,19 @@ export const Board = () => {
   const newTask = async () => {
     await axios
       .post(`/api/newTask`, { idBoard })
-      .then(() => getTasks())
+      .then(() => {
+        getTasks();
+        setDataSnackBar({
+          type: "success",
+          massage: "Новая задача успешно создана",
+        });
+      })
       .catch((err) => {
-        console.log("Ошибка при создании новой задачи", err);
+          setDataSnackBar({
+              type: "error",
+              massage: "Ошибка при создании новой задачи",
+          });
+        console.log(err);
       });
   };
 
@@ -49,25 +62,25 @@ export const Board = () => {
         .then(({ data }) => setTasks(data))
         .catch((err) => console.log(err));
     } else {
-     await getTasks()
+      await getTasks();
     }
   };
 
   const getTasksHashtag = async ({ taskHashtags }) => {
-      if (taskHashtags) {
-    if (taskHashtags.length !== 0) {
-      axios
-        .get(`/api/getTasksHashtag/${taskHashtags}/${idBoard}`)
-        .then(({ data }) => {
-          setTasks(data);
-        })
-        .catch((err) => {
-          console.log("Ошибка фильтрации по тегам", err);
-        });
-    } else {
-      await getTasks();
-    }
+    if (taskHashtags) {
+      if (taskHashtags.length !== 0) {
+        axios
+          .get(`/api/getTasksHashtag/${taskHashtags}/${idBoard}`)
+          .then(({ data }) => {
+            setTasks(data);
+          })
+          .catch((err) => {
+            console.log("Ошибка фильтрации по тегам", err);
+          });
+      } else {
+        await getTasks();
       }
+    }
   };
 
   return (

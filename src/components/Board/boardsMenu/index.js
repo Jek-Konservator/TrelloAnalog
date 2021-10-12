@@ -18,11 +18,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export const BoardMenu = () => {
   const [visibleTemporaryDrawer, setVisibleTemporaryDrawer] = useState(false);
-  const { user, getUser } = useContext(UserContext);
+  const { user, getUser, setDataSnackBar } = useContext(UserContext);
   const classes = useStyles();
   const history = useHistory();
-
-
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -41,6 +39,7 @@ export const BoardMenu = () => {
       .then(({ data }) => {
         getUser();
         console.log(data.message);
+        setDataSnackBar({ type: "success", massage: "Новая доска успешно создана" });
       })
       .catch((err) => {
         console.log("Ошибка добавления новой доски", err);
@@ -52,10 +51,11 @@ export const BoardMenu = () => {
     history.replace(`/boards/${idBoard}`);
   };
 
+
   return (
-    <StyledBoardsMenu >
+    <StyledBoardsMenu>
       <React.Fragment key={"left"}>
-        <IconButton style={{color:"white"}} onClick={toggleDrawer(true)}>
+        <IconButton style={{ color: "white" }} onClick={toggleDrawer(true)}>
           <MenuIcon />
         </IconButton>
         {visibleTemporaryDrawer && (

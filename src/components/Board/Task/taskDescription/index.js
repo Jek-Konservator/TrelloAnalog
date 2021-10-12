@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { IconButton, TextField } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,8 +8,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { StyledData } from "./styled";
 import axios from "axios";
 import { Hashtags } from "../../FilterNavigation/hashtags";
+import {UserContext} from "../../../../context";
 
 export const TaskDescription = ({ task, getTasks }) => {
+  const {setDataSnackBar } = useContext(UserContext);
   const [visibleEditTask, setVisibleEditTask] = useState(false);
   const [visibleEditHashtagTask, setVisibleEditHashtagTask] = useState(false);
   const [taskText, setTaskText] = useState("");
@@ -22,9 +24,17 @@ export const TaskDescription = ({ task, getTasks }) => {
         .then(() => {
           getTasks();
           setVisibleEditTask(false);
+          setDataSnackBar({
+            type: "success",
+            massage: "Описания задачи успешно отредактирована",
+          });
         })
         .catch((err) => {
-          console.log("Ошибка редактирования описания задачи", err);
+          setDataSnackBar({
+            type: "error",
+            massage: "Ошибка редактирования описания задачи",
+          });
+          console.log(err);
         });
     }
   };
